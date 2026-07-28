@@ -1,0 +1,25 @@
+{
+  "name": "dodo-sourdough-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--use-system-ca next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed:products": "node --use-system-ca scripts/seedProducts.js",
+    "set:images": "node --use-system-ca scripts/setProductImages.js",
+    "import:content": "node --use-system-ca scripts/importContent.js",
+    "test:mylerz": "node --use-system-ca scripts/testMylerz.js",
+    "dedupe:products": "node --use-system-ca scripts/dedupeProducts.js"
+  },
+  "dependencies": {
+    "firebase": "^10.12.2",
+    "firebase-admin": "^12.1.1",
+    "next": "14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
+  }
+}

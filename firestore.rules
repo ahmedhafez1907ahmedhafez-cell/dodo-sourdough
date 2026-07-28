@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // مجموعة الأدمنز: مستند لكل أدمن، الـ ID بتاعه = الـ UID بتاعه في Firebase Auth.
+    // محدش يقدر يكتب فيها من المتصفح أبداً — بتتظبط يدوي من Firebase Console
+    // أو من سكريبت سيرفر بعد ما تعمل حساب الأدمن (شوف SETUP.md).
+    match /admins/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // المنتجات: أي حد يقرا، بس الكتابة/التعديل عن طريق API routes بس
+    // (اللي بتستخدم Admin SDK وبتتخطى القواعد دي أصلاً). القاعدة دي حماية
+    // إضافية لو حد حاول يكتب مباشرة من كود المتصفح بتاعه.
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // الطلبات: محدش يقرا أو يكتب مباشرة من المتصفح — كله لازم يعدي على
+    // API routes (اللي فيها requireAdmin للقراءة، وتحقق بيانات للإنشاء).
+    match /orders/{orderId} {
+      allow read, write: if false;
+    }
+  }
+}
