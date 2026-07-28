@@ -53,36 +53,25 @@ export default function Content() {
 
   function selectPlatform(p) { setPlatform(p); setSubtype("all"); }
 
-  // بعد ما تتحمل السكريبتات (instagram/tiktok/facebook) نقولهم يعيدوا معالجة
-  // أي بطاقات جديدة ظهرت (لما نغيّر منصة أو نوع، أو أول تحميل)
+  // انستجرام بس هو اللي محتاج سكريبت SDK يعالج البوستات بعد ما تتحمل.
+  // فيسبوك وتيك توك اتحولوا لـ iframe مباشر (شوف EmbedCard) عشان الـ SDK
+  // بتاعهم مكنش بيشتغل صح على الدومين الحقيقي (فيسبوك محتاج App ID، وتيك توك
+  // كان بيقع لو المنشور نوعه "photo" مش "video").
   useEffect(() => {
     if (typeof window === "undefined") return;
     const t = setTimeout(() => {
       if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
-      if (window.FB?.XFBML?.parse) window.FB.XFBML.parse();
-      if (window.tiktokEmbed?.lib?.render) window.tiktokEmbed.lib.render();
     }, 600);
     return () => clearTimeout(t);
   }, [list]);
 
   return (
     <div className="gallery-page">
-      {/* سكريبتات الـ embed بتاعة كل منصة — من غيرهم البوستات مبتظهرش خالص */}
-      <div id="fb-root"></div>
+      {/* سكريبت الـ embed بتاع انستجرام بس — من غيره بوستاته مبتظهرش */}
       <Script
         src="https://www.instagram.com/embed.js"
         strategy="lazyOnload"
         onLoad={() => window.instgrm?.Embeds?.process()}
-      />
-      <Script
-        src="https://www.tiktok.com/embed.js"
-        strategy="lazyOnload"
-      />
-      <Script
-        src="https://connect.facebook.net/ar_AR/sdk.js#xfbml=1&version=v19.0"
-        strategy="lazyOnload"
-        crossOrigin="anonymous"
-        onLoad={() => window.FB?.XFBML?.parse()}
       />
       <div className="section-title">
         <span className="eyebrow">Content</span>
@@ -167,27 +156,47 @@ function EmbedCard({ platform, url }) {
     );
   }
   if (platform === "tiktok") {
+    // منشورات "photo" (سلايد شو) مالهاش embed رسمي من تيك توك — بيبان ليها
+    // اللينك بس. أما فيديو عادي (/video/ID) فبيتعرض بـ iframe مباشر.
     const idMatch = url.match(/\/video\/(\d+)/);
+    const videoId = idMatch ? idMatch[1] : null;
+    if (!videoId) {
+      return (
+        <div style={{ padding: 24, textAlign: "center" }}>
+          <a href={url} target="_blank" rel="noreferrer" style={{ fontWeight: 700 }}>
+            عرض المنشور على تيك توك ↗
+          </a>
+        </div>
+      );
+    }
     return (
-      <blockquote
-        className="tiktok-embed"
-        cite={url}
-        data-video-id={idMatch ? idMatch[1] : ""}
-        style={{ margin: "0 auto", maxWidth: 605, width: "100%", minHeight: 200 }}
-      >
-        <a href={url} target="_blank" rel="noreferrer">عرض الفيديو على تيك توك</a>
-      </blockquote>
+      <div style={{ position: "relative", paddingBottom: "177%", height: 0, maxWidth: 340, margin: "0 auto" }}>
+        <iframe
+          src={`https://www.tiktok.com/embed/v2/${videoId}`}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+          allow="encrypted-media"
+          allowFullScreen
+          title="TikTok video"
+        />
+      </div>
     );
   }
   if (platform === "facebook") {
+    // فيسبوك: iframe مباشر لبلاجن الفيديو/البوست — من غير SDK JS خالص، لأن
+    // XFBML مكنش بيرندر أي حاجة على الدومين الحقيقي (محتاج App ID مسجل).
+    const encodedUrl = encodeURIComponent(url);
+    const isVideoLike = /\/(reel|videos|watch)\b/i.test(url);
+    const plugin = isVideoLike ? "video.php" : "post.php";
     return (
-      <div
-        className="fb-post"
-        data-href={url}
-        data-width="500"
-        style={{ margin: "0 auto", minHeight: 200 }}
-      >
-        <a href={url} target="_blank" rel="noreferrer">عرض المنشور على فيسبوك</a>
+      <div style={{ position: "relative", paddingBottom: isVideoLike ? "177%" : "125%", height: 0, maxWidth: 500, margin: "0 auto" }}>
+        <iframe
+          src={`https://www.facebook.com/plugins/${plugin}?href=${encodedUrl}&show_text=false&width=500`}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+          scrolling="no"
+          allowFullScreen
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          title="Facebook post"
+        />
       </div>
     );
   }

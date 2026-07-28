@@ -38,6 +38,7 @@ async function addProduct(req, res) {
     nameAr: b.nameAr,
     description: b.description,
     price: b.isStarter ? 0 : Number(b.price),
+    oldPrice: !b.isStarter && b.oldPrice !== undefined && b.oldPrice !== null && b.oldPrice !== "" ? Number(b.oldPrice) : null,
     category: b.category || "",
     catalog: b.catalog, // "tools" أو "bread"
     tag: b.tag || "",

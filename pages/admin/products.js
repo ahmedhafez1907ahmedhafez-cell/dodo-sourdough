@@ -15,7 +15,7 @@ import { useAdminAuth } from "../../lib/useAdminAuth";
 // ============================================================
 
 const EMPTY = {
-  name: "", nameAr: "", price: "", description: "", category: "",
+  name: "", nameAr: "", price: "", oldPrice: "", description: "", category: "",
   tag: "", catalog: "bread", isNew: false, isBestseller: false,
   mainImg: "", secondImg: "", hasExtras: false, isStarter: false, pricePerGram: "",
   video: "", emoji: "", localOnly: true,
@@ -50,6 +50,7 @@ function ProductsAdmin() {
       const payload = {
         ...form,
         price: form.isStarter ? 0 : Number(form.price),
+        oldPrice: !form.isStarter && form.oldPrice !== "" ? Number(form.oldPrice) : null,
         pricePerGram: form.isStarter ? Number(form.pricePerGram || 0) : undefined,
       };
       const url = editingId ? `/api/products/${editingId}` : "/api/products";
@@ -77,7 +78,7 @@ function ProductsAdmin() {
   function startEdit(p) {
     setEditingId(p.id);
     setForm({
-      name: p.name || "", nameAr: p.nameAr || "", price: p.price || "", description: p.description || "",
+      name: p.name || "", nameAr: p.nameAr || "", price: p.price || "", oldPrice: p.oldPrice || "", description: p.description || "",
       category: p.category || "", tag: p.tag || "", catalog: p.catalog || "bread",
       isNew: !!p.isNew, isBestseller: !!p.isBestseller,
       mainImg: p.mainImg || "", secondImg: p.secondImg || "", hasExtras: !!p.hasExtras,
@@ -128,7 +129,28 @@ function ProductsAdmin() {
         {form.isStarter && form.catalog !== "tools" ? (
           <input type="number" placeholder="السعر لكل جرام" value={form.pricePerGram} onChange={(e) => setForm({ ...form, pricePerGram: e.target.value })} />
         ) : (
-          <input type="number" placeholder="السعر" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
+          <>
+            <input type="number" placeholder="السعر الحالي" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
+            <div>
+              <label style={{ fontSize: 13, fontWeight: 700, display: "block", marginBottom: 4 }}>
+                🔥 السعر قبل الخصم (اختياري — سيبه فاضي لو مفيش عرض)
+              </label>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <input
+                  type="number"
+                  placeholder="مثلاً 760 (السعر القديم قبل الخصم)"
+                  value={form.oldPrice}
+                  onChange={(e) => setForm({ ...form, oldPrice: e.target.value })}
+                  style={{ flex: 1 }}
+                />
+                {form.oldPrice !== "" && (
+                  <button type="button" onClick={() => setForm({ ...form, oldPrice: "" })} style={{ padding: "8px 12px", borderRadius: 8, background: "#eee", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}>
+                    ❌ شيل العرض
+                  </button>
+                )}
+              </div>
+            </div>
+          </>
         )}
 
         <input placeholder="الفئة (مثلاً: stuffed أو basket)" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} />
@@ -189,7 +211,19 @@ function ProductsAdmin() {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={p.mainImg} alt="" style={{ width: 44, height: 44, objectFit: "cover", borderRadius: 6 }} onError={(e) => (e.currentTarget.style.display = "none")} />
           )}
-          <div style={{ flex: 1 }}>{p.nameAr} — {p.isStarter ? `${p.pricePerGram} جنيه/جرام` : `${p.price} جنيه`}</div>
+          <div style={{ flex: 1 }}>
+            {p.nameAr} —{" "}
+            {p.isStarter ? (
+              `${p.pricePerGram} جنيه/جرام`
+            ) : p.oldPrice && Number(p.oldPrice) > Number(p.price) ? (
+              <>
+                <span style={{ textDecoration: "line-through", color: "#e74c3c" }}>{p.oldPrice}</span>{" "}
+                <b>{p.price} جنيه 🔥</b>
+              </>
+            ) : (
+              `${p.price} جنيه`
+            )}
+          </div>
           <button onClick={() => startEdit(p)} style={{ color: "#1b1410", border: "none", background: "none", cursor: "pointer" }}>✏️</button>
           <button onClick={() => removeProduct(p.id)} style={{ color: "#e74c3c", border: "none", background: "none", cursor: "pointer" }}>🗑️</button>
         </div>

@@ -30,6 +30,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
   const secondImg = normalizeImageUrl(p.secondImg);
   const images = secondImg ? [mainImg, secondImg] : (mainImg ? [mainImg] : []);
   const isFav = shop.getFavs().includes(p.id);
+  const hasSale = !p.isStarter && Number(p.oldPrice) > Number(p.price);
 
   function toggleExtra(ex) {
     setCheckedExtras((c) => (c.find((x) => x.id === ex.id) ? c.filter((x) => x.id !== ex.id) : [...c, ex]));
@@ -80,11 +81,14 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
           <button className="img-zoom-btn" onClick={(e) => { e.stopPropagation(); shop.openLightbox(images, 0); }}>🔍 عرض</button>
         )}
         {p.tag && <div className="product-badge-tag">{p.tag}</div>}
+        {hasSale && (
+          <div className="product-badge-sale" style={{ top: p.tag ? 42 : 12 }}>🔥 عرض</div>
+        )}
         {p.isBestseller && (
-          <div style={{ position: "absolute", top: 42, right: 12, background: "#e74c3c", color: "white", padding: "3px 9px", borderRadius: 11, fontSize: 10, fontWeight: 700, zIndex: 5 }}>⭐ الأكثر طلباُ</div>
+          <div style={{ position: "absolute", top: (p.tag ? 42 : 12) + (hasSale ? 30 : 0), right: 12, background: "#e74c3c", color: "white", padding: "3px 9px", borderRadius: 11, fontSize: 10, fontWeight: 700, zIndex: 5 }}>⭐ الأكثر طلباُ</div>
         )}
         {p.isNew && (
-          <div style={{ position: "absolute", top: p.isBestseller ? 72 : 42, right: 12, background: "#27ae60", color: "white", padding: "3px 9px", borderRadius: 11, fontSize: 10, fontWeight: 700, zIndex: 5 }}>✨ جديد</div>
+          <div style={{ position: "absolute", top: (p.tag ? 42 : 12) + (hasSale ? 30 : 0) + (p.isBestseller ? 30 : 0), right: 12, background: "#27ae60", color: "white", padding: "3px 9px", borderRadius: 11, fontSize: 10, fontWeight: 700, zIndex: 5 }}>✨ جديد</div>
         )}
       </div>
       <div className="product-info">
@@ -129,7 +133,10 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
         )}
 
         <div className="product-footer">
-          <div className="price">{p.price} <span>{p.priceNote || "جنيه"}</span></div>
+          <div className="price">
+            {hasSale && <span className="price-old">{p.oldPrice} {p.priceNote || "جنيه"}</span>}
+            {p.price} <span>{p.priceNote || "جنيه"}</span>
+          </div>
           <button className="add-to-cart-btn" onClick={handleAdd}>+ أضف للسلة</button>
         </div>
       </div>

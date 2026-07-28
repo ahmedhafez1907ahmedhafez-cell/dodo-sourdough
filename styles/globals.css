@@ -120,8 +120,10 @@ a{color:inherit;}
 .product-info .ar-name{font-size:13px;color:var(--brown-mid);margin-bottom:8px;}
 .product-info .desc{font-size:12px;color:#666;line-height:1.6;margin-bottom:13px;}
 .product-footer{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
-.price{font-size:21px;font-weight:800;color:var(--ember-dark);font-family:'Playfair Display',serif;}
+.price{font-size:21px;font-weight:800;color:var(--ember-dark);font-family:'Playfair Display',serif;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
 .price span{font-size:13px;font-weight:400;color:var(--brown-mid);}
+.price-old{font-size:14px;font-weight:600;color:#e74c3c;text-decoration:line-through;font-family:'Tajawal',sans-serif;}
+.product-badge-sale{position:absolute;top:12px;right:12px;background:#e74c3c;color:#fff;padding:4px 11px;border-radius:2px;font-size:10.5px;font-weight:700;letter-spacing:.3px;z-index:6;}
 .add-to-cart-btn{background:var(--brown-dark);color:var(--cream);border:none;padding:9px 18px;border-radius:3px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s;}
 .add-to-cart-btn:hover{background:var(--ember);color:#fff;transform:scale(1.04);}
 .product-qty-row{display:flex;align-items:center;gap:8px;margin-bottom:11px;background:var(--cream);border-radius:10px;padding:7px 11px;}
