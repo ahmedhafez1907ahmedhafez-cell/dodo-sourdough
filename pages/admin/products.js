@@ -29,6 +29,66 @@ function ProductsAdmin() {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
 
+  // ------------------------------------------------------------
+  // أداة "اعمل عرض بنسبة %" على كذا منتج مرة واحدة
+  // ------------------------------------------------------------
+  const [bulkOpen, setBulkOpen] = useState(false);
+  const [bulkPercent, setBulkPercent] = useState("");
+  const [bulkSelected, setBulkSelected] = useState(() => new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkMsg, setBulkMsg] = useState("");
+
+  const bulkEligible = products.filter((p) => !p.isStarter); // الخميرة (بالجرام) مش داخلة في العروض الجماعية
+
+  function toggleBulkOne(id) {
+    setBulkSelected((s) => {
+      const copy = new Set(s);
+      if (copy.has(id)) copy.delete(id); else copy.add(id);
+      return copy;
+    });
+  }
+  function bulkSelectAll() {
+    setBulkSelected(new Set(bulkEligible.map((p) => p.id)));
+  }
+  function bulkSelectCatalog(catalog) {
+    setBulkSelected(new Set(bulkEligible.filter((p) => p.catalog === catalog).map((p) => p.id)));
+  }
+  function bulkClearSelection() {
+    setBulkSelected(new Set());
+  }
+  function newPriceFor(p) {
+    const pct = Number(bulkPercent);
+    if (!pct || pct <= 0) return p.price;
+    // بنقرب لأقرب نص جنيه عشان أسعار زي 67.5 تفضل مظبوطة
+    return Math.round(p.price * (100 - pct) / 100 * 2) / 2;
+  }
+
+  async function applyBulkSale() {
+    const pct = Number(bulkPercent);
+    if (!pct || pct <= 0 || pct >= 100) { setBulkMsg("⚠️ اكتب نسبة خصم صح (بين 1 و99)"); return; }
+    if (!bulkSelected.size) { setBulkMsg("⚠️ اختار منتج واحد على الأقل"); return; }
+    setBulkBusy(true);
+    setBulkMsg("");
+    let ok = 0, fail = 0;
+    for (const id of bulkSelected) {
+      const p = products.find((x) => x.id === id);
+      if (!p) continue;
+      const newPrice = newPriceFor(p);
+      try {
+        const res = await authedFetch(`/api/products/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ oldPrice: p.price, price: newPrice }),
+        });
+        if (res.ok) ok++; else fail++;
+      } catch { fail++; }
+    }
+    setBulkBusy(false);
+    setBulkMsg(`✅ اتعمل عرض ${bulkPercent}% على ${ok} منتج` + (fail ? ` (فشل ${fail})` : ""));
+    setBulkSelected(new Set());
+    load();
+  }
+
   async function load() {
     try {
       const res = await fetch("/api/products");
@@ -107,6 +167,57 @@ function ProductsAdmin() {
         <Link href="/admin">الطلبات</Link>
         <Link href="/admin/content" style={{ marginRight: 12 }}>المحتوى</Link>
       </div>
+
+      <button
+        type="button"
+        onClick={() => { setBulkOpen((o) => !o); setBulkMsg(""); }}
+        style={{ width: "100%", padding: 12, borderRadius: 8, background: bulkOpen ? "#e74c3c" : "#1b1410", color: "#fff", border: "none", fontWeight: 700, marginBottom: 16, cursor: "pointer" }}
+      >
+        {bulkOpen ? "✖️ قفل أداة العروض" : "🔥 اعمل عرض بنسبة % على كذا منتج"}
+      </button>
+
+      {bulkOpen && (
+        <div style={{ border: "2px solid #e74c3c", borderRadius: 10, padding: 14, marginBottom: 24, background: "#fff5f5" }}>
+          <label style={{ display: "block", fontWeight: 700, marginBottom: 6 }}>خصم كام %؟</label>
+          <input
+            type="number"
+            placeholder="مثلاً 20"
+            value={bulkPercent}
+            onChange={(e) => setBulkPercent(e.target.value)}
+            style={{ width: 120, marginBottom: 10 }}
+          />
+
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
+            <button type="button" onClick={bulkSelectAll} style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #ccc", background: "#fff", cursor: "pointer" }}>تحديد الكل</button>
+            <button type="button" onClick={() => bulkSelectCatalog("tools")} style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #ccc", background: "#fff", cursor: "pointer" }}>تحديد الأدوات</button>
+            <button type="button" onClick={() => bulkSelectCatalog("bread")} style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #ccc", background: "#fff", cursor: "pointer" }}>تحديد الخبز والخميرة</button>
+            <button type="button" onClick={bulkClearSelection} style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #ccc", background: "#fff", cursor: "pointer" }}>إلغاء التحديد</button>
+          </div>
+
+          <div style={{ maxHeight: 280, overflowY: "auto", border: "1px solid #eee", borderRadius: 8, background: "#fff", marginBottom: 10 }}>
+            {bulkEligible.map((p) => (
+              <label key={p.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 10px", borderBottom: "1px solid #f2f2f2", cursor: "pointer", fontSize: 14 }}>
+                <input type="checkbox" checked={bulkSelected.has(p.id)} onChange={() => toggleBulkOne(p.id)} />
+                <span style={{ flex: 1 }}>{p.nameAr}</span>
+                <span style={{ color: "#999" }}>{p.price} جنيه</span>
+                {bulkSelected.has(p.id) && bulkPercent !== "" && (
+                  <span style={{ color: "#e74c3c", fontWeight: 700 }}>← {newPriceFor(p)} جنيه</span>
+                )}
+              </label>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            disabled={bulkBusy}
+            onClick={applyBulkSale}
+            style={{ width: "100%", padding: 12, borderRadius: 8, background: "#e74c3c", color: "#fff", border: "none", fontWeight: 700, cursor: "pointer" }}
+          >
+            {bulkBusy ? "جاري التطبيق..." : `🔥 طبّق العرض على ${bulkSelected.size} منتج`}
+          </button>
+          {bulkMsg && <p style={{ marginTop: 8 }}>{bulkMsg}</p>}
+        </div>
+      )}
 
       <form onSubmit={submit} style={{ display: "grid", gap: 10, marginBottom: 30 }}>
         <select value={form.catalog} onChange={(e) => setForm({ ...form, catalog: e.target.value, localOnly: e.target.value === "bread", isStarter: e.target.value === "tools" ? false : form.isStarter })}>
