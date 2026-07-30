@@ -30,16 +30,34 @@ function ProductsAdmin() {
   const [msg, setMsg] = useState("");
 
   // ------------------------------------------------------------
-  // أداة "اعمل عرض بنسبة %" على كذا منتج مرة واحدة
+  // أداة العروض الجماعية — بتشتغل باتجاهين:
+  //   mode="sale"   → تعمل خصم % على كذا منتج مرة واحدة
+  //   mode="cancel" → ترجّع السعر الأصلي وتشيل العرض عن كذا منتج
+  //
+  // إزاي بنعرف إن المنتج عليه عرض؟ لما بنعمل الخصم بنحفظ السعر
+  // القديم في oldPrice. فأي منتج oldPrice بتاعه أكبر من price =
+  // عليه عرض شغال. والإلغاء ببساطة بيرجّع price = oldPrice ويصفّر
+  // oldPrice، فالكارت بتاعه في الموقع بيرجع عادي من غير بادج "عرض".
   // ------------------------------------------------------------
   const [bulkOpen, setBulkOpen] = useState(false);
+  const [bulkMode, setBulkMode] = useState("sale"); // "sale" | "cancel"
   const [bulkPercent, setBulkPercent] = useState("");
   const [bulkSelected, setBulkSelected] = useState(() => new Set());
   const [bulkBusy, setBulkBusy] = useState(false);
   const [bulkMsg, setBulkMsg] = useState("");
 
-  const bulkEligible = products.filter((p) => !p.isStarter); // الخميرة (بالجرام) مش داخلة في العروض الجماعية
+  const isCancel = bulkMode === "cancel";
+  const hasSale = (p) => !p.isStarter && Number(p.oldPrice) > Number(p.price);
 
+  // الخميرة (بالجرام) مش داخلة في العروض الجماعية.
+  // وفي وضع الإلغاء بنعرض المنتجات اللي عليها عرض بس.
+  const bulkEligible = products.filter((p) => (isCancel ? hasSale(p) : !p.isStarter));
+
+  function switchBulkMode(mode) {
+    setBulkMode(mode);
+    setBulkSelected(new Set());
+    setBulkMsg("");
+  }
   function toggleBulkOne(id) {
     setBulkSelected((s) => {
       const copy = new Set(s);
@@ -57,15 +75,18 @@ function ProductsAdmin() {
     setBulkSelected(new Set());
   }
   function newPriceFor(p) {
+    if (isCancel) return Number(p.oldPrice) || p.price;
     const pct = Number(bulkPercent);
     if (!pct || pct <= 0) return p.price;
     // بنقرب لأقرب نص جنيه عشان أسعار زي 67.5 تفضل مظبوطة
     return Math.round(p.price * (100 - pct) / 100 * 2) / 2;
   }
 
-  async function applyBulkSale() {
-    const pct = Number(bulkPercent);
-    if (!pct || pct <= 0 || pct >= 100) { setBulkMsg("⚠️ اكتب نسبة خصم صح (بين 1 و99)"); return; }
+  async function applyBulk() {
+    if (!isCancel) {
+      const pct = Number(bulkPercent);
+      if (!pct || pct <= 0 || pct >= 100) { setBulkMsg("⚠️ اكتب نسبة خصم صح (بين 1 و99)"); return; }
+    }
     if (!bulkSelected.size) { setBulkMsg("⚠️ اختار منتج واحد على الأقل"); return; }
     setBulkBusy(true);
     setBulkMsg("");
@@ -73,18 +94,25 @@ function ProductsAdmin() {
     for (const id of bulkSelected) {
       const p = products.find((x) => x.id === id);
       if (!p) continue;
-      const newPrice = newPriceFor(p);
+      // العرض: بنحفظ السعر الحالي في oldPrice وننزّل price
+      // الإلغاء: بنرجّع price للسعر القديم ونصفّر oldPrice
+      const patch = isCancel
+        ? { price: Number(p.oldPrice) || p.price, oldPrice: null }
+        : { oldPrice: p.price, price: newPriceFor(p) };
       try {
         const res = await authedFetch(`/api/products/${id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ oldPrice: p.price, price: newPrice }),
+          body: JSON.stringify(patch),
         });
         if (res.ok) ok++; else fail++;
       } catch { fail++; }
     }
     setBulkBusy(false);
-    setBulkMsg(`✅ اتعمل عرض ${bulkPercent}% على ${ok} منتج` + (fail ? ` (فشل ${fail})` : ""));
+    setBulkMsg(
+      (isCancel ? `✅ اتلغى العرض عن ${ok} منتج` : `✅ اتعمل عرض ${bulkPercent}% على ${ok} منتج`) +
+      (fail ? ` (فشل ${fail})` : "")
+    );
     setBulkSelected(new Set());
     load();
   }
@@ -173,19 +201,52 @@ function ProductsAdmin() {
         onClick={() => { setBulkOpen((o) => !o); setBulkMsg(""); }}
         style={{ width: "100%", padding: 12, borderRadius: 8, background: bulkOpen ? "#e74c3c" : "#1b1410", color: "#fff", border: "none", fontWeight: 700, marginBottom: 16, cursor: "pointer" }}
       >
-        {bulkOpen ? "✖️ قفل أداة العروض" : "🔥 اعمل عرض بنسبة % على كذا منتج"}
+        {bulkOpen ? "✖️ قفل أداة العروض" : "🔥 عروض جماعية — اعمل أو الغِ عرض على كذا منتج"}
       </button>
 
       {bulkOpen && (
-        <div style={{ border: "2px solid #e74c3c", borderRadius: 10, padding: 14, marginBottom: 24, background: "#fff5f5" }}>
-          <label style={{ display: "block", fontWeight: 700, marginBottom: 6 }}>خصم كام %؟</label>
-          <input
-            type="number"
-            placeholder="مثلاً 20"
-            value={bulkPercent}
-            onChange={(e) => setBulkPercent(e.target.value)}
-            style={{ width: 120, marginBottom: 10 }}
-          />
+        <div style={{ border: `2px solid ${isCancel ? "#2c7a4b" : "#e74c3c"}`, borderRadius: 10, padding: 14, marginBottom: 24, background: isCancel ? "#f3fbf5" : "#fff5f5" }}>
+
+          {/* اختيار الاتجاه: عرض جديد ولا إلغاء عرض قايم */}
+          <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+            <button
+              type="button"
+              onClick={() => switchBulkMode("sale")}
+              style={{ flex: 1, padding: 10, borderRadius: 8, cursor: "pointer", fontWeight: 700,
+                border: isCancel ? "1px solid #ccc" : "2px solid #e74c3c",
+                background: isCancel ? "#fff" : "#e74c3c", color: isCancel ? "#555" : "#fff" }}
+            >
+              اعمل عرض
+            </button>
+            <button
+              type="button"
+              onClick={() => switchBulkMode("cancel")}
+              style={{ flex: 1, padding: 10, borderRadius: 8, cursor: "pointer", fontWeight: 700,
+                border: isCancel ? "2px solid #2c7a4b" : "1px solid #ccc",
+                background: isCancel ? "#2c7a4b" : "#fff", color: isCancel ? "#fff" : "#555" }}
+            >
+              الغِ العرض
+            </button>
+          </div>
+
+          {isCancel ? (
+            <p style={{ fontSize: 13.5, color: "#555", lineHeight: 1.8, marginBottom: 10 }}>
+              اختار المنتجات اللي عايز تشيل العرض عنها — السعر هيرجع زي ما كان قبل الخصم،
+              وعلامة «عرض» هتختفي من الموقع.
+              {!bulkEligible.length && <strong style={{ display: "block", marginTop: 6, color: "#2c7a4b" }}>مفيش أي منتج عليه عرض دلوقتي.</strong>}
+            </p>
+          ) : (
+            <>
+              <label style={{ display: "block", fontWeight: 700, marginBottom: 6 }}>خصم كام %؟</label>
+              <input
+                type="number"
+                placeholder="مثلاً 20"
+                value={bulkPercent}
+                onChange={(e) => setBulkPercent(e.target.value)}
+                style={{ width: 120, marginBottom: 10 }}
+              />
+            </>
+          )}
 
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
             <button type="button" onClick={bulkSelectAll} style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #ccc", background: "#fff", cursor: "pointer" }}>تحديد الكل</button>
@@ -195,13 +256,21 @@ function ProductsAdmin() {
           </div>
 
           <div style={{ maxHeight: 280, overflowY: "auto", border: "1px solid #eee", borderRadius: 8, background: "#fff", marginBottom: 10 }}>
+            {!bulkEligible.length && (
+              <p style={{ padding: 14, textAlign: "center", color: "#999", fontSize: 13 }}>
+                {isCancel ? "مفيش منتجات عليها عروض" : "مفيش منتجات"}
+              </p>
+            )}
             {bulkEligible.map((p) => (
               <label key={p.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 10px", borderBottom: "1px solid #f2f2f2", cursor: "pointer", fontSize: 14 }}>
                 <input type="checkbox" checked={bulkSelected.has(p.id)} onChange={() => toggleBulkOne(p.id)} />
                 <span style={{ flex: 1 }}>{p.nameAr}</span>
-                <span style={{ color: "#999" }}>{p.price} جنيه</span>
-                {bulkSelected.has(p.id) && bulkPercent !== "" && (
-                  <span style={{ color: "#e74c3c", fontWeight: 700 }}>← {newPriceFor(p)} جنيه</span>
+                <span style={{ color: "#999" }}>
+                  {isCancel && <span style={{ textDecoration: "line-through", marginLeft: 6 }}>{p.oldPrice}</span>}
+                  {p.price} جنيه
+                </span>
+                {bulkSelected.has(p.id) && (isCancel || bulkPercent !== "") && (
+                  <span style={{ color: isCancel ? "#2c7a4b" : "#e74c3c", fontWeight: 700 }}>← {newPriceFor(p)} جنيه</span>
                 )}
               </label>
             ))}
@@ -209,11 +278,15 @@ function ProductsAdmin() {
 
           <button
             type="button"
-            disabled={bulkBusy}
-            onClick={applyBulkSale}
-            style={{ width: "100%", padding: 12, borderRadius: 8, background: "#e74c3c", color: "#fff", border: "none", fontWeight: 700, cursor: "pointer" }}
+            disabled={bulkBusy || !bulkSelected.size}
+            onClick={applyBulk}
+            style={{ width: "100%", padding: 12, borderRadius: 8, background: isCancel ? "#2c7a4b" : "#e74c3c", color: "#fff", border: "none", fontWeight: 700, cursor: bulkSelected.size ? "pointer" : "default", opacity: bulkSelected.size ? 1 : .55 }}
           >
-            {bulkBusy ? "جاري التطبيق..." : `🔥 طبّق العرض على ${bulkSelected.size} منتج`}
+            {bulkBusy
+              ? "جاري التطبيق..."
+              : isCancel
+                ? `الغِ العرض عن ${bulkSelected.size} منتج`
+                : `🔥 طبّق العرض على ${bulkSelected.size} منتج`}
           </button>
           {bulkMsg && <p style={{ marginTop: 8 }}>{bulkMsg}</p>}
         </div>
