@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../styles/globals.css";
 import { ShopProvider } from "../context/ShopContext";
