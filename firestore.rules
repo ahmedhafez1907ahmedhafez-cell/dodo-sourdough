@@ -23,5 +23,18 @@ service cloud.firestore {
     match /orders/{orderId} {
       allow read, write: if false;
     }
+
+    // أكواد التحقق بالإيميل: سيرفر بس، ممنوع منعاً باتاً من المتصفح.
+    // لو حد قدر يقراها كان هيقدر يدخل بأي إيميل.
+    match /emailCodes/{email} {
+      allow read, write: if false;
+    }
+
+    // التقييمات: القراءة عامة، والكتابة/الحذف عن طريق API بس
+    // (عشان الـ deleteKey ميتسربش).
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if false;
+    }
   }
 }

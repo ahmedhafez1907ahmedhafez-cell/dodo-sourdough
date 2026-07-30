@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCardReveal } from "../lib/useMotion";
 import { useShop } from "../context/ShopContext";
+import Icon from "../components/Icon";
 
 export default function Reviews() {
   const shop = useShop();
@@ -38,16 +39,16 @@ export default function Reviews() {
       delete copy[id];
       setMyKeys(copy);
       localStorage.setItem("ds_my_review_keys", JSON.stringify(copy));
-      shop.showToast("🗑️ اتحذف تعليقك");
+      shop.showToast("اتحذف تعليقك");
       load();
     } catch (e) {
-      shop.showToast("❌ " + e.message);
+      shop.showToast(e.message);
     }
   }
 
   async function submit() {
-    if (!name.trim()) return shop.showToast("⚠️ اكتب اسمك!");
-    if (text.trim().length < 10) return shop.showToast("⚠️ اكتب رأيك (10 أحرف على الأقل)!");
+    if (!name.trim()) return shop.showToast("اكتب اسمك");
+    if (text.trim().length < 10) return shop.showToast("اكتب رأيك (10 أحرف على الأقل)!");
     setBusy(true);
     try {
       const res = await fetch("/api/reviews", {
@@ -65,10 +66,10 @@ export default function Reviews() {
       }
       setModalOpen(false);
       setName(""); setText(""); setStars(5);
-      shop.showToast("🎉 شكراً على تعليقك! تم النشر");
+      shop.showToast("شكراً على تعليقك! تم النشر");
       load();
     } catch (e) {
-      shop.showToast("❌ " + e.message);
+      shop.showToast(e.message);
     } finally {
       setBusy(false);
     }
@@ -76,7 +77,7 @@ export default function Reviews() {
 
   return (
     <div className="reviews-page">
-      <div className="section-title"><span className="eyebrow">Testimonials</span><h2>آراء عملاءنا 💬</h2><div className="title-line"></div><p>كلام حقيقي من ناس جربوا دودو ساوردو</p></div>
+      <div className="section-title"><span className="eyebrow">Testimonials</span><h2>آراء عملائنا</h2><div className="title-line"></div><p>كلام حقيقي من ناس جربوا دودو ساوردو</p></div>
 
       <div className="reviews-grid">
         {loading && <p style={{ textAlign: "center", color: "#aaa" }}>جاري التحميل...</p>}
@@ -88,7 +89,7 @@ export default function Reviews() {
                 onClick={() => deleteMyReview(rev.id)}
                 title="احذف تعليقك"
                 style={{ position: "absolute", top: 10, left: 10, border: "none", background: "none", cursor: "pointer", fontSize: 16, opacity: 0.7 }}
-              >🗑️</button>
+              ><Icon name="trash" size={15} /></button>
             )}
             <div className="review-quote">&rdquo;</div>
             <p className="review-text">{rev.text}</p>
@@ -96,32 +97,32 @@ export default function Reviews() {
               <div className="review-avatar">{(rev.name || "?").charAt(0)}</div>
               <div>
                 <div className="review-name">{rev.name}</div>
-                <div className="review-stars">{"⭐".repeat(rev.stars || 5)}</div>
+                <div className="review-stars">{Array.from({ length: rev.stars || 5 }, (_, i) => <Icon key={i} name="star" size={15} />)}</div>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <button className="write-review-btn" onClick={() => setModalOpen(true)}>✍️ اكتب تعليقك</button>
+      <button className="write-review-btn" onClick={() => setModalOpen(true)}><Icon name="edit" size={17} /> اكتب تعليقك</button>
 
       {modalOpen && (
         <div className="review-modal open" onClick={(e) => e.target === e.currentTarget && setModalOpen(false)}>
           <div className="review-modal-inner">
-            <button className="review-modal-close" onClick={() => setModalOpen(false)}>✕</button>
+            <button className="review-modal-close" onClick={() => setModalOpen(false)}><Icon name="close" size={17} /></button>
             <div className="review-modal-content">
-              <h3>✍️ شاركنا رأيك</h3>
-              <div className="review-form-group"><label>👤 اسمك *</label><input value={name} onChange={(e) => setName(e.target.value)} placeholder="اكتب اسمك" /></div>
+              <h3>شاركنا رأيك</h3>
+              <div className="review-form-group"><label><Icon name="user" size={15} className="lbl-ico" />اسمك *</label><input value={name} onChange={(e) => setName(e.target.value)} placeholder="اكتب اسمك" /></div>
               <div className="review-form-group">
-                <label>⭐ تقييمك</label>
+                <label><Icon name="star" size={15} className="lbl-ico" />تقييمك</label>
                 <div className="star-select">
                   {[1, 2, 3, 4, 5].map((n) => (
-                    <span key={n} className={n <= stars ? "active" : ""} onClick={() => setStars(n)}>⭐</span>
+                    <span key={n} className={n <= stars ? "active" : ""} onClick={() => setStars(n)}><Icon name="star" size={22} /></span>
                   ))}
                 </div>
               </div>
-              <div className="review-form-group"><label>💬 رأيك *</label><textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="اكتب تجربتك مع دودو ساوردو..." /></div>
-              <button className="submit-review-btn" disabled={busy} onClick={submit}>{busy ? "جاري الإرسال..." : "🍞 أرسل تعليقك"}</button>
+              <div className="review-form-group"><label><Icon name="chat" size={15} className="lbl-ico" />رأيك *</label><textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="اكتب تجربتك مع دودو ساوردو..." /></div>
+              <button className="submit-review-btn" disabled={busy} onClick={submit}>{busy ? "جاري الإرسال..." : "أرسل تعليقك"}</button>
             </div>
           </div>
         </div>

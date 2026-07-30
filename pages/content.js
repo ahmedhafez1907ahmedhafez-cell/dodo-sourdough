@@ -2,12 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import Script from "next/script";
 import { useCardReveal } from "../lib/useMotion";
 import { CONTENT_TYPES } from "../lib/contentTypes";
+import Icon from "../components/Icon";
 
 const PLATFORMS = [
-  { key: "instagram", label: "📸 انستجرام", color: "#dc2743" },
-  { key: "tiktok", label: "🎵 تيك توك", color: "#111" },
-  { key: "facebook", label: "📘 فيسبوك", color: "#1877F2" },
-  { key: "youtube", label: "▶️ يوتيوب", color: "#FF0000" },
+  { key: "instagram", label: "انستجرام", icon: "camera", color: "#dc2743" },
+  { key: "tiktok", label: "تيك توك", icon: "music", color: "#111" },
+  { key: "facebook", label: "فيسبوك", icon: "facebook", color: "#1877F2" },
+  { key: "youtube", label: "يوتيوب", icon: "play", color: "#FF0000" },
 ];
 
 const PROFILE_LINKS = {
@@ -75,7 +76,7 @@ export default function Content() {
       />
       <div className="section-title">
         <span className="eyebrow">Content</span>
-        <h2>المحتوى 📱</h2>
+        <h2>المحتوى</h2>
         <div className="title-line"></div>
         <p>آخر منشوراتنا من كل صفحاتنا في مكان واحد</p>
       </div>
@@ -83,7 +84,7 @@ export default function Content() {
       <div className="filter-section" style={{ background: "transparent", border: "none" }}>
         {PLATFORMS.map((p) => (
           <button key={p.key} className={"filter-btn" + (platform === p.key ? " active" : "")} onClick={() => selectPlatform(p.key)}>
-            {p.label}
+            <Icon name={p.icon} size={16} /> {p.label}
           </button>
         ))}
       </div>
@@ -116,7 +117,7 @@ export default function Content() {
               <EmbedCard platform={it.platform} url={it.url} />
               <div style={{ padding: "10px 14px" }}>
                 <a href={it.url} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: "var(--gold)", fontWeight: 700 }}>
-                  ❤️ لايك / كومنت على المنشور الأصلي ↗
+                  <Icon name="heart" size={15} /> لايك / كومنت على المنشور الأصلي ↗
                 </a>
               </div>
             </div>

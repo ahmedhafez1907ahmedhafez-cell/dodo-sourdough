@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useShop } from "../context/ShopContext";
+import Icon from "./Icon";
 
-export const EXTRAS = [
-  { id: "roumy", name: "جبنة رومي إضافية", price: 15 },
-  { id: "mozz", name: "موزاريلا إضافية", price: 20 },
-  { id: "jalap", name: "هالبينو إضافي", price: 10 },
-  { id: "sauce", name: "صوص إضافي", price: 5 },
-];
+// الأسعار جاية من lib/pricing.js — نفس المصدر اللي السيرفر بيتحقق بيه،
+// عشان مستحيل يحصل اختلاف بين اللي العميل شايفه واللي بيتحسب فعلاً
+export { EXTRAS_LIST as EXTRAS } from "../lib/pricing";
+import { EXTRAS_LIST } from "../lib/pricing";
 
 function normalizeImageUrl(url) {
   if (!url) return null;
@@ -43,7 +42,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
       shop.addToCart({
         id: p.id, name: p.name, nameAr: `${p.nameAr} (${grams} جرام)`,
         basePrice: total, extras: [], extrasPrice: 0, totalPrice: total, unitPrice: total,
-        qty: 1, emoji: p.emoji || "🌿", priceNote: "جنيه", isStarter: true, localOnly,
+        qty: 1, img: mainImg || null, priceNote: "جنيه", isStarter: true, localOnly,
       });
       setGrams(1);
       return;
@@ -54,7 +53,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
       id: p.id, name: p.name, nameAr: p.nameAr,
       basePrice: p.price, extras: checkedExtras, extrasPrice,
       totalPrice: unitPrice * qty, unitPrice, qty,
-      emoji: p.emoji || "🍞", priceNote: p.priceNote || "جنيه", localOnly,
+      img: mainImg || null, priceNote: p.priceNote || "جنيه", localOnly,
     });
     setQty(1);
     setCheckedExtras([]);
@@ -66,7 +65,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
         {mainImg && imgOk ? (
           <img className="img-main" src={mainImg} alt={p.nameAr} onError={() => setImgOk(false)} />
         ) : (
-          <div className="img-emoji-bg">{p.emoji || "🍞"}</div>
+          <div className="img-emoji-bg"><Icon name="bread" size={44} /></div>
         )}
         {secondImg && imgOk && (
           <>
@@ -74,21 +73,26 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
             <div className="img-split-line"></div>
           </>
         )}
-        <button className="fav-btn" onClick={(e) => { e.stopPropagation(); shop.toggleFav(p.id); }}>
-          {isFav ? "⭐" : "☆"}
+        <button
+          className={"fav-btn" + (isFav ? " on" : "")}
+          aria-label={isFav ? "شيل من المفضلة" : "ضيف للمفضلة"}
+          aria-pressed={isFav}
+          onClick={(e) => { e.stopPropagation(); shop.toggleFav(p.id); }}
+        >
+          <Icon name="heart" size={17} />
         </button>
         {images.length > 0 && (
-          <button className="img-zoom-btn" onClick={(e) => { e.stopPropagation(); shop.openLightbox(images, 0); }}>🔍 عرض</button>
+          <button className="img-zoom-btn" onClick={(e) => { e.stopPropagation(); shop.openLightbox(images, 0); }}>تكبير</button>
         )}
         {p.tag && <div className="product-badge-tag">{p.tag}</div>}
         {hasSale && (
-          <div className="product-badge-sale" style={{ top: p.tag ? 42 : 12 }}>🔥 عرض</div>
+          <div className="product-badge-sale" style={{ top: p.tag ? 42 : 12 }}>عرض</div>
         )}
         {p.isBestseller && (
-          <div style={{ position: "absolute", top: (p.tag ? 42 : 12) + (hasSale ? 30 : 0), right: 12, background: "#e74c3c", color: "white", padding: "3px 9px", borderRadius: 11, fontSize: 10, fontWeight: 700, zIndex: 5 }}>⭐ الأكثر طلباُ</div>
+          <div style={{ position: "absolute", top: (p.tag ? 42 : 12) + (hasSale ? 32 : 0), right: 12, background: "#a8442a", color: "#fbf6ee", padding: "4px 11px", borderRadius: 999, fontSize: 10.5, fontWeight: 700, letterSpacing: ".3px", zIndex: 5 }}>الأكثر طلباً</div>
         )}
         {p.isNew && (
-          <div style={{ position: "absolute", top: (p.tag ? 42 : 12) + (hasSale ? 30 : 0) + (p.isBestseller ? 30 : 0), right: 12, background: "#27ae60", color: "white", padding: "3px 9px", borderRadius: 11, fontSize: 10, fontWeight: 700, zIndex: 5 }}>✨ جديد</div>
+          <div style={{ position: "absolute", top: (p.tag ? 42 : 12) + (hasSale ? 32 : 0) + (p.isBestseller ? 32 : 0), right: 12, background: "#5c7a3f", color: "#fbf6ee", padding: "4px 11px", borderRadius: 999, fontSize: 10.5, fontWeight: 700, letterSpacing: ".3px", zIndex: 5 }}>جديد</div>
         )}
       </div>
       <div className="product-info">
@@ -98,9 +102,9 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
 
         {p.hasExtras && (
           <div className="extras-section">
-            <h4 style={{ fontSize: 12, fontWeight: 700, marginBottom: 7 }}>🍴 إضافات (اختياري):</h4>
+            <h4 style={{ fontSize: 12, fontWeight: 700, marginBottom: 7 }}>إضافات (اختياري):</h4>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
-              {EXTRAS.map((ex) => (
+              {EXTRAS_LIST.map((ex) => (
                 <label key={ex.id} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "var(--brown-mid)", cursor: "pointer" }}>
                   <input type="checkbox" checked={!!checkedExtras.find((x) => x.id === ex.id)} onChange={() => toggleExtra(ex)} />
                   {ex.name} (+{ex.price})
@@ -137,7 +141,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
             {hasSale && <span className="price-old">{p.oldPrice} {p.priceNote || "جنيه"}</span>}
             {p.price} <span>{p.priceNote || "جنيه"}</span>
           </div>
-          <button className="add-to-cart-btn" onClick={handleAdd}>+ أضف للسلة</button>
+          <button className="add-to-cart-btn" onClick={handleAdd}><Icon name="plus" size={16} /> أضف للسلة</button>
         </div>
       </div>
     </div>

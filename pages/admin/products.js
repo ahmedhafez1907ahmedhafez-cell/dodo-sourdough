@@ -161,7 +161,7 @@ function ProductsAdmin() {
   }
 
   return (
-    <div style={{ fontFamily: "Tajawal, sans-serif", direction: "rtl", padding: 20, maxWidth: 700, margin: "0 auto" }}>
+    <div className="adm" style={{ fontFamily: "Tajawal, sans-serif", direction: "rtl", padding: 20, maxWidth: 700, margin: "0 auto" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
         <h2>{editingId ? "✏️ تعديل منتج" : "🍞 إضافة منتج جديد"}</h2>
         <Link href="/admin">الطلبات</Link>

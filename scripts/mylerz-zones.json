@@ -1,0 +1,922 @@
+{
+  "Value": [
+    {
+      "Code": "CA",
+      "ArName": "القاهرة",
+      "EnName": "Cairo",
+      "Zones": [
+        {
+          "Code": "AS",
+          "ArName": "عين شمس",
+          "EnName": "Ain Shams"
+        },
+        {
+          "Code": "Al-S",
+          "ArName": "السلام",
+          "EnName": "Al Salam"
+        },
+        {
+          "Code": "El-M",
+          "ArName": "المرج",
+          "EnName": "El Marg"
+        },
+        {
+          "Code": "HEl",
+          "ArName": "هيليوبلس",
+          "EnName": "Heliopolis"
+        },
+        {
+          "Code": "Nozha",
+          "ArName": "النزهه",
+          "EnName": "Nozha"
+        },
+        {
+          "Code": "Nasr City",
+          "ArName": "مدينة نصر ",
+          "EnName": "Nasr City"
+        },
+        {
+          "Code": "Zamalek",
+          "ArName": "الزمالك",
+          "EnName": "Zamalek"
+        },
+        {
+          "Code": "El-Azbakia",
+          "ArName": "الازبكيه",
+          "EnName": "El Azbakia"
+        },
+        {
+          "Code": "El-Mosky",
+          "ArName": "الموسكي",
+          "EnName": "El Mosky"
+        },
+        {
+          "Code": "El-Waily",
+          "ArName": "الوايلي",
+          "EnName": "El Waily"
+        },
+        {
+          "Code": "Abdeen",
+          "ArName": "عابدين",
+          "EnName": "Abdeen"
+        },
+        {
+          "Code": "Bab El-Shaeria",
+          "ArName": "باب الشعريه",
+          "EnName": "Bab El-Shaeria"
+        },
+        {
+          "Code": "El-Gamalia",
+          "ArName": "الجماليه",
+          "EnName": "El Gamalia"
+        },
+        {
+          "Code": "Boulak",
+          "ArName": "بولاق",
+          "EnName": "Boulak"
+        },
+        {
+          "Code": "Qasr elneil",
+          "ArName": "قصر النيل",
+          "EnName": "Qasr elneil"
+        },
+        {
+          "Code": "ELdarb Elahmar",
+          "ArName": "الدرب الاحمر",
+          "EnName": "ELdarb Elahmar"
+        },
+        {
+          "Code": "Badr City",
+          "ArName": "مدينة بدر",
+          "EnName": "Badr City"
+        },
+        {
+          "Code": "Basateen",
+          "ArName": "البساتين",
+          "EnName": "Basateen"
+        },
+        {
+          "Code": "Elsayeda Zeinab",
+          "ArName": "السيده زينب",
+          "EnName": "Elsayeda Zeinab"
+        },
+        {
+          "Code": "Hadayek El Qobah",
+          "ArName": "حدايق القبه",
+          "EnName": "Hadayek El Qobah"
+        },
+        {
+          "Code": "15th of May",
+          "ArName": "15 مايو",
+          "EnName": "15th of May"
+        },
+        {
+          "Code": "Helwan",
+          "ArName": "حلوان",
+          "EnName": "Helwan"
+        },
+        {
+          "Code": "Eltebeen",
+          "ArName": "التبيين",
+          "EnName": "Eltebeen"
+        },
+        {
+          "Code": "Maadi",
+          "ArName": "المعادي",
+          "EnName": "Maadi"
+        },
+        {
+          "Code": "Madinaty",
+          "ArName": "مدينتي",
+          "EnName": "Madinaty"
+        },
+        {
+          "Code": "Manial",
+          "ArName": "المنيل",
+          "EnName": "Manial"
+        },
+        {
+          "Code": "Masr El Qadeema",
+          "ArName": "مصر القديمه",
+          "EnName": "Masr El Qadeema"
+        },
+        {
+          "Code": "New Cairo",
+          "ArName": "القاهره الجديده",
+          "EnName": "New Cairo"
+        },
+        {
+          "Code": "El Shorouk",
+          "ArName": "الشروق",
+          "EnName": "El Shorouk"
+        },
+        {
+          "Code": "Shoubra",
+          "ArName": "شبرا",
+          "EnName": "Shoubra"
+        },
+        {
+          "Code": "Zeitoun",
+          "ArName": "الزيتون",
+          "EnName": "Zeitoun"
+        },
+        {
+          "Code": "AMRY",
+          "ArName": "الأميرية",
+          "EnName": "Al Amiriyyah"
+        },
+        {
+          "Code": "ABAG",
+          "ArName": "الأباجية",
+          "EnName": "Al Abageyah"
+        },
+        {
+          "Code": "TURA",
+          "ArName": "طره",
+          "EnName": "Tura"
+        },
+        {
+          "Code": "HDBA",
+          "ArName": "الهضبة الوسطى",
+          "EnName": "El Hadba EL wosta"
+        },
+        {
+          "Code": "SAF",
+          "ArName": "الصف",
+          "EnName": "El Saf"
+        },
+        {
+          "Code": "GHMR",
+          "ArName": "غمره",
+          "EnName": "Ghamra"
+        },
+        {
+          "Code": "ZAHR",
+          "ArName": "الظاهر",
+          "EnName": "El Zaher"
+        },
+        {
+          "Code": "ABAS",
+          "ArName": "العباسية",
+          "EnName": "Abbaseya"
+        },
+        {
+          "Code": "SHRB",
+          "ArName": "الشرابية",
+          "EnName": "Al Sharabiya"
+        },
+        {
+          "Code": "FRAG",
+          "ArName": "روض الفرج",
+          "EnName": "Rod El Farag"
+        },
+        {
+          "Code": "KHSU",
+          "ArName": "الخصوص",
+          "EnName": "Al Khusus"
+        },
+        {
+          "Code": "ZWYA",
+          "ArName": "الزاوية الحمرا",
+          "EnName": "El Zawya El Hamra"
+        },
+        {
+          "Code": "KHM1",
+          "ArName": "أول شبرا الخيمه",
+          "EnName": "Awal Shubra Al Kheimah"
+        },
+        {
+          "Code": "KHM2",
+          "ArName": "2 شبرا الخيمه",
+          "EnName": "Shubra El Kheima 2"
+        },
+        {
+          "Code": "FUTR",
+          "ArName": "مدينة المستقبل",
+          "EnName": "Future City"
+        },
+        {
+          "Code": "NHEL",
+          "ArName": "مدينة هيليوبلس الجديدة",
+          "EnName": "New Heliopolis City"
+        },
+        {
+          "Code": "OBOR",
+          "ArName": "مدينة العبور",
+          "EnName": "El Obour City"
+        },
+        {
+          "Code": "RMDN",
+          "ArName": "مدينة العاشر من رمضان",
+          "EnName": "10th of Ramadan"
+        },
+        {
+          "Code": "ESHA",
+          "ArName": "السيدة عائشه",
+          "EnName": "Elsayeda Aisha"
+        },
+        {
+          "Code": "NKHL",
+          "ArName": "عزبة النخل",
+          "EnName": "Izbat an Nakhl"
+        },
+        {
+          "Code": "CFC",
+          "ArName": "CFC",
+          "EnName": "CFC"
+        },
+        {
+          "Code": "SC Zone",
+          "ArName": "Sorting Center Zone",
+          "EnName": "Sorting Center Zone"
+        }
+      ]
+    },
+    {
+      "Code": "Giza",
+      "ArName": "الجيزة",
+      "EnName": "Giza",
+      "Zones": [
+        {
+          "Code": "Agouza",
+          "ArName": "العجوزه",
+          "EnName": "Agouza"
+        },
+        {
+          "Code": "Dokki",
+          "ArName": "الدقي",
+          "EnName": "Dokki"
+        },
+        {
+          "Code": "Faisal",
+          "ArName": "فيصل",
+          "EnName": "Faisal"
+        },
+        {
+          "Code": "Boulak Eldakrour",
+          "ArName": "بولاق الدكرور",
+          "EnName": "Boulak Eldakrour"
+        },
+        {
+          "Code": "Hadayek Al Ahram",
+          "ArName": "حدايق الاهرام",
+          "EnName": "Hadayek Al Ahram"
+        },
+        {
+          "Code": "Haram",
+          "ArName": "هرم",
+          "EnName": "Haram"
+        },
+        {
+          "Code": "Imbaba",
+          "ArName": "امبابه",
+          "EnName": "Imbaba"
+        },
+        {
+          "Code": "Mohandseen",
+          "ArName": "مهندسين",
+          "EnName": "Mohandseen"
+        },
+        {
+          "Code": "Nahia",
+          "ArName": "ناهيا",
+          "EnName": "Nahia"
+        },
+        {
+          "Code": "6th of Oct",
+          "ArName": "السادس من إكتوبر",
+          "EnName": "6th of Oct"
+        },
+        {
+          "Code": "Sheikh Zayed",
+          "ArName": "الشيخ زايد",
+          "EnName": "Sheikh Zayed"
+        },
+        {
+          "Code": "Omraneya",
+          "ArName": "عمرانيه",
+          "EnName": "Omraneya"
+        },
+        {
+          "Code": "Saft El Laban",
+          "ArName": "صفط اللبن",
+          "EnName": "Saft El Laban"
+        },
+        {
+          "Code": "Warraq",
+          "ArName": "وراق",
+          "EnName": "Warraq"
+        },
+        {
+          "Code": "HWMD",
+          "ArName": "الحوامدية",
+          "EnName": "El Hawamdeyya"
+        },
+        {
+          "Code": "BDRA",
+          "ArName": "البدرشين",
+          "EnName": "Al Badrashin"
+        },
+        {
+          "Code": "AYAT",
+          "ArName": "العياط",
+          "EnName": "Al Ayat"
+        },
+        {
+          "Code": "LWAA",
+          "ArName": "أرض اللواء",
+          "EnName": "Ard El Lewa"
+        },
+        {
+          "Code": "BRAG",
+          "ArName": "البراجيل",
+          "EnName": "Al Baragel"
+        },
+        {
+          "Code": "MOTM",
+          "ArName": "المعتمدية",
+          "EnName": "Al Moatamadeyah"
+        },
+        {
+          "Code": "KFRH",
+          "ArName": "كفر حكيم",
+          "EnName": "Kafr Hakim"
+        },
+        {
+          "Code": "OSIM",
+          "ArName": "أوسيم",
+          "EnName": "Ossim"
+        },
+        {
+          "Code": "GIZA",
+          "ArName": "الجيزة",
+          "EnName": "El Giza"
+        },
+        {
+          "Code": "MUNB",
+          "ArName": "المنيب",
+          "EnName": "Al Munib"
+        },
+        {
+          "Code": "MEKI",
+          "ArName": "ساقية مكى",
+          "EnName": "Saqiyet Mekki"
+        },
+        {
+          "Code": "NMRS",
+          "ArName": "أبو النمرس",
+          "EnName": "Abu an Numros"
+        },
+        {
+          "Code": "MANT",
+          "ArName": "شبرا منت",
+          "EnName": "Shubra Ment"
+        },
+        {
+          "Code": "MNWT",
+          "ArName": "المناوات",
+          "EnName": "Al Manawat"
+        },
+        {
+          "Code": "SMAN",
+          "ArName": "نزلة السمان",
+          "EnName": "Nazlet El Semman"
+        },
+        {
+          "Code": "BTRN",
+          "ArName": "نزلة البطران",
+          "EnName": "Nazlet Al Batran"
+        },
+        {
+          "Code": "TLBA",
+          "ArName": "الطالبية",
+          "EnName": "El Talbia"
+        },
+        {
+          "Code": "TRMS",
+          "ArName": "كفر طهرمس",
+          "EnName": "Kafr Tuhurmis"
+        },
+        {
+          "Code": "NASR",
+          "ArName": "كفر نصار",
+          "EnName": "Kafr Nassar"
+        },
+        {
+          "Code": "RWSH",
+          "ArName": "أبو رواش",
+          "EnName": "Abou Rawash"
+        },
+        {
+          "Code": "abo rawash",
+          "ArName": "أبو رواش",
+          "EnName": "Abo Rawash"
+        },
+        {
+          "Code": "ADR",
+          "ArName": "طريق اسكندريه الصحراوي",
+          "EnName": "Alex Desert Road"
+        },
+        {
+          "Code": "NG",
+          "ArName": "نيو جيزه",
+          "EnName": "New Giza"
+        }
+      ]
+    },
+    {
+      "Code": "ALX",
+      "ArName": "الاسكندرية",
+      "EnName": "Alexandria",
+      "Zones": [
+        {
+          "Code": "Alexandria",
+          "ArName": "الاسكندريه",
+          "EnName": "Alexandria"
+        },
+        {
+          "Code": "Alex Amazon Zone",
+          "ArName": "Alex Amazon Zone",
+          "EnName": "Alex Amazon Zone"
+        }
+      ]
+    },
+    {
+      "Code": "ASYT",
+      "ArName": "أسيوط",
+      "EnName": "Asyut",
+      "Zones": [
+        {
+          "Code": "ASYT",
+          "ArName": "أسيوط",
+          "EnName": "Asyut"
+        }
+      ]
+    },
+    {
+      "Code": "ASWN",
+      "ArName": "أسوان",
+      "EnName": "Aswan",
+      "Zones": [
+        {
+          "Code": "ASWN",
+          "ArName": "أسوان",
+          "EnName": "Aswan"
+        }
+      ]
+    },
+    {
+      "Code": "BEHR",
+      "ArName": "البحيرة",
+      "EnName": "Beheira",
+      "Zones": [
+        {
+          "Code": "BEHR",
+          "ArName": "البحيرة",
+          "EnName": "Beheira"
+        }
+      ]
+    },
+    {
+      "Code": "BENS",
+      "ArName": "بنى سويف",
+      "EnName": "Beni Suef",
+      "Zones": [
+        {
+          "Code": "BENS",
+          "ArName": "بنى سويف",
+          "EnName": "Beni Suef"
+        }
+      ]
+    },
+    {
+      "Code": "DAKH",
+      "ArName": "الدقهلية",
+      "EnName": "Dakahlia",
+      "Zones": [
+        {
+          "Code": "DAKH",
+          "ArName": "الدقهلية",
+          "EnName": "Dakahlia"
+        }
+      ]
+    },
+    {
+      "Code": "DAMT",
+      "ArName": "دمياط",
+      "EnName": "Damietta",
+      "Zones": [
+        {
+          "Code": "DAMT",
+          "ArName": "دمياط",
+          "EnName": "Damietta"
+        }
+      ]
+    },
+    {
+      "Code": "FAYM",
+      "ArName": "الفيوم",
+      "EnName": "Faiyum",
+      "Zones": [
+        {
+          "Code": "FAYM",
+          "ArName": "الفيوم",
+          "EnName": "Faiyum"
+        },
+        {
+          "Code": "Atssa",
+          "ArName": "اطسا",
+          "EnName": "Atssa"
+        },
+        {
+          "Code": "Abshway",
+          "ArName": "ابشواى",
+          "EnName": "Abshway"
+        },
+        {
+          "Code": "Youssef Elseddik",
+          "ArName": "يوسف الصديق",
+          "EnName": "Youssef Elseddik"
+        },
+        {
+          "Code": "Senoras",
+          "ArName": "سنورس",
+          "EnName": "Senoras"
+        },
+        {
+          "Code": "Tamya",
+          "ArName": "طما",
+          "EnName": "Tamya"
+        }
+      ]
+    },
+    {
+      "Code": "GHRB",
+      "ArName": "الغربية",
+      "EnName": "Gharbia",
+      "Zones": [
+        {
+          "Code": "GHRB",
+          "ArName": "الغربية",
+          "EnName": "Gharbia"
+        }
+      ]
+    },
+    {
+      "Code": "ISML",
+      "ArName": "الإسماعيلية",
+      "EnName": "Ismailia",
+      "Zones": [
+        {
+          "Code": "ISML",
+          "ArName": "الإسماعيلية",
+          "EnName": "Ismailia"
+        }
+      ]
+    },
+    {
+      "Code": "SHKH",
+      "ArName": "كفر الشيخ",
+      "EnName": "Kafr El Sheikh",
+      "Zones": [
+        {
+          "Code": "SHKH",
+          "ArName": "كفر الشيخ",
+          "EnName": "Kafr El Sheikh"
+        }
+      ]
+    },
+    {
+      "Code": "LUXR",
+      "ArName": "الأقصر",
+      "EnName": "Luxor",
+      "Zones": [
+        {
+          "Code": "LUXR",
+          "ArName": "الأقصر",
+          "EnName": "Luxor"
+        }
+      ]
+    },
+    {
+      "Code": "MTRH",
+      "ArName": "مرسى مطروح",
+      "EnName": "Matruh",
+      "Zones": [
+        {
+          "Code": "MTRH",
+          "ArName": "مرسى مطروح",
+          "EnName": "Matruh"
+        }
+      ]
+    },
+    {
+      "Code": "MNYA",
+      "ArName": "المنيا",
+      "EnName": "Minya",
+      "Zones": [
+        {
+          "Code": "MNYA",
+          "ArName": "المنيا",
+          "EnName": "Minya"
+        }
+      ]
+    },
+    {
+      "Code": "MONF",
+      "ArName": "المنوفية",
+      "EnName": "Monufia",
+      "Zones": [
+        {
+          "Code": "MONF",
+          "ArName": "المنوفية",
+          "EnName": "Monufia"
+        }
+      ]
+    },
+    {
+      "Code": "WADI",
+      "ArName": "الوادى الجديد",
+      "EnName": "El Wadi el Gedid",
+      "Zones": [
+        {
+          "Code": "WADI",
+          "ArName": "الوادى الجديد",
+          "EnName": "El Wadi el Gedid"
+        }
+      ]
+    },
+    {
+      "Code": "NSNA",
+      "ArName": "شمال سيناء",
+      "EnName": "North Sinai",
+      "Zones": [
+        {
+          "Code": "NSNA",
+          "ArName": "شمال سيناء",
+          "EnName": "North Sinai"
+        }
+      ]
+    },
+    {
+      "Code": "PORS",
+      "ArName": "بورسعيد",
+      "EnName": "Port Said",
+      "Zones": [
+        {
+          "Code": "PORS",
+          "ArName": "بورسعيد",
+          "EnName": "Port Said"
+        }
+      ]
+    },
+    {
+      "Code": "QLYB",
+      "ArName": "القليوبية",
+      "EnName": "Qalyubia",
+      "Zones": [
+        {
+          "Code": "QLYB",
+          "ArName": "القليوبية",
+          "EnName": "Qalyubia"
+        }
+      ]
+    },
+    {
+      "Code": "QENA",
+      "ArName": "قنا",
+      "EnName": "Qena",
+      "Zones": [
+        {
+          "Code": "QENA",
+          "ArName": "قنا",
+          "EnName": "Qena"
+        }
+      ]
+    },
+    {
+      "Code": "REDS",
+      "ArName": "البحر الأحمر",
+      "EnName": "Red Sea",
+      "Zones": [
+        {
+          "Code": "REDS",
+          "ArName": "البحر الأحمر",
+          "EnName": "Red Sea"
+        },
+        {
+          "Code": "Hurghada",
+          "ArName": "Hurghada",
+          "EnName": "Hurghada"
+        },
+        {
+          "Code": "MarsaAlam",
+          "ArName": "Marsa Alam",
+          "EnName": "Marsa Alam"
+        },
+        {
+          "Code": "RasGhareb",
+          "ArName": "Ras Ghareb",
+          "EnName": "Ras Ghareb"
+        },
+        {
+          "Code": "ElQoseir",
+          "ArName": "El Qoseir",
+          "EnName": "El Qoseir"
+        },
+        {
+          "Code": "Safaga",
+          "ArName": "Safaga",
+          "EnName": "Safaga"
+        }
+      ]
+    },
+    {
+      "Code": "SHRK",
+      "ArName": "الشرقية",
+      "EnName": "Sharqia",
+      "Zones": [
+        {
+          "Code": "SHRK",
+          "ArName": "الشرقية",
+          "EnName": "Sharqia"
+        }
+      ]
+    },
+    {
+      "Code": "SOHG",
+      "ArName": "سوهاج",
+      "EnName": "Sohag",
+      "Zones": [
+        {
+          "Code": "SOHG",
+          "ArName": "سوهاج",
+          "EnName": "Sohag"
+        }
+      ]
+    },
+    {
+      "Code": "SSINA",
+      "ArName": "جنوب سيناء",
+      "EnName": "South Sinai",
+      "Zones": [
+        {
+          "Code": "SSINI",
+          "ArName": "جنوب سيناء",
+          "EnName": "South Sinai"
+        }
+      ]
+    },
+    {
+      "Code": "SUEZ",
+      "ArName": "السويس",
+      "EnName": "Suez",
+      "Zones": [
+        {
+          "Code": "SUEZ",
+          "ArName": "السويس",
+          "EnName": "Suez"
+        }
+      ]
+    },
+    {
+      "Code": "NC",
+      "ArName": "الساحل الشمالي",
+      "EnName": "North Coast",
+      "Zones": [
+        {
+          "Code": "NorthCoast",
+          "ArName": "الساحل الشمالي",
+          "EnName": "North Coast"
+        }
+      ]
+    },
+    {
+      "Code": "INT",
+      "ArName": "دولى",
+      "EnName": "International",
+      "Zones": [
+        {
+          "Code": "INT",
+          "ArName": "دولى",
+          "EnName": "International"
+        }
+      ]
+    },
+    {
+      "Code": "BANHA",
+      "ArName": "بنها",
+      "EnName": "Banha City",
+      "Zones": [
+        {
+          "Code": "AbozaabaL",
+          "ArName": "ابو زعبل",
+          "EnName": "Abozaabal"
+        },
+        {
+          "Code": "Elkhanka",
+          "ArName": "الخانكه",
+          "EnName": "Elkhanka"
+        },
+        {
+          "Code": "Qanater",
+          "ArName": "القناطر",
+          "EnName": "Qanater"
+        },
+        {
+          "Code": "Banha",
+          "ArName": "بنها",
+          "EnName": "Banha"
+        },
+        {
+          "Code": "Shebin elqanater",
+          "ArName": "شبين القناطر",
+          "EnName": "Shebin elqanater"
+        },
+        {
+          "Code": "Toukh",
+          "ArName": "طوخ",
+          "EnName": "Toukh"
+        },
+        {
+          "Code": "Qalyoub",
+          "ArName": "قليوب",
+          "EnName": "Qalyoub"
+        },
+        {
+          "Code": "Qaha",
+          "ArName": "قها",
+          "EnName": "Qaha"
+        }
+      ]
+    },
+    {
+      "Code": "SEWA",
+      "ArName": "سيوة",
+      "EnName": "SEWA",
+      "Zones": [
+        {
+          "Code": "SEWA",
+          "ArName": "سيوة",
+          "EnName": "SEWA"
+        }
+      ]
+    },
+    {
+      "Code": "El-Rehab",
+      "ArName": "الرحاب",
+      "EnName": "El-Rehab",
+      "Zones": [
+        {
+          "Code": "El-Rehab",
+          "ArName": "الرحاب",
+          "EnName": "El-Rehab"
+        }
+      ]
+    }
+  ],
+  "CoreValue": null,
+  "IsErrorState": false,
+  "ErrorDescription": null,
+  "ErrorMetadata": null
+}

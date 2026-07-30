@@ -3,7 +3,7 @@ import Link from "next/link";
 import AdminGuard from "../../components/AdminGuard";
 import { useAdminAuth } from "../../lib/useAdminAuth";
 
-const STATUSES = ["قيد التحضير", "جاري الشحن", "تم التوصيل", "ملغي"];
+import { ORDER_STATUSES as STATUSES } from "../../lib/orderStatus";
 
 function OrdersDashboard() {
   const { authedFetch, logout, user, loading: authLoading } = useAdminAuth();
@@ -49,7 +49,7 @@ function OrdersDashboard() {
   }
 
   return (
-    <div style={{ fontFamily: "Tajawal, sans-serif", direction: "rtl", padding: 20, maxWidth: 1000, margin: "0 auto" }}>
+    <div className="adm" style={{ fontFamily: "Tajawal, sans-serif", direction: "rtl", padding: 20, maxWidth: 1000, margin: "0 auto" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <h2>📦 الطلبات</h2>
         <div style={{ display: "flex", gap: 10 }}>

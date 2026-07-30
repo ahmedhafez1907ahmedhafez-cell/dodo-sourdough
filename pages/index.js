@@ -1,30 +1,39 @@
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import Icon from "../components/Icon";
+import SplitText from "../components/SplitText";
 import { useHeroIntro, useCardReveal, scatterStyle } from "../lib/useMotion";
 import { WHATSAPP_NUMBER } from "../lib/contact";
 
 const CATALOG_META = {
   tools: {
-    eyebrow: "Our Tools", title: "أدوات الساوردو 🧺", sub: "كل اللي محتاجه لخبيز ساوردو احترافي في البيت",
-    badges: ["🧺 Premium Tools", "⭐ Best Seller", "🌾 For Sourdough Bakers"],
+    eyebrow: "Our Tools", title: "أدوات الساوردو", sub: "كل اللي محتاجه لخبيز ساوردو احترافي في البيت",
+    badges: ["أدوات مختارة", "الأكثر طلباً", "لخبّازي الساوردو"],
     filters: [
-      { key: "all", label: "🧺 الكل" }, { key: "basket", label: "🧺 باسكت" },
-      { key: "mat", label: "🧵 مفارش" }, { key: "tool", label: "🔧 أدوات أخرى" },
-      { key: "price-low", label: "💰 الأقل سعراً" }, { key: "price-high", label: "💎 الأعلى سعراً" },
+      { key: "all", label: "الكل" }, { key: "basket", label: "باسكت" },
+      { key: "mat", label: "مفارش" }, { key: "tool", label: "أدوات أخرى" },
+      { key: "price-low", label: "الأقل سعراً" }, { key: "price-high", label: "الأعلى سعراً" },
     ],
   },
   bread: {
-    eyebrow: "Our Menu", title: "الخبز والخميرة 🍞", sub: "ساوردو طازج ومحشي وخميرة حية",
-    badges: ["🌿 مكونات طبيعية 100%", "🍞 طازج يومياً", "✋ صنع بالحب"],
+    eyebrow: "Our Menu", title: "الخبز والخميرة", sub: "ساوردو طازج ومحشي وخميرة حية",
+    badges: ["مكونات طبيعية 100%", "طازج يومياً", "صنع بالحب"],
     filters: [
-      { key: "all", label: "🍞 الكل" }, { key: "sourdough", label: "⭐ الأكثر طلباً" },
-      { key: "stuffed", label: "🧀 محشوة" }, { key: "plain", label: "🍞 سادة" },
-      { key: "slices", label: "🔪 شرائح" }, { key: "starter", label: "🌾 خميرة" },
-      { key: "newest", label: "✨ الأحدث" },
-      { key: "price-low", label: "💰 الأقل سعراً" }, { key: "price-high", label: "💎 الأعلى سعراً" },
+      { key: "all", label: "الكل" }, { key: "sourdough", label: "الأكثر طلباً" },
+      { key: "stuffed", label: "محشوة" }, { key: "plain", label: "سادة" },
+      { key: "slices", label: "شرائح" }, { key: "starter", label: "خميرة" },
+      { key: "newest", label: "الأحدث" },
+      { key: "price-low", label: "الأقل سعراً" }, { key: "price-high", label: "الأعلى سعراً" },
     ],
   },
 };
+
+const FEATURES = [
+  ["leaf", "طبيعي 100%", "بدون إضافات صناعية أو حافظات"],
+  ["clock", "تخمير طويل", "أكثر من 24 ساعة لأفضل طعم"],
+  ["home", "صناعة بيتية", "مصنوع بحب في البيت"],
+  ["truck", "توصيل سريع", "نوصلك بعد التأكيد"],
+];
 
 export default function Home() {
   useHeroIntro();
@@ -57,45 +66,50 @@ export default function Home() {
 
   const meta = CATALOG_META[catalog];
 
+  function goToProducts(e) {
+    e.preventDefault();
+    document.getElementById("products")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return (
     <div>
-      <div className="preorder-notice">🕐 جميع الطلبات بالحجز المسبق — All orders are by pre-order only</div>
+      <div className="preorder-notice">
+        <Icon name="clock" size={15} /> جميع الطلبات بالحجز المسبق — All orders are by pre-order only
+      </div>
 
       <section className="hero">
-        <div className="hero-bg-word">SOURDOUGH</div>
-        <div className="hero-shape hshape1"></div>
-        <div className="hero-shape hshape2"></div>
-        <div className="hero-content">
+        <div className="hero-top">
+          <div className="hero-cover">
+            <img src="/cover-bread.jpg" alt="خبز ساوردو طازج من فرن دودو" />
+          </div>
+        </div>
+
+        <div className="hero-mark">
           <img
-            src="/logo.png" alt="دودو ساوردو" className="hero-logo hero-intro"
-            style={{ "--hy": "-120px", "--hr": "-10deg", "--hd": ".05s" }}
-            onError={(e) => { e.currentTarget.src = "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍞</text></svg>"; }}
+            src="/logo-clear.png" alt="دودو ساوردو" className="hero-logo hero-intro"
+            style={{ "--hy": "18px", "--hs": ".9", "--hd": ".06s" }}
+            onError={(e) => { e.currentTarget.src = "/logo.png"; }}
           />
-          <span className="eyebrow hero-intro" style={{ "--hx": "-90px", "--hd": ".2s" }}>Dodo Sourdough</span>
-          <div className="hero-badges">
-            <span className="badge hero-intro" style={{ "--hx": "-60px", "--hy": "30px", "--hd": ".3s" }}>🌿 مكونات طبيعية 100%</span>
-            <span className="badge hero-intro" style={{ "--hx": "40px", "--hy": "40px", "--hd": ".36s" }}>🍞 طازج يومياً</span>
-            <span className="badge hero-intro" style={{ "--hx": "-30px", "--hy": "-40px", "--hd": ".42s" }}>✋ صنع بالحب</span>
-            <span className="badge hero-intro" style={{ "--hx": "70px", "--hy": "-20px", "--hd": ".48s" }}>🚀 توصيل للبيت</span>
-          </div>
-          <div className="hero-btns hero-intro" style={{ "--hy": "70px", "--hd": ".55s" }}>
-            <a href="#products" className="btn-primary">🛒 اطلب دلوقتي</a>
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="btn-secondary">تواصل معنا</a>
-          </div>
+        </div>
+
+        <SplitText className="hero-line" text="خبز يستاهل الانتظار" delay={0.4} stagger={0.14} />
+
+        <div className="hero-btns hero-intro" style={{ "--hy": "26px", "--hd": ".75s" }}>
+          <a href="#products" onClick={goToProducts} className="btn-primary">
+            اطلب دلوقتي <Icon name="chevron" size={17} style={{ transform: "scaleX(-1)" }} />
+          </a>
+          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="btn-secondary">
+            تواصل معنا
+          </a>
         </div>
       </section>
 
       <section className="features-section">
-        <div className="section-title"><span className="eyebrow">Why Dodo</span><h2>ليه دودو ساوردو؟ 🤔</h2><div className="title-line"></div><p>خبزنا مش بس خبز، ده تجربة حقيقية</p></div>
+        <div className="section-title"><span className="eyebrow">Why Dodo</span><h2>ليه دودو ساوردو؟</h2><div className="title-line"></div><p>خبزنا مش بس خبز، ده تجربة حقيقية</p></div>
         <div className="features-grid">
-          {[
-            ["🌿", "طبيعي 100%", "بدون إضافات صناعية أو حافظات"],
-            ["⏰", "تخمير طويل", "أكثر من 24 ساعة لأفضل طعم"],
-            ["🏠", "صناعة بيتية", "مصنوع بحب في البيت"],
-            ["🚀", "توصيل سريع", "نوصلك بعد التأكيد"],
-          ].map(([icon, h, p], i) => (
+          {FEATURES.map(([ico, h, p], i) => (
             <div className="feature-card reveal" style={{ transitionDelay: i * 0.08 + "s" }} key={h}>
-              <div className="feature-icon">{icon}</div><h4>{h}</h4><p>{p}</p>
+              <div className="feature-icon"><Icon name={ico} size={26} /></div><h4>{h}</h4><p>{p}</p>
             </div>
           ))}
         </div>
@@ -107,20 +121,31 @@ export default function Home() {
             {meta.badges.map((b) => <span className="csw-badge" key={b}>{b}</span>)}
           </div>
           <div className="catalog-tabs">
-            <div className={"catalog-tab reveal" + (catalog === "tools" ? " active" : "")} onClick={() => setCatalog("tools")}>
-              <div className="ctab-icon">🧺</div>
+            <button
+              type="button"
+              className={"catalog-tab reveal" + (catalog === "tools" ? " active" : "")}
+              onClick={() => setCatalog("tools")}
+              aria-pressed={catalog === "tools"}
+            >
+              <div className="ctab-icon"><Icon name="basket" size={28} /></div>
               <div className="ctab-title">أدوات الساوردو</div>
               <div className="ctab-sub">باسكت، مفارش، وأدوات الخبز الاحترافية</div>
               <div className="ctab-pointer"></div>
-            </div>
-            <div className={"catalog-tab reveal" + (catalog === "bread" ? " active" : "")} style={{ transitionDelay: ".12s" }} onClick={() => setCatalog("bread")}>
-              <div className="ctab-icon">🍞</div>
+            </button>
+            <button
+              type="button"
+              className={"catalog-tab reveal" + (catalog === "bread" ? " active" : "")}
+              style={{ transitionDelay: ".12s" }}
+              onClick={() => setCatalog("bread")}
+              aria-pressed={catalog === "bread"}
+            >
+              <div className="ctab-icon"><Icon name="bread" size={28} /></div>
               <div className="ctab-title">الخبز والخميرة</div>
               <div className="ctab-sub">ساوردو طازج ومحشي وخميرة حية</div>
               <div className="ctab-pointer"></div>
-            </div>
+            </button>
           </div>
-          <p className="catalog-nudge">👆 دوس على القسم اللي عايزه — الأدوات أو الخبز — مش هيظهروا مع بعض في نفس الوقت</p>
+          <p className="catalog-nudge">دوس على القسم اللي عايزه — الأدوات أو الخبز</p>
         </div>
 
         <div className="section-title"><span className="eyebrow">{meta.eyebrow}</span><h2>{meta.title}</h2><div className="title-line"></div><p>{meta.sub}</p></div>
@@ -134,7 +159,7 @@ export default function Home() {
         <div className="products-section">
           <div className="products-grid">
             {loading && <div className="no-products">جاري تحميل المنتجات...</div>}
-            {!loading && !list.length && <div className="no-products">🔍 لا توجد منتجات حالياً</div>}
+            {!loading && !list.length && <div className="no-products">لا توجد منتجات في القسم ده</div>}
             {list.map((p, idx) => {
               const sizeClass = p.isBestseller ? "pc-tall" : (idx % 5 === 2 ? "pc-short" : "");
               return <ProductCard key={p.id} product={p} style={scatterStyle(idx)} sizeClass={sizeClass} />;
@@ -143,10 +168,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ padding: "50px 20px", background: "var(--cream-dark)", textAlign: "center" }}>
-        <div className="section-title"><span className="eyebrow">Get in Touch</span><h2>تواصل معنا 💬</h2><div className="title-line"></div><p>احنا هنا دايماً!</p></div>
-        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#25D366", color: "white", padding: "16px 35px", borderRadius: 32, textDecoration: "none", fontSize: 18, fontWeight: 800, marginTop: 10 }}>
-          ابعتلنا على واتساب
+      <section className="contact-section">
+        <div className="section-title"><span className="eyebrow">Get in Touch</span><h2>تواصل معنا</h2><div className="title-line"></div><p>احنا هنا دايماً</p></div>
+        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="wa-cta">
+          <Icon name="chat" size={20} /> ابعتلنا على واتساب
         </a>
       </section>
     </div>

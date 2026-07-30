@@ -30,7 +30,7 @@ function ReviewsDashboard() {
   }
 
   return (
-    <div style={{ fontFamily: "Tajawal, sans-serif", direction: "rtl", padding: 20, maxWidth: 700, margin: "0 auto" }}>
+    <div className="adm" style={{ fontFamily: "Tajawal, sans-serif", direction: "rtl", padding: 20, maxWidth: 700, margin: "0 auto" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <h2>💬 التعليقات</h2>
         <div style={{ display: "flex", gap: 10 }}>

@@ -1,6 +1,5 @@
 import { adminDb, requireAdmin, ApiError } from "../../../../lib/firebaseAdmin";
-
-const ALLOWED_STATUSES = ["قيد التحضير", "جاري الشحن", "تم التوصيل", "ملغي"];
+import { isValidStatus } from "../../../../lib/orderStatus";
 
 export default async function handler(req, res) {
   try {
@@ -11,7 +10,7 @@ export default async function handler(req, res) {
     await requireAdmin(req);
     const { id } = req.query;
     const { status } = req.body || {};
-    if (!ALLOWED_STATUSES.includes(status)) {
+    if (!isValidStatus(status)) {
       return res.status(400).json({ error: "حالة غير معروفة" });
     }
     await adminDb.collection("orders").doc(id).update({ status });

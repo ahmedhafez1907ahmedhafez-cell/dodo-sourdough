@@ -25,7 +25,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div style={{ maxWidth: 380, margin: "80px auto", fontFamily: "Tajawal, sans-serif", direction: "rtl" }}>
+    <div className="adm" style={{ maxWidth: 380, margin: "80px auto", fontFamily: "Tajawal, sans-serif", direction: "rtl" }}>
       <h2 style={{ textAlign: "center", marginBottom: 20 }}>تسجيل دخول الأدمن</h2>
       <form onSubmit={submit}>
         <input

@@ -1,0 +1,4210 @@
+{
+  "warehouse_byMerchantId": {
+    "Value": [
+      {
+        "Id": 40876,
+        "MerchantId": 23085,
+        "Code": "بنها ",
+        "Name": "بنها ",
+        "ZoneId": 2116,
+        "AreaId": 3,
+        "IsFulfilmentCenter": false
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "warehouse_list": {
+    "Value": [
+      {
+        "Id": 40876,
+        "MerchantId": 23085,
+        "Code": "بنها ",
+        "Name": "بنها ",
+        "ZoneId": 2116,
+        "AreaId": null,
+        "IsFulfilmentCenter": false
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "serviceTypes": {
+    "Value": [
+      {
+        "MaxCOD": 25000,
+        "Id": 1,
+        "Code": "DTD",
+        "ArName": "من الباب إلى الباب",
+        "EnName": "Door-to-Door"
+      },
+      {
+        "MaxCOD": 25000,
+        "Id": 2,
+        "Code": "DTC",
+        "ArName": "من الباب إلى المخزن",
+        "EnName": "Door-to-Counter"
+      },
+      {
+        "MaxCOD": 70000,
+        "Id": 3,
+        "Code": "CTD",
+        "ArName": "من المخزن إلى الباب",
+        "EnName": "Counter-to-Door"
+      },
+      {
+        "MaxCOD": 70000,
+        "Id": 4,
+        "Code": "CTC",
+        "ArName": "من المخزن إلى المخزن",
+        "EnName": "Counter-to-Counter"
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "packageService": {
+    "Value": [
+      {
+        "Id": 1,
+        "Code": "SD",
+        "ArName": "نفس اليوم",
+        "EnName": "Same Day"
+      },
+      {
+        "Id": 2,
+        "Code": "ND",
+        "ArName": "اليوم التالي",
+        "EnName": "Next Day"
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "serviceCategory": {
+    "Value": [
+      {
+        "Id": 1,
+        "Code": "DELIVERY",
+        "ArName": "توصيل",
+        "EnName": "Delivery"
+      },
+      {
+        "Id": 2,
+        "Code": "RETURN",
+        "ArName": "إرجاع",
+        "EnName": "Return"
+      },
+      {
+        "Id": 3,
+        "Code": "PERSONAL DELIVERY",
+        "ArName": "توصيل شخصى",
+        "EnName": "Personal Delivery"
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "paymentTypes": {
+    "Value": [
+      {
+        "Id": 1,
+        "Code": "PP",
+        "ArName": "مسبقة الدفع",
+        "EnName": "Pre-Paid"
+      },
+      {
+        "Id": 2,
+        "Code": "COD",
+        "ArName": "الدفع عند الاستلام",
+        "EnName": "Cash-On-Delivery"
+      },
+      {
+        "Id": 3,
+        "Code": "CC",
+        "ArName": "الدفع بالبطاقة عند الاستلام",
+        "EnName": "CC-on-Delivery"
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "productCategory": {
+    "Value": [
+      {
+        "Id": 1,
+        "Code": "others",
+        "ArName": "اخري",
+        "EnName": "Others"
+      },
+      {
+        "Id": 2,
+        "Code": " LS",
+        "ArName": "Logistics and shipping",
+        "EnName": "Logistics and shipping"
+      },
+      {
+        "Id": 3,
+        "Code": "EH",
+        "ArName": "الكترونيات وهاردوير",
+        "EnName": "Electronic And Hardware’s"
+      },
+      {
+        "Id": 4,
+        "Code": "HB",
+        "ArName": "الصحة والجمال",
+        "EnName": "Health and Beauty"
+      },
+      {
+        "Id": 5,
+        "Code": "Fashion",
+        "ArName": "أزياء",
+        "EnName": "Fashion"
+      },
+      {
+        "Id": 6,
+        "Code": "Pharma",
+        "ArName": "مستلزمات صيدلية",
+        "EnName": "Pharmaceutical"
+      },
+      {
+        "Id": 7,
+        "Code": "Baby",
+        "ArName": "مستلزمات الأطفال",
+        "EnName": "Baby Products"
+      },
+      {
+        "Id": 8,
+        "Code": "Furn",
+        "ArName": "أثاث",
+        "EnName": "Furniture"
+      },
+      {
+        "Id": 9,
+        "Code": "FA",
+        "ArName": "اكسسوارات تجميل",
+        "EnName": "Fashion Accessories"
+      },
+      {
+        "Id": 10,
+        "Code": "OP",
+        "ArName": "منتجات عضوية",
+        "EnName": "Organic product"
+      },
+      {
+        "Id": 11,
+        "Code": "KS",
+        "ArName": "مستلزمات المطبخ",
+        "EnName": "Kitchen Supplies"
+      },
+      {
+        "Id": 12,
+        "Code": "market",
+        "ArName": "السوق",
+        "EnName": "Marketplace"
+      },
+      {
+        "Id": 13,
+        "Code": "automotive",
+        "ArName": "قطع غيار عربات",
+        "EnName": "Automotive Spares"
+      },
+      {
+        "Id": 14,
+        "Code": "footwear",
+        "ArName": "أحذية",
+        "EnName": "Footwear"
+      },
+      {
+        "Id": 15,
+        "Code": "HA",
+        "ArName": "منزلي",
+        "EnName": "Home Appliances"
+      },
+      {
+        "Id": 16,
+        "Code": "KT",
+        "ArName": "لعب اطفال",
+        "EnName": "Kids Toys"
+      },
+      {
+        "Id": 17,
+        "Code": "FB",
+        "ArName": "مأكولات ومشروبات",
+        "EnName": "Food And Beverage"
+      },
+      {
+        "Id": 18,
+        "Code": "grocery",
+        "ArName": "متطلبات المنزل",
+        "EnName": "Grocery"
+      },
+      {
+        "Id": 19,
+        "Code": "MA",
+        "ArName": "اكسسوارات تليفونات",
+        "EnName": "Mobile Accessories"
+      },
+      {
+        "Id": 20,
+        "Code": "ST",
+        "ArName": "معدات خاصة",
+        "EnName": "Special Tools"
+      },
+      {
+        "Id": 21,
+        "Code": "MK",
+        "ArName": "معدات طبية",
+        "EnName": "Medical Kits"
+      },
+      {
+        "Id": 22,
+        "Code": "gifts",
+        "ArName": "هدايا",
+        "EnName": "Gifts"
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "addressCategory": {
+    "Value": [
+      {
+        "Id": 1,
+        "Code": "H",
+        "ArName": "مسكن",
+        "EnName": "Home"
+      },
+      {
+        "Id": 2,
+        "Code": "OF",
+        "ArName": "مكتب",
+        "EnName": "Office"
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "packageTypes": {
+    "Value": [
+      {
+        "Id": 1,
+        "Code": "Document",
+        "ArName": "مستند",
+        "EnName": "Document"
+      },
+      {
+        "Id": 2,
+        "Code": "Parcel",
+        "ArName": "طرد",
+        "EnName": "Parcel"
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "cities": {
+    "Value": [
+      {
+        "Id": 1,
+        "Code": "CA",
+        "ArName": "القاهرة",
+        "EnName": "Cairo"
+      },
+      {
+        "Id": 3,
+        "Code": "Giza",
+        "ArName": "الجيزة",
+        "EnName": "Giza"
+      },
+      {
+        "Id": 4,
+        "Code": "ALX",
+        "ArName": "الاسكندرية",
+        "EnName": "Alexandria"
+      },
+      {
+        "Id": 5,
+        "Code": "ASYT",
+        "ArName": "أسيوط",
+        "EnName": "Asyut"
+      },
+      {
+        "Id": 6,
+        "Code": "ASWN",
+        "ArName": "أسوان",
+        "EnName": "Aswan"
+      },
+      {
+        "Id": 7,
+        "Code": "BEHR",
+        "ArName": "البحيرة",
+        "EnName": "Beheira"
+      },
+      {
+        "Id": 8,
+        "Code": "BENS",
+        "ArName": "بنى سويف",
+        "EnName": "Beni Suef"
+      },
+      {
+        "Id": 9,
+        "Code": "DAKH",
+        "ArName": "الدقهلية",
+        "EnName": "Dakahlia"
+      },
+      {
+        "Id": 10,
+        "Code": "DAMT",
+        "ArName": "دمياط",
+        "EnName": "Damietta"
+      },
+      {
+        "Id": 11,
+        "Code": "FAYM",
+        "ArName": "الفيوم",
+        "EnName": "Faiyum"
+      },
+      {
+        "Id": 12,
+        "Code": "GHRB",
+        "ArName": "الغربية",
+        "EnName": "Gharbia"
+      },
+      {
+        "Id": 13,
+        "Code": "ISML",
+        "ArName": "الإسماعيلية",
+        "EnName": "Ismailia"
+      },
+      {
+        "Id": 14,
+        "Code": "SHKH",
+        "ArName": "كفر الشيخ",
+        "EnName": "Kafr El Sheikh"
+      },
+      {
+        "Id": 15,
+        "Code": "LUXR",
+        "ArName": "الأقصر",
+        "EnName": "Luxor"
+      },
+      {
+        "Id": 16,
+        "Code": "MTRH",
+        "ArName": "مرسى مطروح",
+        "EnName": "Matruh"
+      },
+      {
+        "Id": 17,
+        "Code": "MNYA",
+        "ArName": "المنيا",
+        "EnName": "Minya"
+      },
+      {
+        "Id": 18,
+        "Code": "MONF",
+        "ArName": "المنوفية",
+        "EnName": "Monufia"
+      },
+      {
+        "Id": 19,
+        "Code": "WADI",
+        "ArName": "الوادى الجديد",
+        "EnName": "El Wadi el Gedid"
+      },
+      {
+        "Id": 20,
+        "Code": "NSNA",
+        "ArName": "شمال سيناء",
+        "EnName": "North Sinai"
+      },
+      {
+        "Id": 21,
+        "Code": "PORS",
+        "ArName": "بورسعيد",
+        "EnName": "Port Said"
+      },
+      {
+        "Id": 22,
+        "Code": "QLYB",
+        "ArName": "القليوبية",
+        "EnName": "Qalyubia"
+      },
+      {
+        "Id": 23,
+        "Code": "QENA",
+        "ArName": "قنا",
+        "EnName": "Qena"
+      },
+      {
+        "Id": 24,
+        "Code": "REDS",
+        "ArName": "البحر الأحمر",
+        "EnName": "Red Sea"
+      },
+      {
+        "Id": 25,
+        "Code": "SHRK",
+        "ArName": "الشرقية",
+        "EnName": "Sharqia"
+      },
+      {
+        "Id": 26,
+        "Code": "SOHG",
+        "ArName": "سوهاج",
+        "EnName": "Sohag"
+      },
+      {
+        "Id": 27,
+        "Code": "SSINA",
+        "ArName": "جنوب سيناء",
+        "EnName": "South Sinai"
+      },
+      {
+        "Id": 28,
+        "Code": "SUEZ",
+        "ArName": "السويس",
+        "EnName": "Suez"
+      },
+      {
+        "Id": 29,
+        "Code": "NC",
+        "ArName": "الساحل الشمالي",
+        "EnName": "North Coast"
+      },
+      {
+        "Id": 30,
+        "Code": "INT",
+        "ArName": "دولى",
+        "EnName": "International"
+      },
+      {
+        "Id": 31,
+        "Code": "BANHA",
+        "ArName": "بنها",
+        "EnName": "Banha City"
+      },
+      {
+        "Id": 32,
+        "Code": "SEWA",
+        "ArName": "سيوة",
+        "EnName": "SEWA"
+      },
+      {
+        "Id": 33,
+        "Code": "El-Rehab",
+        "ArName": "الرحاب",
+        "EnName": "El-Rehab"
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  },
+  "zones": {
+    "Value": [
+      {
+        "Id": 2163,
+        "Code": "RMDN",
+        "ArName": "مدينة العاشر من رمضان",
+        "EnName": "10th of Ramadan",
+        "SubZone": [
+          {
+            "Id": 2164,
+            "Code": "RMDN",
+            "ArName": "مدينة العاشر من رمضان",
+            "EnName": "10th of Ramadan"
+          }
+        ]
+      },
+      {
+        "Id": 209,
+        "Code": "15th of May",
+        "ArName": "15 مايو",
+        "EnName": "15th of May",
+        "SubZone": [
+          {
+            "Id": 210,
+            "Code": "15th of May City",
+            "ArName": "مدينة 15 مايو",
+            "EnName": "15th of May City"
+          }
+        ]
+      },
+      {
+        "Id": 1064,
+        "Code": "6th of Oct",
+        "ArName": "السادس من إكتوبر",
+        "EnName": "6th of Oct",
+        "SubZone": [
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          },
+          {
+            "Id": 2023,
+            "Code": "South Residential District",
+            "ArName": "الحي الجنوبي السكني",
+            "EnName": "South Residential District"
+          }
+        ]
+      },
+      {
+        "Id": 2143,
+        "Code": "ABAS",
+        "ArName": "العباسية",
+        "EnName": "Abbaseya",
+        "SubZone": [
+          {
+            "Id": 2144,
+            "Code": "ABAS",
+            "ArName": "العباسية",
+            "EnName": "Abbaseya"
+          }
+        ]
+      },
+      {
+        "Id": 104,
+        "Code": "Abdeen",
+        "ArName": "عابدين",
+        "EnName": "Abdeen",
+        "SubZone": [
+          {
+            "Id": 105,
+            "Code": "Down Town-Abdeen",
+            "ArName": "وسط البلد عابدين",
+            "EnName": "Down Town-Abdeen"
+          },
+          {
+            "Id": 105,
+            "Code": "Down Town-Abdeen",
+            "ArName": "وسط البلد عابدين",
+            "EnName": "Down Town-Abdeen"
+          }
+        ]
+      },
+      {
+        "Id": 2225,
+        "Code": "abo rawash",
+        "ArName": "أبو رواش",
+        "EnName": "Abo Rawash",
+        "SubZone": [
+          {
+            "Id": 2226,
+            "Code": "abo rawash",
+            "ArName": "أبو رواش",
+            "EnName": "Abo Rawash"
+          }
+        ]
+      },
+      {
+        "Id": 2197,
+        "Code": "RWSH",
+        "ArName": "أبو رواش",
+        "EnName": "Abou Rawash",
+        "SubZone": [
+          {
+            "Id": 2198,
+            "Code": "RWSH",
+            "ArName": "أبو رواش",
+            "EnName": "Abou Rawash"
+          }
+        ]
+      },
+      {
+        "Id": 2227,
+        "Code": "AbozaabaL",
+        "ArName": "ابو زعبل",
+        "EnName": "Abozaabal",
+        "SubZone": [
+          {
+            "Id": 2228,
+            "Code": "AbozaabaL",
+            "ArName": "ابو زعبل",
+            "EnName": "Abozaabal"
+          },
+          {
+            "Id": 2228,
+            "Code": "AbozaabaL",
+            "ArName": "ابو زعبل",
+            "EnName": "Abozaabal"
+          }
+        ]
+      },
+      {
+        "Id": 2260,
+        "Code": "Abshway",
+        "ArName": "ابشواى",
+        "EnName": "Abshway",
+        "SubZone": [
+          {
+            "Id": 2261,
+            "Code": "Abshway",
+            "ArName": "ابشواى",
+            "EnName": "Abshway"
+          }
+        ]
+      },
+      {
+        "Id": 2181,
+        "Code": "NMRS",
+        "ArName": "أبو النمرس",
+        "EnName": "Abu an Numros",
+        "SubZone": [
+          {
+            "Id": 2182,
+            "Code": "NMRS",
+            "ArName": "أبو النمرس",
+            "EnName": "Abu an Numros"
+          }
+        ]
+      },
+      {
+        "Id": 336,
+        "Code": "Agouza",
+        "ArName": "العجوزه",
+        "EnName": "Agouza",
+        "SubZone": [
+          {
+            "Id": 337,
+            "Code": "Agouza-Abou El Dahab Square",
+            "ArName": "العجوزه ميدان ابو الدهب",
+            "EnName": "Agouza-Abou El Dahab Square"
+          },
+          {
+            "Id": 337,
+            "Code": "Agouza-Abou El Dahab Square",
+            "ArName": "العجوزه ميدان ابو الدهب",
+            "EnName": "Agouza-Abou El Dahab Square"
+          },
+          {
+            "Id": 337,
+            "Code": "Agouza-Abou El Dahab Square",
+            "ArName": "العجوزه ميدان ابو الدهب",
+            "EnName": "Agouza-Abou El Dahab Square"
+          },
+          {
+            "Id": 337,
+            "Code": "Agouza-Abou El Dahab Square",
+            "ArName": "العجوزه ميدان ابو الدهب",
+            "EnName": "Agouza-Abou El Dahab Square"
+          },
+          {
+            "Id": 337,
+            "Code": "Agouza-Abou El Dahab Square",
+            "ArName": "العجوزه ميدان ابو الدهب",
+            "EnName": "Agouza-Abou El Dahab Square"
+          },
+          {
+            "Id": 337,
+            "Code": "Agouza-Abou El Dahab Square",
+            "ArName": "العجوزه ميدان ابو الدهب",
+            "EnName": "Agouza-Abou El Dahab Square"
+          },
+          {
+            "Id": 337,
+            "Code": "Agouza-Abou El Dahab Square",
+            "ArName": "العجوزه ميدان ابو الدهب",
+            "EnName": "Agouza-Abou El Dahab Square"
+          },
+          {
+            "Id": 337,
+            "Code": "Agouza-Abou El Dahab Square",
+            "ArName": "العجوزه ميدان ابو الدهب",
+            "EnName": "Agouza-Abou El Dahab Square"
+          }
+        ]
+      },
+      {
+        "Id": 5,
+        "Code": "AS",
+        "ArName": "عين شمس",
+        "EnName": "Ain Shams",
+        "SubZone": [
+          {
+            "Id": 7,
+            "Code": "AS",
+            "ArName": "عين شمس",
+            "EnName": "Ain Shams"
+          },
+          {
+            "Id": 7,
+            "Code": "AS",
+            "ArName": "عين شمس",
+            "EnName": "Ain Shams"
+          },
+          {
+            "Id": 7,
+            "Code": "AS",
+            "ArName": "عين شمس",
+            "EnName": "Ain Shams"
+          },
+          {
+            "Id": 7,
+            "Code": "AS",
+            "ArName": "عين شمس",
+            "EnName": "Ain Shams"
+          },
+          {
+            "Id": 7,
+            "Code": "AS",
+            "ArName": "عين شمس",
+            "EnName": "Ain Shams"
+          },
+          {
+            "Id": 7,
+            "Code": "AS",
+            "ArName": "عين شمس",
+            "EnName": "Ain Shams"
+          },
+          {
+            "Id": 7,
+            "Code": "AS",
+            "ArName": "عين شمس",
+            "EnName": "Ain Shams"
+          },
+          {
+            "Id": 7,
+            "Code": "AS",
+            "ArName": "عين شمس",
+            "EnName": "Ain Shams"
+          }
+        ]
+      },
+      {
+        "Id": 2125,
+        "Code": "ABAG",
+        "ArName": "الأباجية",
+        "EnName": "Al Abageyah",
+        "SubZone": [
+          {
+            "Id": 2126,
+            "Code": "ABAG",
+            "ArName": "الأباجية",
+            "EnName": "Al Abageyah"
+          }
+        ]
+      },
+      {
+        "Id": 2123,
+        "Code": "AMRY",
+        "ArName": "الأميرية",
+        "EnName": "Al Amiriyyah",
+        "SubZone": [
+          {
+            "Id": 2124,
+            "Code": "AMRY",
+            "ArName": "الأميرية",
+            "EnName": "Al Amiriyyah"
+          }
+        ]
+      },
+      {
+        "Id": 2135,
+        "Code": "AYAT",
+        "ArName": "العياط",
+        "EnName": "Al Ayat",
+        "SubZone": [
+          {
+            "Id": 2136,
+            "Code": "AYAT",
+            "ArName": "العياط",
+            "EnName": "Al Ayat"
+          }
+        ]
+      },
+      {
+        "Id": 2131,
+        "Code": "BDRA",
+        "ArName": "البدرشين",
+        "EnName": "Al Badrashin",
+        "SubZone": [
+          {
+            "Id": 2132,
+            "Code": "BDRA",
+            "ArName": "البدرشين",
+            "EnName": "Al Badrashin"
+          },
+          {
+            "Id": 2132,
+            "Code": "BDRA",
+            "ArName": "البدرشين",
+            "EnName": "Al Badrashin"
+          },
+          {
+            "Id": 2132,
+            "Code": "BDRA",
+            "ArName": "البدرشين",
+            "EnName": "Al Badrashin"
+          },
+          {
+            "Id": 2132,
+            "Code": "BDRA",
+            "ArName": "البدرشين",
+            "EnName": "Al Badrashin"
+          },
+          {
+            "Id": 2132,
+            "Code": "BDRA",
+            "ArName": "البدرشين",
+            "EnName": "Al Badrashin"
+          },
+          {
+            "Id": 2132,
+            "Code": "BDRA",
+            "ArName": "البدرشين",
+            "EnName": "Al Badrashin"
+          }
+        ]
+      },
+      {
+        "Id": 2167,
+        "Code": "BRAG",
+        "ArName": "البراجيل",
+        "EnName": "Al Baragel",
+        "SubZone": [
+          {
+            "Id": 2168,
+            "Code": "BRAG",
+            "ArName": "البراجيل",
+            "EnName": "Al Baragel"
+          }
+        ]
+      },
+      {
+        "Id": 2149,
+        "Code": "KHSU",
+        "ArName": "الخصوص",
+        "EnName": "Al Khusus",
+        "SubZone": [
+          {
+            "Id": 2150,
+            "Code": "KHSU",
+            "ArName": "الخصوص",
+            "EnName": "Al Khusus"
+          }
+        ]
+      },
+      {
+        "Id": 2185,
+        "Code": "MNWT",
+        "ArName": "المناوات",
+        "EnName": "Al Manawat",
+        "SubZone": [
+          {
+            "Id": 2186,
+            "Code": "MNWT",
+            "ArName": "المناوات",
+            "EnName": "Al Manawat"
+          }
+        ]
+      },
+      {
+        "Id": 2169,
+        "Code": "MOTM",
+        "ArName": "المعتمدية",
+        "EnName": "Al Moatamadeyah",
+        "SubZone": [
+          {
+            "Id": 2170,
+            "Code": "MOTM",
+            "ArName": "المعتمدية",
+            "EnName": "Al Moatamadeyah"
+          }
+        ]
+      },
+      {
+        "Id": 2177,
+        "Code": "MUNB",
+        "ArName": "المنيب",
+        "EnName": "Al Munib",
+        "SubZone": [
+          {
+            "Id": 2178,
+            "Code": "MUNB",
+            "ArName": "المنيب",
+            "EnName": "Al Munib"
+          }
+        ]
+      },
+      {
+        "Id": 31,
+        "Code": "Al-S",
+        "ArName": "السلام",
+        "EnName": "Al Salam",
+        "SubZone": [
+          {
+            "Id": 32,
+            "Code": "AL-S City",
+            "ArName": "مدينة السلام",
+            "EnName": "Al Salam City"
+          }
+        ]
+      },
+      {
+        "Id": 2145,
+        "Code": "SHRB",
+        "ArName": "الشرابية",
+        "EnName": "Al Sharabiya",
+        "SubZone": [
+          {
+            "Id": 2146,
+            "Code": "SHRB",
+            "ArName": "الشرابية",
+            "EnName": "Al Sharabiya"
+          }
+        ]
+      },
+      {
+        "Id": 2279,
+        "Code": "Alex Amazon Zone",
+        "ArName": "Alex Amazon Zone",
+        "EnName": "Alex Amazon Zone",
+        "SubZone": [
+          {
+            "Id": 2280,
+            "Code": "Alex Amazon Zone",
+            "ArName": "Alex Amazon subzone",
+            "EnName": "Alex Amazon subzone"
+          }
+        ]
+      },
+      {
+        "Id": 2272,
+        "Code": "ADR",
+        "ArName": "طريق اسكندريه الصحراوي",
+        "EnName": "Alex Desert Road",
+        "SubZone": [
+          {
+            "Id": 2273,
+            "Code": "SV",
+            "ArName": "القريه الذكيه",
+            "EnName": "Smart Village"
+          }
+        ]
+      },
+      {
+        "Id": 2025,
+        "Code": "Alexandria",
+        "ArName": "الاسكندريه",
+        "EnName": "Alexandria",
+        "SubZone": [
+          {
+            "Id": 2026,
+            "Code": "Alexandria",
+            "ArName": "الاسكندريه",
+            "EnName": "Alexandria"
+          }
+        ]
+      },
+      {
+        "Id": 2165,
+        "Code": "LWAA",
+        "ArName": "أرض اللواء",
+        "EnName": "Ard El Lewa",
+        "SubZone": [
+          {
+            "Id": 2166,
+            "Code": "LWAA",
+            "ArName": "أرض اللواء",
+            "EnName": "Ard El Lewa"
+          }
+        ]
+      },
+      {
+        "Id": 2076,
+        "Code": "ASWN",
+        "ArName": "أسوان",
+        "EnName": "Aswan",
+        "SubZone": [
+          {
+            "Id": 2100,
+            "Code": "ASWN",
+            "ArName": "أسوان",
+            "EnName": "Aswan"
+          }
+        ]
+      },
+      {
+        "Id": 2075,
+        "Code": "ASYT",
+        "ArName": "أسيوط",
+        "EnName": "Asyut",
+        "SubZone": [
+          {
+            "Id": 2099,
+            "Code": "ASYT",
+            "ArName": "أسيوط",
+            "EnName": "Asyut"
+          }
+        ]
+      },
+      {
+        "Id": 2258,
+        "Code": "Atssa",
+        "ArName": "اطسا",
+        "EnName": "Atssa",
+        "SubZone": [
+          {
+            "Id": 2259,
+            "Code": "Atssa",
+            "ArName": "اطسا",
+            "EnName": "Atssa"
+          }
+        ]
+      },
+      {
+        "Id": 2153,
+        "Code": "KHM1",
+        "ArName": "أول شبرا الخيمه",
+        "EnName": "Awal Shubra Al Kheimah",
+        "SubZone": [
+          {
+            "Id": 2154,
+            "Code": "KHM1",
+            "ArName": "أول شبرا الخيمه",
+            "EnName": "Awal Shubra Al Kheimah"
+          }
+        ]
+      },
+      {
+        "Id": 108,
+        "Code": "Bab El-Shaeria",
+        "ArName": "باب الشعريه",
+        "EnName": "Bab El-Shaeria",
+        "SubZone": [
+          {
+            "Id": 109,
+            "Code": "DownTown-Bab El Shaeria",
+            "ArName": "وسط البلد باب الشعريه",
+            "EnName": "DownTown-Bab El Shaeria"
+          }
+        ]
+      },
+      {
+        "Id": 159,
+        "Code": "Badr City",
+        "ArName": "مدينة بدر",
+        "EnName": "Badr City",
+        "SubZone": [
+          {
+            "Id": 160,
+            "Code": "Badr City",
+            "ArName": "مدينة بدر",
+            "EnName": "Badr City"
+          },
+          {
+            "Id": 160,
+            "Code": "Badr City",
+            "ArName": "مدينة بدر",
+            "EnName": "Badr City"
+          }
+        ]
+      },
+      {
+        "Id": 2231,
+        "Code": "Banha",
+        "ArName": "بنها",
+        "EnName": "Banha",
+        "SubZone": [
+          {
+            "Id": 2246,
+            "Code": "Banha",
+            "ArName": "بنها",
+            "EnName": "Banha"
+          },
+          {
+            "Id": 2246,
+            "Code": "Banha",
+            "ArName": "بنها",
+            "EnName": "Banha"
+          }
+        ]
+      },
+      {
+        "Id": 162,
+        "Code": "Basateen",
+        "ArName": "البساتين",
+        "EnName": "Basateen",
+        "SubZone": [
+          {
+            "Id": 163,
+            "Code": "Basateen",
+            "ArName": "البساتين",
+            "EnName": "Basateen"
+          },
+          {
+            "Id": 163,
+            "Code": "Basateen",
+            "ArName": "البساتين",
+            "EnName": "Basateen"
+          },
+          {
+            "Id": 163,
+            "Code": "Basateen",
+            "ArName": "البساتين",
+            "EnName": "Basateen"
+          },
+          {
+            "Id": 163,
+            "Code": "Basateen",
+            "ArName": "البساتين",
+            "EnName": "Basateen"
+          },
+          {
+            "Id": 163,
+            "Code": "Basateen",
+            "ArName": "البساتين",
+            "EnName": "Basateen"
+          },
+          {
+            "Id": 163,
+            "Code": "Basateen",
+            "ArName": "البساتين",
+            "EnName": "Basateen"
+          }
+        ]
+      },
+      {
+        "Id": 2077,
+        "Code": "BEHR",
+        "ArName": "البحيرة",
+        "EnName": "Beheira",
+        "SubZone": [
+          {
+            "Id": 2101,
+            "Code": "BEHR",
+            "ArName": "البحيرة",
+            "EnName": "Beheira"
+          }
+        ]
+      },
+      {
+        "Id": 2078,
+        "Code": "BENS",
+        "ArName": "بنى سويف",
+        "EnName": "Beni Suef",
+        "SubZone": [
+          {
+            "Id": 2102,
+            "Code": "BENS",
+            "ArName": "بنى سويف",
+            "EnName": "Beni Suef"
+          }
+        ]
+      },
+      {
+        "Id": 116,
+        "Code": "Boulak",
+        "ArName": "بولاق",
+        "EnName": "Boulak",
+        "SubZone": [
+          {
+            "Id": 117,
+            "Code": "DownTown-Boulak Abo el Eila",
+            "ArName": "وسط البلد بولاق ابو العلا",
+            "EnName": "DownTown-Boulak Abo el Eila"
+          },
+          {
+            "Id": 117,
+            "Code": "DownTown-Boulak Abo el Eila",
+            "ArName": "وسط البلد بولاق ابو العلا",
+            "EnName": "DownTown-Boulak Abo el Eila"
+          },
+          {
+            "Id": 117,
+            "Code": "DownTown-Boulak Abo el Eila",
+            "ArName": "وسط البلد بولاق ابو العلا",
+            "EnName": "DownTown-Boulak Abo el Eila"
+          }
+        ]
+      },
+      {
+        "Id": 394,
+        "Code": "Boulak Eldakrour",
+        "ArName": "بولاق الدكرور",
+        "EnName": "Boulak Eldakrour",
+        "SubZone": [
+          {
+            "Id": 398,
+            "Code": "Boulak Nahia",
+            "ArName": "بولاق ناهيا",
+            "EnName": "Boulak Nahia"
+          },
+          {
+            "Id": 398,
+            "Code": "Boulak Nahia",
+            "ArName": "بولاق ناهيا",
+            "EnName": "Boulak Nahia"
+          }
+        ]
+      },
+      {
+        "Id": 2203,
+        "Code": "CFC",
+        "ArName": "CFC",
+        "EnName": "CFC",
+        "SubZone": [
+          {
+            "Id": 2204,
+            "Code": "CFC",
+            "ArName": "CFC",
+            "EnName": "CFC"
+          }
+        ]
+      },
+      {
+        "Id": 2079,
+        "Code": "DAKH",
+        "ArName": "الدقهلية",
+        "EnName": "Dakahlia",
+        "SubZone": [
+          {
+            "Id": 2103,
+            "Code": "DAKH",
+            "ArName": "الدقهلية",
+            "EnName": "Dakahlia"
+          }
+        ]
+      },
+      {
+        "Id": 2080,
+        "Code": "DAMT",
+        "ArName": "دمياط",
+        "EnName": "Damietta",
+        "SubZone": [
+          {
+            "Id": 2104,
+            "Code": "DAMT",
+            "ArName": "دمياط",
+            "EnName": "Damietta"
+          }
+        ]
+      },
+      {
+        "Id": 347,
+        "Code": "Dokki",
+        "ArName": "الدقي",
+        "EnName": "Dokki",
+        "SubZone": [
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          },
+          {
+            "Id": 349,
+            "Code": "Dokki-26 July Axis",
+            "ArName": "الدقي محور 26 يوليو",
+            "EnName": "Dokki-26 July Axis"
+          }
+        ]
+      },
+      {
+        "Id": 91,
+        "Code": "El-Azbakia",
+        "ArName": "الازبكيه",
+        "EnName": "El Azbakia",
+        "SubZone": [
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          },
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          },
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          },
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          },
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          },
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          },
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          },
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          },
+          {
+            "Id": 92,
+            "Code": "Down Town-El Azbakeya",
+            "ArName": "وسط البلد الازبكيه",
+            "EnName": "Down Town-El Azbakeya"
+          }
+        ]
+      },
+      {
+        "Id": 111,
+        "Code": "El-Gamalia",
+        "ArName": "الجماليه",
+        "EnName": "El Gamalia",
+        "SubZone": [
+          {
+            "Id": 112,
+            "Code": "Al Azhar",
+            "ArName": "الازهر",
+            "EnName": "Al Azhar"
+          },
+          {
+            "Id": 112,
+            "Code": "Al Azhar",
+            "ArName": "الازهر",
+            "EnName": "Al Azhar"
+          },
+          {
+            "Id": 112,
+            "Code": "Al Azhar",
+            "ArName": "الازهر",
+            "EnName": "Al Azhar"
+          },
+          {
+            "Id": 112,
+            "Code": "Al Azhar",
+            "ArName": "الازهر",
+            "EnName": "Al Azhar"
+          }
+        ]
+      },
+      {
+        "Id": 2175,
+        "Code": "GIZA",
+        "ArName": "الجيزة",
+        "EnName": "El Giza",
+        "SubZone": [
+          {
+            "Id": 2176,
+            "Code": "GIZA",
+            "ArName": "الجيزة",
+            "EnName": "El Giza"
+          },
+          {
+            "Id": 2176,
+            "Code": "GIZA",
+            "ArName": "الجيزة",
+            "EnName": "El Giza"
+          }
+        ]
+      },
+      {
+        "Id": 2133,
+        "Code": "HDBA",
+        "ArName": "الهضبة الوسطى",
+        "EnName": "El Hadba EL wosta",
+        "SubZone": [
+          {
+            "Id": 2134,
+            "Code": "HDBA",
+            "ArName": "الهضبة الوسطى",
+            "EnName": "El Hadba EL wosta"
+          }
+        ]
+      },
+      {
+        "Id": 2129,
+        "Code": "HWMD",
+        "ArName": "الحوامدية",
+        "EnName": "El Hawamdeyya",
+        "SubZone": [
+          {
+            "Id": 2130,
+            "Code": "HWMD",
+            "ArName": "الحوامدية",
+            "EnName": "El Hawamdeyya"
+          }
+        ]
+      },
+      {
+        "Id": 33,
+        "Code": "El-M",
+        "ArName": "المرج",
+        "EnName": "El Marg",
+        "SubZone": [
+          {
+            "Id": 34,
+            "Code": "El-M Berket Al Hag",
+            "ArName": "المرج بركة الحاج",
+            "EnName": "El Marg-Berket Al Hag"
+          },
+          {
+            "Id": 34,
+            "Code": "El-M Berket Al Hag",
+            "ArName": "المرج بركة الحاج",
+            "EnName": "El Marg-Berket Al Hag"
+          },
+          {
+            "Id": 34,
+            "Code": "El-M Berket Al Hag",
+            "ArName": "المرج بركة الحاج",
+            "EnName": "El Marg-Berket Al Hag"
+          },
+          {
+            "Id": 34,
+            "Code": "El-M Berket Al Hag",
+            "ArName": "المرج بركة الحاج",
+            "EnName": "El Marg-Berket Al Hag"
+          },
+          {
+            "Id": 34,
+            "Code": "El-M Berket Al Hag",
+            "ArName": "المرج بركة الحاج",
+            "EnName": "El Marg-Berket Al Hag"
+          },
+          {
+            "Id": 34,
+            "Code": "El-M Berket Al Hag",
+            "ArName": "المرج بركة الحاج",
+            "EnName": "El Marg-Berket Al Hag"
+          }
+        ]
+      },
+      {
+        "Id": 101,
+        "Code": "El-Mosky",
+        "ArName": "الموسكي",
+        "EnName": "El Mosky",
+        "SubZone": [
+          {
+            "Id": 102,
+            "Code": "DownTown-Al Moski",
+            "ArName": "الموسكي وسط البلد",
+            "EnName": "DownTown-Al Moski"
+          }
+        ]
+      },
+      {
+        "Id": 2161,
+        "Code": "OBOR",
+        "ArName": "مدينة العبور",
+        "EnName": "El Obour City",
+        "SubZone": [
+          {
+            "Id": 2162,
+            "Code": "OBOR",
+            "ArName": "مدينة العبور",
+            "EnName": "El Obour City"
+          }
+        ]
+      },
+      {
+        "Id": 2210,
+        "Code": "ElQoseir",
+        "ArName": "El Qoseir",
+        "EnName": "El Qoseir",
+        "SubZone": [
+          {
+            "Id": 2215,
+            "Code": "ElQoseir",
+            "ArName": "El Qoseir",
+            "EnName": "El Qoseir"
+          }
+        ]
+      },
+      {
+        "Id": 2137,
+        "Code": "SAF",
+        "ArName": "الصف",
+        "EnName": "El Saf",
+        "SubZone": [
+          {
+            "Id": 2138,
+            "Code": "SAF",
+            "ArName": "الصف",
+            "EnName": "El Saf"
+          }
+        ]
+      },
+      {
+        "Id": 303,
+        "Code": "El Shorouk",
+        "ArName": "الشروق",
+        "EnName": "El Shorouk",
+        "SubZone": [
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          },
+          {
+            "Id": 304,
+            "Code": "El Shorouk - 3rd district",
+            "ArName": "الشروق الحي الثالث",
+            "EnName": "El Shorouk - 3rd district"
+          }
+        ]
+      },
+      {
+        "Id": 2191,
+        "Code": "TLBA",
+        "ArName": "الطالبية",
+        "EnName": "El Talbia",
+        "SubZone": [
+          {
+            "Id": 2192,
+            "Code": "TLBA",
+            "ArName": "الطالبية",
+            "EnName": "El Talbia"
+          }
+        ]
+      },
+      {
+        "Id": 2089,
+        "Code": "WADI",
+        "ArName": "الوادى الجديد",
+        "EnName": "El Wadi el Gedid",
+        "SubZone": [
+          {
+            "Id": 2113,
+            "Code": "WADI",
+            "ArName": "الوادى الجديد",
+            "EnName": "El Wadi el Gedid"
+          }
+        ]
+      },
+      {
+        "Id": 103,
+        "Code": "El-Waily",
+        "ArName": "الوايلي",
+        "EnName": "El Waily",
+        "SubZone": [
+          {
+            "Id": 2012,
+            "Code": "El-Waily",
+            "ArName": "الوايلى",
+            "EnName": "El Waily"
+          }
+        ]
+      },
+      {
+        "Id": 2141,
+        "Code": "ZAHR",
+        "ArName": "الظاهر",
+        "EnName": "El Zaher",
+        "SubZone": [
+          {
+            "Id": 2142,
+            "Code": "ZAHR",
+            "ArName": "الظاهر",
+            "EnName": "El Zaher"
+          }
+        ]
+      },
+      {
+        "Id": 2151,
+        "Code": "ZWYA",
+        "ArName": "الزاوية الحمرا",
+        "EnName": "El Zawya El Hamra",
+        "SubZone": [
+          {
+            "Id": 2152,
+            "Code": "ZWYA",
+            "ArName": "الزاوية الحمرا",
+            "EnName": "El Zawya El Hamra"
+          }
+        ]
+      },
+      {
+        "Id": 149,
+        "Code": "ELdarb Elahmar",
+        "ArName": "الدرب الاحمر",
+        "EnName": "ELdarb Elahmar",
+        "SubZone": [
+          {
+            "Id": 150,
+            "Code": "Batneya",
+            "ArName": "الباطنيه",
+            "EnName": "Batneya"
+          },
+          {
+            "Id": 150,
+            "Code": "Batneya",
+            "ArName": "الباطنيه",
+            "EnName": "Batneya"
+          },
+          {
+            "Id": 150,
+            "Code": "Batneya",
+            "ArName": "الباطنيه",
+            "EnName": "Batneya"
+          },
+          {
+            "Id": 150,
+            "Code": "Batneya",
+            "ArName": "الباطنيه",
+            "EnName": "Batneya"
+          },
+          {
+            "Id": 150,
+            "Code": "Batneya",
+            "ArName": "الباطنيه",
+            "EnName": "Batneya"
+          },
+          {
+            "Id": 150,
+            "Code": "Batneya",
+            "ArName": "الباطنيه",
+            "EnName": "Batneya"
+          },
+          {
+            "Id": 150,
+            "Code": "Batneya",
+            "ArName": "الباطنيه",
+            "EnName": "Batneya"
+          },
+          {
+            "Id": 150,
+            "Code": "Batneya",
+            "ArName": "الباطنيه",
+            "EnName": "Batneya"
+          }
+        ]
+      },
+      {
+        "Id": 2229,
+        "Code": "Elkhanka",
+        "ArName": "الخانكه",
+        "EnName": "Elkhanka",
+        "SubZone": [
+          {
+            "Id": 2237,
+            "Code": "Khanka",
+            "ArName": "الخانكه",
+            "EnName": "Khanka"
+          },
+          {
+            "Id": 2237,
+            "Code": "Khanka",
+            "ArName": "الخانكه",
+            "EnName": "Khanka"
+          },
+          {
+            "Id": 2237,
+            "Code": "Khanka",
+            "ArName": "الخانكه",
+            "EnName": "Khanka"
+          },
+          {
+            "Id": 2237,
+            "Code": "Khanka",
+            "ArName": "الخانكه",
+            "EnName": "Khanka"
+          }
+        ]
+      },
+      {
+        "Id": 2270,
+        "Code": "El-Rehab",
+        "ArName": "الرحاب",
+        "EnName": "El-Rehab",
+        "SubZone": [
+          {
+            "Id": 2271,
+            "Code": "El-Rehab",
+            "ArName": "الرحاب",
+            "EnName": "El-Rehab"
+          }
+        ]
+      },
+      {
+        "Id": 2199,
+        "Code": "ESHA",
+        "ArName": "السيدة عائشه",
+        "EnName": "Elsayeda Aisha",
+        "SubZone": [
+          {
+            "Id": 2200,
+            "Code": "ESHA",
+            "ArName": "السيدة عائشه",
+            "EnName": "Elsayeda Aisha"
+          }
+        ]
+      },
+      {
+        "Id": 174,
+        "Code": "Elsayeda Zeinab",
+        "ArName": "السيده زينب",
+        "EnName": "Elsayeda Zeinab",
+        "SubZone": [
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          },
+          {
+            "Id": 175,
+            "Code": "Sayeda Zeinab",
+            "ArName": "السيده زينب",
+            "EnName": "Sayeda Zeinab"
+          }
+        ]
+      },
+      {
+        "Id": 230,
+        "Code": "Eltebeen",
+        "ArName": "التبيين",
+        "EnName": "Eltebeen",
+        "SubZone": [
+          {
+            "Id": 232,
+            "Code": "Eltebeen",
+            "ArName": "التبيين",
+            "EnName": "Eltebeen"
+          },
+          {
+            "Id": 232,
+            "Code": "Eltebeen",
+            "ArName": "التبيين",
+            "EnName": "Eltebeen"
+          },
+          {
+            "Id": 232,
+            "Code": "Eltebeen",
+            "ArName": "التبيين",
+            "EnName": "Eltebeen"
+          },
+          {
+            "Id": 232,
+            "Code": "Eltebeen",
+            "ArName": "التبيين",
+            "EnName": "Eltebeen"
+          }
+        ]
+      },
+      {
+        "Id": 365,
+        "Code": "Faisal",
+        "ArName": "فيصل",
+        "EnName": "Faisal",
+        "SubZone": [
+          {
+            "Id": 372,
+            "Code": "faisal-El Remaya Square",
+            "ArName": "فيصل ميدان الرمايه",
+            "EnName": "faisal-El Remaya Square"
+          }
+        ]
+      },
+      {
+        "Id": 2081,
+        "Code": "FAYM",
+        "ArName": "الفيوم",
+        "EnName": "Faiyum",
+        "SubZone": [
+          {
+            "Id": 2105,
+            "Code": "FAYM",
+            "ArName": "الفيوم",
+            "EnName": "Faiyum"
+          }
+        ]
+      },
+      {
+        "Id": 2157,
+        "Code": "FUTR",
+        "ArName": "مدينة المستقبل",
+        "EnName": "Future City",
+        "SubZone": [
+          {
+            "Id": 2158,
+            "Code": "FUTR",
+            "ArName": "مدينة المستقبل",
+            "EnName": "Future City"
+          }
+        ]
+      },
+      {
+        "Id": 2139,
+        "Code": "GHMR",
+        "ArName": "غمره",
+        "EnName": "Ghamra",
+        "SubZone": [
+          {
+            "Id": 2140,
+            "Code": "GHMR",
+            "ArName": "غمره",
+            "EnName": "Ghamra"
+          }
+        ]
+      },
+      {
+        "Id": 2082,
+        "Code": "GHRB",
+        "ArName": "الغربية",
+        "EnName": "Gharbia",
+        "SubZone": [
+          {
+            "Id": 2106,
+            "Code": "GHRB",
+            "ArName": "الغربية",
+            "EnName": "Gharbia"
+          }
+        ]
+      },
+      {
+        "Id": 1020,
+        "Code": "Hadayek Al Ahram",
+        "ArName": "حدايق الاهرام",
+        "EnName": "Hadayek Al Ahram",
+        "SubZone": [
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          },
+          {
+            "Id": 1021,
+            "Code": "A",
+            "ArName": "ا",
+            "EnName": "A"
+          }
+        ]
+      },
+      {
+        "Id": 197,
+        "Code": "Hadayek El Qobah",
+        "ArName": "حدايق القبه",
+        "EnName": "Hadayek El Qobah",
+        "SubZone": [
+          {
+            "Id": 199,
+            "Code": "Hadayek Al Qobah-Al Sheikh Al Babli",
+            "ArName": "حدايق القبه الشخ البابلي",
+            "EnName": "Hadayek Al Qobah-Al Sheikh Al Babli"
+          },
+          {
+            "Id": 199,
+            "Code": "Hadayek Al Qobah-Al Sheikh Al Babli",
+            "ArName": "حدايق القبه الشخ البابلي",
+            "EnName": "Hadayek Al Qobah-Al Sheikh Al Babli"
+          },
+          {
+            "Id": 199,
+            "Code": "Hadayek Al Qobah-Al Sheikh Al Babli",
+            "ArName": "حدايق القبه الشخ البابلي",
+            "EnName": "Hadayek Al Qobah-Al Sheikh Al Babli"
+          },
+          {
+            "Id": 199,
+            "Code": "Hadayek Al Qobah-Al Sheikh Al Babli",
+            "ArName": "حدايق القبه الشخ البابلي",
+            "EnName": "Hadayek Al Qobah-Al Sheikh Al Babli"
+          },
+          {
+            "Id": 199,
+            "Code": "Hadayek Al Qobah-Al Sheikh Al Babli",
+            "ArName": "حدايق القبه الشخ البابلي",
+            "EnName": "Hadayek Al Qobah-Al Sheikh Al Babli"
+          },
+          {
+            "Id": 199,
+            "Code": "Hadayek Al Qobah-Al Sheikh Al Babli",
+            "ArName": "حدايق القبه الشخ البابلي",
+            "EnName": "Hadayek Al Qobah-Al Sheikh Al Babli"
+          },
+          {
+            "Id": 199,
+            "Code": "Hadayek Al Qobah-Al Sheikh Al Babli",
+            "ArName": "حدايق القبه الشخ البابلي",
+            "EnName": "Hadayek Al Qobah-Al Sheikh Al Babli"
+          },
+          {
+            "Id": 199,
+            "Code": "Hadayek Al Qobah-Al Sheikh Al Babli",
+            "ArName": "حدايق القبه الشخ البابلي",
+            "EnName": "Hadayek Al Qobah-Al Sheikh Al Babli"
+          }
+        ]
+      },
+      {
+        "Id": 1038,
+        "Code": "Haram",
+        "ArName": "هرم",
+        "EnName": "Haram",
+        "SubZone": [
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          },
+          {
+            "Id": 1039,
+            "Code": "Haram- El-Taawon",
+            "ArName": "هرم التعاون",
+            "EnName": "Haram- El-Taawon"
+          }
+        ]
+      },
+      {
+        "Id": 41,
+        "Code": "HEl",
+        "ArName": "هيليوبلس",
+        "EnName": "Heliopolis",
+        "SubZone": [
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          },
+          {
+            "Id": 42,
+            "Code": "HEl-Al Ismailia SQ",
+            "ArName": "هيليوبلس ميدان الاسماعيليه",
+            "EnName": "Heliopolis- Al-Ismailia Square"
+          }
+        ]
+      },
+      {
+        "Id": 211,
+        "Code": "Helwan",
+        "ArName": "حلوان",
+        "EnName": "Helwan",
+        "SubZone": [
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          },
+          {
+            "Id": 212,
+            "Code": "Hadayek Helwan",
+            "ArName": "حدايق حلوان",
+            "EnName": "Hadayek Helwan"
+          }
+        ]
+      },
+      {
+        "Id": 2207,
+        "Code": "Hurghada",
+        "ArName": "Hurghada",
+        "EnName": "Hurghada",
+        "SubZone": [
+          {
+            "Id": 2212,
+            "Code": "Hurghada",
+            "ArName": "Hurghada",
+            "EnName": "Hurghada"
+          }
+        ]
+      },
+      {
+        "Id": 1047,
+        "Code": "Imbaba",
+        "ArName": "امبابه",
+        "EnName": "Imbaba",
+        "SubZone": [
+          {
+            "Id": 1048,
+            "Code": "Al Manashi",
+            "ArName": "المناشي",
+            "EnName": "Al Manashi"
+          },
+          {
+            "Id": 1048,
+            "Code": "Al Manashi",
+            "ArName": "المناشي",
+            "EnName": "Al Manashi"
+          },
+          {
+            "Id": 1048,
+            "Code": "Al Manashi",
+            "ArName": "المناشي",
+            "EnName": "Al Manashi"
+          },
+          {
+            "Id": 1048,
+            "Code": "Al Manashi",
+            "ArName": "المناشي",
+            "EnName": "Al Manashi"
+          }
+        ]
+      },
+      {
+        "Id": 2223,
+        "Code": "INT",
+        "ArName": "دولى",
+        "EnName": "International",
+        "SubZone": [
+          {
+            "Id": 2224,
+            "Code": "INT",
+            "ArName": "دولى",
+            "EnName": "International"
+          }
+        ]
+      },
+      {
+        "Id": 2083,
+        "Code": "ISML",
+        "ArName": "الإسماعيلية",
+        "EnName": "Ismailia",
+        "SubZone": [
+          {
+            "Id": 2107,
+            "Code": "ISML",
+            "ArName": "الإسماعيلية",
+            "EnName": "Ismailia"
+          }
+        ]
+      },
+      {
+        "Id": 2201,
+        "Code": "NKHL",
+        "ArName": "عزبة النخل",
+        "EnName": "Izbat an Nakhl",
+        "SubZone": [
+          {
+            "Id": 2202,
+            "Code": "NKHL",
+            "ArName": "عزبة النخل",
+            "EnName": "Izbat an Nakhl"
+          }
+        ]
+      },
+      {
+        "Id": 2084,
+        "Code": "SHKH",
+        "ArName": "كفر الشيخ",
+        "EnName": "Kafr El Sheikh",
+        "SubZone": [
+          {
+            "Id": 2108,
+            "Code": "SHKH",
+            "ArName": "كفر الشيخ",
+            "EnName": "Kafr El Sheikh"
+          }
+        ]
+      },
+      {
+        "Id": 2171,
+        "Code": "KFRH",
+        "ArName": "كفر حكيم",
+        "EnName": "Kafr Hakim",
+        "SubZone": [
+          {
+            "Id": 2172,
+            "Code": "KFRH",
+            "ArName": "كفر حكيم",
+            "EnName": "Kafr Hakim"
+          }
+        ]
+      },
+      {
+        "Id": 2195,
+        "Code": "NASR",
+        "ArName": "كفر نصار",
+        "EnName": "Kafr Nassar",
+        "SubZone": [
+          {
+            "Id": 2196,
+            "Code": "NASR",
+            "ArName": "كفر نصار",
+            "EnName": "Kafr Nassar"
+          }
+        ]
+      },
+      {
+        "Id": 2193,
+        "Code": "TRMS",
+        "ArName": "كفر طهرمس",
+        "EnName": "Kafr Tuhurmis",
+        "SubZone": [
+          {
+            "Id": 2194,
+            "Code": "TRMS",
+            "ArName": "كفر طهرمس",
+            "EnName": "Kafr Tuhurmis"
+          }
+        ]
+      },
+      {
+        "Id": 2085,
+        "Code": "LUXR",
+        "ArName": "الأقصر",
+        "EnName": "Luxor",
+        "SubZone": [
+          {
+            "Id": 2109,
+            "Code": "LUXR",
+            "ArName": "الأقصر",
+            "EnName": "Luxor"
+          }
+        ]
+      },
+      {
+        "Id": 246,
+        "Code": "Maadi",
+        "ArName": "المعادي",
+        "EnName": "Maadi",
+        "SubZone": [
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          },
+          {
+            "Id": 248,
+            "Code": "Maadi- Taqseem Laselky",
+            "ArName": "المعادي تقسيم اللاسلكي",
+            "EnName": "Maadi- Taqseem Laselky"
+          }
+        ]
+      },
+      {
+        "Id": 262,
+        "Code": "Madinaty",
+        "ArName": "مدينتي",
+        "EnName": "Madinaty",
+        "SubZone": [
+          {
+            "Id": 263,
+            "Code": "Madinty",
+            "ArName": "مدينتي",
+            "EnName": "Madinty"
+          }
+        ]
+      },
+      {
+        "Id": 264,
+        "Code": "Manial",
+        "ArName": "المنيل",
+        "EnName": "Manial",
+        "SubZone": [
+          {
+            "Id": 265,
+            "Code": "Manial Al Rodah-Abdo Basha",
+            "ArName": "منيل الروضه عبده باشا",
+            "EnName": "Manial Al Rodah-Abdo Basha"
+          },
+          {
+            "Id": 265,
+            "Code": "Manial Al Rodah-Abdo Basha",
+            "ArName": "منيل الروضه عبده باشا",
+            "EnName": "Manial Al Rodah-Abdo Basha"
+          },
+          {
+            "Id": 265,
+            "Code": "Manial Al Rodah-Abdo Basha",
+            "ArName": "منيل الروضه عبده باشا",
+            "EnName": "Manial Al Rodah-Abdo Basha"
+          }
+        ]
+      },
+      {
+        "Id": 2208,
+        "Code": "MarsaAlam",
+        "ArName": "Marsa Alam",
+        "EnName": "Marsa Alam",
+        "SubZone": [
+          {
+            "Id": 2213,
+            "Code": "MarsaAlam",
+            "ArName": "Marsa Alam",
+            "EnName": "Marsa Alam"
+          }
+        ]
+      },
+      {
+        "Id": 269,
+        "Code": "Masr El Qadeema",
+        "ArName": "مصر القديمه",
+        "EnName": "Masr El Qadeema",
+        "SubZone": [
+          {
+            "Id": 270,
+            "Code": "Misr El-Kadima",
+            "ArName": "مصر القديمه",
+            "EnName": "Misr El-Kadima"
+          },
+          {
+            "Id": 270,
+            "Code": "Misr El-Kadima",
+            "ArName": "مصر القديمه",
+            "EnName": "Misr El-Kadima"
+          },
+          {
+            "Id": 270,
+            "Code": "Misr El-Kadima",
+            "ArName": "مصر القديمه",
+            "EnName": "Misr El-Kadima"
+          },
+          {
+            "Id": 270,
+            "Code": "Misr El-Kadima",
+            "ArName": "مصر القديمه",
+            "EnName": "Misr El-Kadima"
+          }
+        ]
+      },
+      {
+        "Id": 2086,
+        "Code": "MTRH",
+        "ArName": "مرسى مطروح",
+        "EnName": "Matruh",
+        "SubZone": [
+          {
+            "Id": 2110,
+            "Code": "MTRH",
+            "ArName": "مرسى مطروح",
+            "EnName": "Matruh"
+          }
+        ]
+      },
+      {
+        "Id": 2087,
+        "Code": "MNYA",
+        "ArName": "المنيا",
+        "EnName": "Minya",
+        "SubZone": [
+          {
+            "Id": 2111,
+            "Code": "MNYA",
+            "ArName": "المنيا",
+            "EnName": "Minya"
+          }
+        ]
+      },
+      {
+        "Id": 1054,
+        "Code": "Mohandseen",
+        "ArName": "مهندسين",
+        "EnName": "Mohandseen",
+        "SubZone": [
+          {
+            "Id": 1055,
+            "Code": "Mohandessin-Ahmed Oraby",
+            "ArName": "المهندسين احمد عرابي",
+            "EnName": "Mohandessin-Ahmed Oraby"
+          },
+          {
+            "Id": 1055,
+            "Code": "Mohandessin-Ahmed Oraby",
+            "ArName": "المهندسين احمد عرابي",
+            "EnName": "Mohandessin-Ahmed Oraby"
+          },
+          {
+            "Id": 1055,
+            "Code": "Mohandessin-Ahmed Oraby",
+            "ArName": "المهندسين احمد عرابي",
+            "EnName": "Mohandessin-Ahmed Oraby"
+          },
+          {
+            "Id": 1055,
+            "Code": "Mohandessin-Ahmed Oraby",
+            "ArName": "المهندسين احمد عرابي",
+            "EnName": "Mohandessin-Ahmed Oraby"
+          },
+          {
+            "Id": 1055,
+            "Code": "Mohandessin-Ahmed Oraby",
+            "ArName": "المهندسين احمد عرابي",
+            "EnName": "Mohandessin-Ahmed Oraby"
+          },
+          {
+            "Id": 1055,
+            "Code": "Mohandessin-Ahmed Oraby",
+            "ArName": "المهندسين احمد عرابي",
+            "EnName": "Mohandessin-Ahmed Oraby"
+          },
+          {
+            "Id": 1055,
+            "Code": "Mohandessin-Ahmed Oraby",
+            "ArName": "المهندسين احمد عرابي",
+            "EnName": "Mohandessin-Ahmed Oraby"
+          }
+        ]
+      },
+      {
+        "Id": 2088,
+        "Code": "MONF",
+        "ArName": "المنوفية",
+        "EnName": "Monufia",
+        "SubZone": [
+          {
+            "Id": 2112,
+            "Code": "MONF",
+            "ArName": "المنوفية",
+            "EnName": "Monufia"
+          }
+        ]
+      },
+      {
+        "Id": 1062,
+        "Code": "Nahia",
+        "ArName": "ناهيا",
+        "EnName": "Nahia",
+        "SubZone": [
+          {
+            "Id": 1063,
+            "Code": "Nahai Elbalad",
+            "ArName": "ناهيا البلد",
+            "EnName": "Nahai Elbalad"
+          }
+        ]
+      },
+      {
+        "Id": 72,
+        "Code": "Nasr City",
+        "ArName": "مدينة نصر ",
+        "EnName": "Nasr City",
+        "SubZone": [
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          },
+          {
+            "Id": 73,
+            "Code": "Ezbt Elhagana",
+            "ArName": "عزبه الهجانه",
+            "EnName": "Ezbt Elhagana"
+          }
+        ]
+      },
+      {
+        "Id": 2189,
+        "Code": "BTRN",
+        "ArName": "نزلة البطران",
+        "EnName": "Nazlet Al Batran",
+        "SubZone": [
+          {
+            "Id": 2190,
+            "Code": "BTRN",
+            "ArName": "نزلة البطران",
+            "EnName": "Nazlet Al Batran"
+          }
+        ]
+      },
+      {
+        "Id": 2187,
+        "Code": "SMAN",
+        "ArName": "نزلة السمان",
+        "EnName": "Nazlet El Semman",
+        "SubZone": [
+          {
+            "Id": 2188,
+            "Code": "SMAN",
+            "ArName": "نزلة السمان",
+            "EnName": "Nazlet El Semman"
+          }
+        ]
+      },
+      {
+        "Id": 280,
+        "Code": "New Cairo",
+        "ArName": "القاهره الجديده",
+        "EnName": "New Cairo",
+        "SubZone": [
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          },
+          {
+            "Id": 281,
+            "Code": "New Cairo- New Cairo El-Diplomaseen",
+            "ArName": "القاهره الجديده الدبلوماسيين",
+            "EnName": "New Cairo- New Cairo El-Diplomaseen"
+          }
+        ]
+      },
+      {
+        "Id": 2274,
+        "Code": "NG",
+        "ArName": "نيو جيزه",
+        "EnName": "New Giza",
+        "SubZone": [
+          {
+            "Id": 2275,
+            "Code": "NG",
+            "ArName": "نيو جيزه",
+            "EnName": "New Giza"
+          }
+        ]
+      },
+      {
+        "Id": 2159,
+        "Code": "NHEL",
+        "ArName": "مدينة هيليوبلس الجديدة",
+        "EnName": "New Heliopolis City",
+        "SubZone": [
+          {
+            "Id": 2160,
+            "Code": "NHEL",
+            "ArName": "مدينة هيليوبلس الجديدة",
+            "EnName": "New Heliopolis City"
+          }
+        ]
+      },
+      {
+        "Id": 2205,
+        "Code": "NorthCoast",
+        "ArName": "الساحل الشمالي",
+        "EnName": "North Coast",
+        "SubZone": [
+          {
+            "Id": 2206,
+            "Code": "NorthCoast",
+            "ArName": "الساحل الشمالي",
+            "EnName": "North Coast"
+          }
+        ]
+      },
+      {
+        "Id": 2090,
+        "Code": "NSNA",
+        "ArName": "شمال سيناء",
+        "EnName": "North Sinai",
+        "SubZone": [
+          {
+            "Id": 2114,
+            "Code": "NSNA",
+            "ArName": "شمال سيناء",
+            "EnName": "North Sinai"
+          }
+        ]
+      },
+      {
+        "Id": 66,
+        "Code": "Nozha",
+        "ArName": "النزهه",
+        "EnName": "Nozha",
+        "SubZone": [
+          {
+            "Id": 67,
+            "Code": "Hayksteb",
+            "ArName": "الهايكستب",
+            "EnName": "Hayksteb"
+          },
+          {
+            "Id": 67,
+            "Code": "Hayksteb",
+            "ArName": "الهايكستب",
+            "EnName": "Hayksteb"
+          },
+          {
+            "Id": 67,
+            "Code": "Hayksteb",
+            "ArName": "الهايكستب",
+            "EnName": "Hayksteb"
+          },
+          {
+            "Id": 67,
+            "Code": "Hayksteb",
+            "ArName": "الهايكستب",
+            "EnName": "Hayksteb"
+          }
+        ]
+      },
+      {
+        "Id": 1119,
+        "Code": "Omraneya",
+        "ArName": "عمرانيه",
+        "EnName": "Omraneya",
+        "SubZone": [
+          {
+            "Id": 1120,
+            "Code": "Omraneya-Al Thalathe",
+            "ArName": "عمرانيه الثلاثيني",
+            "EnName": "Omraneya-Al Thalathe"
+          },
+          {
+            "Id": 1120,
+            "Code": "Omraneya-Al Thalathe",
+            "ArName": "عمرانيه الثلاثيني",
+            "EnName": "Omraneya-Al Thalathe"
+          },
+          {
+            "Id": 1120,
+            "Code": "Omraneya-Al Thalathe",
+            "ArName": "عمرانيه الثلاثيني",
+            "EnName": "Omraneya-Al Thalathe"
+          },
+          {
+            "Id": 1120,
+            "Code": "Omraneya-Al Thalathe",
+            "ArName": "عمرانيه الثلاثيني",
+            "EnName": "Omraneya-Al Thalathe"
+          },
+          {
+            "Id": 1120,
+            "Code": "Omraneya-Al Thalathe",
+            "ArName": "عمرانيه الثلاثيني",
+            "EnName": "Omraneya-Al Thalathe"
+          },
+          {
+            "Id": 1120,
+            "Code": "Omraneya-Al Thalathe",
+            "ArName": "عمرانيه الثلاثيني",
+            "EnName": "Omraneya-Al Thalathe"
+          },
+          {
+            "Id": 1120,
+            "Code": "Omraneya-Al Thalathe",
+            "ArName": "عمرانيه الثلاثيني",
+            "EnName": "Omraneya-Al Thalathe"
+          },
+          {
+            "Id": 1120,
+            "Code": "Omraneya-Al Thalathe",
+            "ArName": "عمرانيه الثلاثيني",
+            "EnName": "Omraneya-Al Thalathe"
+          }
+        ]
+      },
+      {
+        "Id": 2173,
+        "Code": "OSIM",
+        "ArName": "أوسيم",
+        "EnName": "Ossim",
+        "SubZone": [
+          {
+            "Id": 2174,
+            "Code": "OSIM",
+            "ArName": "أوسيم",
+            "EnName": "Ossim"
+          }
+        ]
+      },
+      {
+        "Id": 2091,
+        "Code": "PORS",
+        "ArName": "بورسعيد",
+        "EnName": "Port Said",
+        "SubZone": [
+          {
+            "Id": 2115,
+            "Code": "PORS",
+            "ArName": "بورسعيد",
+            "EnName": "Port Said"
+          }
+        ]
+      },
+      {
+        "Id": 2235,
+        "Code": "Qaha",
+        "ArName": "قها",
+        "EnName": "Qaha",
+        "SubZone": [
+          {
+            "Id": 2257,
+            "Code": "Qaha",
+            "ArName": "قها",
+            "EnName": "Qaha"
+          }
+        ]
+      },
+      {
+        "Id": 2234,
+        "Code": "Qalyoub",
+        "ArName": "قليوب",
+        "EnName": "Qalyoub",
+        "SubZone": [
+          {
+            "Id": 2253,
+            "Code": "Qalma",
+            "ArName": "قلما",
+            "EnName": "Qalma"
+          },
+          {
+            "Id": 2253,
+            "Code": "Qalma",
+            "ArName": "قلما",
+            "EnName": "Qalma"
+          },
+          {
+            "Id": 2253,
+            "Code": "Qalma",
+            "ArName": "قلما",
+            "EnName": "Qalma"
+          },
+          {
+            "Id": 2253,
+            "Code": "Qalma",
+            "ArName": "قلما",
+            "EnName": "Qalma"
+          }
+        ]
+      },
+      {
+        "Id": 2092,
+        "Code": "QLYB",
+        "ArName": "القليوبية",
+        "EnName": "Qalyubia",
+        "SubZone": [
+          {
+            "Id": 2116,
+            "Code": "QLYB",
+            "ArName": "القليوبية",
+            "EnName": "Qalyubia"
+          }
+        ]
+      },
+      {
+        "Id": 2230,
+        "Code": "Qanater",
+        "ArName": "القناطر",
+        "EnName": "Qanater",
+        "SubZone": [
+          {
+            "Id": 2241,
+            "Code": "Qanater Khairya",
+            "ArName": "القناطر الخيريه",
+            "EnName": "Qanater Khairya"
+          },
+          {
+            "Id": 2241,
+            "Code": "Qanater Khairya",
+            "ArName": "القناطر الخيريه",
+            "EnName": "Qanater Khairya"
+          },
+          {
+            "Id": 2241,
+            "Code": "Qanater Khairya",
+            "ArName": "القناطر الخيريه",
+            "EnName": "Qanater Khairya"
+          },
+          {
+            "Id": 2241,
+            "Code": "Qanater Khairya",
+            "ArName": "القناطر الخيريه",
+            "EnName": "Qanater Khairya"
+          },
+          {
+            "Id": 2241,
+            "Code": "Qanater Khairya",
+            "ArName": "القناطر الخيريه",
+            "EnName": "Qanater Khairya"
+          }
+        ]
+      },
+      {
+        "Id": 141,
+        "Code": "Qasr elneil",
+        "ArName": "قصر النيل",
+        "EnName": "Qasr elneil",
+        "SubZone": [
+          {
+            "Id": 142,
+            "Code": "Qasr elneil",
+            "ArName": "قصر النيل",
+            "EnName": "Qasr elneil"
+          },
+          {
+            "Id": 142,
+            "Code": "Qasr elneil",
+            "ArName": "قصر النيل",
+            "EnName": "Qasr elneil"
+          },
+          {
+            "Id": 142,
+            "Code": "Qasr elneil",
+            "ArName": "قصر النيل",
+            "EnName": "Qasr elneil"
+          },
+          {
+            "Id": 142,
+            "Code": "Qasr elneil",
+            "ArName": "قصر النيل",
+            "EnName": "Qasr elneil"
+          }
+        ]
+      },
+      {
+        "Id": 2093,
+        "Code": "QENA",
+        "ArName": "قنا",
+        "EnName": "Qena",
+        "SubZone": [
+          {
+            "Id": 2117,
+            "Code": "QENA",
+            "ArName": "قنا",
+            "EnName": "Qena"
+          }
+        ]
+      },
+      {
+        "Id": 2209,
+        "Code": "RasGhareb",
+        "ArName": "Ras Ghareb",
+        "EnName": "Ras Ghareb",
+        "SubZone": [
+          {
+            "Id": 2214,
+            "Code": "RasGhareb",
+            "ArName": "Ras Ghareb",
+            "EnName": "Ras Ghareb"
+          }
+        ]
+      },
+      {
+        "Id": 2094,
+        "Code": "REDS",
+        "ArName": "البحر الأحمر",
+        "EnName": "Red Sea",
+        "SubZone": [
+          {
+            "Id": 2118,
+            "Code": "REDS",
+            "ArName": "البحر الأحمر",
+            "EnName": "Red Sea"
+          }
+        ]
+      },
+      {
+        "Id": 2147,
+        "Code": "FRAG",
+        "ArName": "روض الفرج",
+        "EnName": "Rod El Farag",
+        "SubZone": [
+          {
+            "Id": 2148,
+            "Code": "FRAG",
+            "ArName": "روض الفرج",
+            "EnName": "Rod El Farag"
+          }
+        ]
+      },
+      {
+        "Id": 2211,
+        "Code": "Safaga",
+        "ArName": "Safaga",
+        "EnName": "Safaga",
+        "SubZone": [
+          {
+            "Id": 2216,
+            "Code": "Safaga",
+            "ArName": "Safaga",
+            "EnName": "Safaga"
+          }
+        ]
+      },
+      {
+        "Id": 1130,
+        "Code": "Saft El Laban",
+        "ArName": "صفط اللبن",
+        "EnName": "Saft El Laban",
+        "SubZone": [
+          {
+            "Id": 1131,
+            "Code": "Giza-Saft El Laban",
+            "ArName": "جيزه صفط اللبن",
+            "EnName": "Giza-Saft El Laban"
+          },
+          {
+            "Id": 1131,
+            "Code": "Giza-Saft El Laban",
+            "ArName": "جيزه صفط اللبن",
+            "EnName": "Giza-Saft El Laban"
+          },
+          {
+            "Id": 1131,
+            "Code": "Giza-Saft El Laban",
+            "ArName": "جيزه صفط اللبن",
+            "EnName": "Giza-Saft El Laban"
+          },
+          {
+            "Id": 1131,
+            "Code": "Giza-Saft El Laban",
+            "ArName": "جيزه صفط اللبن",
+            "EnName": "Giza-Saft El Laban"
+          }
+        ]
+      },
+      {
+        "Id": 2179,
+        "Code": "MEKI",
+        "ArName": "ساقية مكى",
+        "EnName": "Saqiyet Mekki",
+        "SubZone": [
+          {
+            "Id": 2180,
+            "Code": "MEKI",
+            "ArName": "ساقية مكى",
+            "EnName": "Saqiyet Mekki"
+          }
+        ]
+      },
+      {
+        "Id": 2264,
+        "Code": "Senoras",
+        "ArName": "سنورس",
+        "EnName": "Senoras",
+        "SubZone": [
+          {
+            "Id": 2265,
+            "Code": "Senoras",
+            "ArName": "سنورس",
+            "EnName": "Senoras"
+          }
+        ]
+      },
+      {
+        "Id": 2268,
+        "Code": "SEWA",
+        "ArName": "سيوة",
+        "EnName": "SEWA",
+        "SubZone": [
+          {
+            "Id": 2269,
+            "Code": "SEWA",
+            "ArName": "سيوة",
+            "EnName": "SEWA"
+          }
+        ]
+      },
+      {
+        "Id": 2095,
+        "Code": "SHRK",
+        "ArName": "الشرقية",
+        "EnName": "Sharqia",
+        "SubZone": [
+          {
+            "Id": 2119,
+            "Code": "SHRK",
+            "ArName": "الشرقية",
+            "EnName": "Sharqia"
+          }
+        ]
+      },
+      {
+        "Id": 2232,
+        "Code": "Shebin elqanater",
+        "ArName": "شبين القناطر",
+        "EnName": "Shebin elqanater",
+        "SubZone": [
+          {
+            "Id": 2248,
+            "Code": "Seiaqous",
+            "ArName": "سرياقوس",
+            "EnName": "Seiaqous"
+          },
+          {
+            "Id": 2248,
+            "Code": "Seiaqous",
+            "ArName": "سرياقوس",
+            "EnName": "Seiaqous"
+          },
+          {
+            "Id": 2248,
+            "Code": "Seiaqous",
+            "ArName": "سرياقوس",
+            "EnName": "Seiaqous"
+          },
+          {
+            "Id": 2248,
+            "Code": "Seiaqous",
+            "ArName": "سرياقوس",
+            "EnName": "Seiaqous"
+          }
+        ]
+      },
+      {
+        "Id": 1100,
+        "Code": "Sheikh Zayed",
+        "ArName": "الشيخ زايد",
+        "EnName": "Sheikh Zayed",
+        "SubZone": [
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          },
+          {
+            "Id": 1101,
+            "Code": "1st District",
+            "ArName": "الحي الاول",
+            "EnName": "1st District"
+          }
+        ]
+      },
+      {
+        "Id": 319,
+        "Code": "Shoubra",
+        "ArName": "شبرا",
+        "EnName": "Shoubra",
+        "SubZone": [
+          {
+            "Id": 321,
+            "Code": "Shubra-El Khalafawy",
+            "ArName": "شبرا الخلفاوي",
+            "EnName": "Shubra-El Khalafawy"
+          },
+          {
+            "Id": 321,
+            "Code": "Shubra-El Khalafawy",
+            "ArName": "شبرا الخلفاوي",
+            "EnName": "Shubra-El Khalafawy"
+          },
+          {
+            "Id": 321,
+            "Code": "Shubra-El Khalafawy",
+            "ArName": "شبرا الخلفاوي",
+            "EnName": "Shubra-El Khalafawy"
+          }
+        ]
+      },
+      {
+        "Id": 2155,
+        "Code": "KHM2",
+        "ArName": "2 شبرا الخيمه",
+        "EnName": "Shubra El Kheima 2",
+        "SubZone": [
+          {
+            "Id": 2156,
+            "Code": "KHM2",
+            "ArName": "2 شبرا الخيمه",
+            "EnName": "Shubra El Kheima 2"
+          }
+        ]
+      },
+      {
+        "Id": 2183,
+        "Code": "MANT",
+        "ArName": "شبرا منت",
+        "EnName": "Shubra Ment",
+        "SubZone": [
+          {
+            "Id": 2184,
+            "Code": "MANT",
+            "ArName": "شبرا منت",
+            "EnName": "Shubra Ment"
+          }
+        ]
+      },
+      {
+        "Id": 2096,
+        "Code": "SOHG",
+        "ArName": "سوهاج",
+        "EnName": "Sohag",
+        "SubZone": [
+          {
+            "Id": 2120,
+            "Code": "SOHG",
+            "ArName": "سوهاج",
+            "EnName": "Sohag"
+          }
+        ]
+      },
+      {
+        "Id": 2277,
+        "Code": "SC Zone",
+        "ArName": "Sorting Center Zone",
+        "EnName": "Sorting Center Zone",
+        "SubZone": [
+          {
+            "Id": 2278,
+            "Code": "SC SubZone",
+            "ArName": "Sorting Center SubZone",
+            "EnName": "Sorting Center SubZone"
+          }
+        ]
+      },
+      {
+        "Id": 2281,
+        "Code": "SSINI",
+        "ArName": "جنوب سيناء",
+        "EnName": "South Sinai",
+        "SubZone": [
+          {
+            "Id": 2282,
+            "Code": "SSINI",
+            "ArName": "جنوب سيناء",
+            "EnName": "South Sinai"
+          }
+        ]
+      },
+      {
+        "Id": 2098,
+        "Code": "SUEZ",
+        "ArName": "السويس",
+        "EnName": "Suez",
+        "SubZone": [
+          {
+            "Id": 2122,
+            "Code": "SUEZ",
+            "ArName": "السويس",
+            "EnName": "Suez"
+          }
+        ]
+      },
+      {
+        "Id": 2266,
+        "Code": "Tamya",
+        "ArName": "طما",
+        "EnName": "Tamya",
+        "SubZone": [
+          {
+            "Id": 2267,
+            "Code": "Tamya",
+            "ArName": "طما",
+            "EnName": "Tamya"
+          }
+        ]
+      },
+      {
+        "Id": 2233,
+        "Code": "Toukh",
+        "ArName": "طوخ",
+        "EnName": "Toukh",
+        "SubZone": [
+          {
+            "Id": 2252,
+            "Code": "Toukh",
+            "ArName": "طوخ",
+            "EnName": "Toukh"
+          }
+        ]
+      },
+      {
+        "Id": 2127,
+        "Code": "TURA",
+        "ArName": "طره",
+        "EnName": "Tura",
+        "SubZone": [
+          {
+            "Id": 2128,
+            "Code": "TURA",
+            "ArName": "طره",
+            "EnName": "Tura"
+          }
+        ]
+      },
+      {
+        "Id": 1133,
+        "Code": "Warraq",
+        "ArName": "وراق",
+        "EnName": "Warraq",
+        "SubZone": [
+          {
+            "Id": 1134,
+            "Code": "Warraq",
+            "ArName": "وراق",
+            "EnName": "Warraq"
+          }
+        ]
+      },
+      {
+        "Id": 2262,
+        "Code": "Youssef Elseddik",
+        "ArName": "يوسف الصديق",
+        "EnName": "Youssef Elseddik",
+        "SubZone": [
+          {
+            "Id": 2263,
+            "Code": "Youssef Elseddik",
+            "ArName": "يوسف الصديق",
+            "EnName": "Youssef Elseddik"
+          }
+        ]
+      },
+      {
+        "Id": 86,
+        "Code": "Zamalek",
+        "ArName": "الزمالك",
+        "EnName": "Zamalek",
+        "SubZone": [
+          {
+            "Id": 87,
+            "Code": "Abou Elfeda",
+            "ArName": "ابو الفدا",
+            "EnName": "Abou Elfeda"
+          },
+          {
+            "Id": 87,
+            "Code": "Abou Elfeda",
+            "ArName": "ابو الفدا",
+            "EnName": "Abou Elfeda"
+          },
+          {
+            "Id": 87,
+            "Code": "Abou Elfeda",
+            "ArName": "ابو الفدا",
+            "EnName": "Abou Elfeda"
+          },
+          {
+            "Id": 87,
+            "Code": "Abou Elfeda",
+            "ArName": "ابو الفدا",
+            "EnName": "Abou Elfeda"
+          }
+        ]
+      },
+      {
+        "Id": 324,
+        "Code": "Zeitoun",
+        "ArName": "الزيتون",
+        "EnName": "Zeitoun",
+        "SubZone": [
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          },
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          },
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          },
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          },
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          },
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          },
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          },
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          },
+          {
+            "Id": 325,
+            "Code": "Al Sawah",
+            "ArName": "السواح",
+            "EnName": "Al Sawah"
+          }
+        ]
+      }
+    ],
+    "CoreValue": null,
+    "IsErrorState": false,
+    "ErrorDescription": null,
+    "ErrorMetadata": null
+  }
+}
