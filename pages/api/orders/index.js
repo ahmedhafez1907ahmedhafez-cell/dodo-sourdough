@@ -1,9 +1,9 @@
 import { adminDb, requireAdmin, ApiError } from "../../../lib/firebaseAdmin";
 import { getDeliveryFee, getGovernorateFee, OTHER_GOVERNORATE } from "../../../lib/deliveryRates";
 import { sendOrderNotification } from "../../../lib/sendMail";
-import { createMylerzShipment } from "../../../lib/mylerz";
 import { recalcItems, PriceError } from "../../../lib/pricing";
 import { DEFAULT_ORDER_STATUS } from "../../../lib/orderStatus";
+import { depositFor, remainderFor, DEPOSIT_WALLET } from "../../../lib/payment";
 
 export default async function handler(req, res) {
   try {
@@ -64,6 +64,8 @@ async function createOrder(req, res) {
   }
 
   const total = itemsTotal + (deliveryFee || 0);
+  // العربون: نص المبلغ، بيتحسب في السيرفر عشان العميل ميقدرش يقلله
+  const deposit = depositFor(total);
 
   const orderRef = await adminDb.collection("orders").add({
     customerName: String(b.customerName).slice(0, 80),
@@ -80,55 +82,34 @@ async function createOrder(req, res) {
     deliveryFee,
     deliveryNote,
     total,
+    deposit,
+    depositPaid: false,
     status: DEFAULT_ORDER_STATUS,
     mylerzTrackingNo: null,
     createdAt: new Date().toISOString(),
   });
 
   // بنبني الأوردر من القيم المحسوبة في السيرفر — مش من الـ body
-  const order = { ...b, id: orderRef.id, items, itemsTotal, deliveryFee, total };
+  const order = { ...b, id: orderRef.id, items, itemsTotal, deliveryFee, total, deposit };
 
   // إشعار إيميل — مايفشلش الطلب لو الإيميل وقع
   sendOrderNotification(order).catch((e) => console.error("[order email]", e));
 
-  // شحنة مايلرز — لو التكامل مش مفعّل بترجع {enabled:false} من غير ما توقف الأوردر.
-  //
-  // بنتخطاها في حالتين:
-  //  1) سعر التوصيل لسه متحددش ("محافظة تانية") — لو بعتنا الشحنة دلوقتي
-  //     المندوب هيحصّل مبلغ ناقص، لأن التوصيل مش محسوب فيه.
-  //  2) أوردرات بنها لو MYLERZ_SKIP_BANHA=true — لو بتوصّلها بنفسك
-  //     مش منطقي تدفع شحن لمايلرز عليها.
-  const skipBanha = String(process.env.MYLERZ_SKIP_BANHA || "").toLowerCase() === "true";
-  const isLocalBanha = skipBanha && b.zone === "banha";
-  const skipReason =
-    deliveryFee === null ? "سعر التوصيل لسه متحددش" :
-    isLocalBanha ? "أوردر بنها — توصيل محلي" : null;
+  // ⚠️ الشحنة مش بتتعمل هنا خالص.
+  // الأوردر بيفضل "في انتظار العربون" لحد ما الأدمن يأكّد إن نص
+  // المبلغ وصل، وساعتها بس بتتبعت لمايلرز من
+  // /api/orders/[id]/deposit — عشان محدش يشحن من غير ما يدفع.
 
-  if (skipReason) {
-    console.log(`[Mylerz] تخطينا الشحنة (${skipReason}) — أوردر ${orderRef.id}`);
-  } else {
-    try {
-      const mylerz = await createMylerzShipment(order);
-      if (mylerz.enabled && mylerz.trackingNo) {
-        await orderRef.update({
-          mylerzTrackingNo: mylerz.trackingNo,
-          mylerzPickupCode: mylerz.pickupOrderCode || null,
-        });
-      }
-    } catch (e) {
-      console.error("[Mylerz]", e.message);
-      await orderRef.update({ mylerzError: String(e.message).slice(0, 300) }).catch(() => {});
-    }
-  }
-
-  // localHandoff = الأوردر ده بنوصّله بنفسنا (بنها)، فالواجهة بتحوّل
-  // العميل على واتساب برسالة فيها تفاصيل الطلب بدل ما يستنى مندوب مايلرز.
+  // كل الأوردرات دلوقتي بتعدي على نفس الشاشة: العربون + واتساب.
+  // بنرجّع الأرقام للواجهة عشان تعرضها للعميل.
   return res.status(201).json({
     id: orderRef.id,
     total,
     deliveryFee,
     deliveryNote,
-    localHandoff: isLocalBanha,
+    deposit,
+    remainder: remainderFor(total),
+    depositWallet: DEPOSIT_WALLET,
   });
 }
 

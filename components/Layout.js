@@ -5,6 +5,7 @@ import { getDeliveryFee, getGovernorateFee, GOVERNORATE_NAMES, OTHER_GOVERNORATE
 import { AREA_NAMES } from "../lib/areaNames";
 import { WHATSAPP_NUMBER } from "../lib/contact";
 import { buildOrderWhatsAppUrl } from "../lib/orderMessage";
+import { DEPOSIT_WALLET } from "../lib/payment";
 import Icon from "./Icon";
 
 export default function Layout({ children }) {
@@ -179,26 +180,29 @@ function CartSidebar() {
       setForm(EMPTY_FORM);
       shop.setCartOpen(false);
 
-      // أوردر بنها = توصيل محلي. الأوردر اتسجل عندنا خلاص، وبنكمّل
-      // على واتساب برسالة جاهزة فيها كل التفاصيل.
-      if (data.localHandoff) {
-        const url = buildOrderWhatsAppUrl({
-          id: data.id,
-          name: snapForm.name,
-          phone: snapForm.phone,
-          area: snapForm.area || (forcedLocal ? snapForm.area : ""),
-          street: snapForm.street,
-          items: snapshot,
-          deliveryFee: data.deliveryFee,
-          total: data.total,
-        });
-        setDone({ id: data.id, url });
-        // بنحاول نفتحه أوتوماتيك — بعض المتصفحات بتمنع ده، وساعتها
-        // الزرار اللي في الشاشة هو خطة بديلة.
-        try { window.open(url, "_blank", "noopener"); } catch { /* الزرار موجود */ }
-      } else {
-        shop.showToast(data.deliveryNote ? "تم إرسال طلبك — " + data.deliveryNote : "تم إرسال طلبك، هنتواصل معك قريباً لتأكيد الميعاد");
-      }
+      // كل أوردر بيعدي على نفس الشاشة: العربون + واتساب.
+      // الأوردر اتسجل عندنا بحالة "في انتظار العربون" ومش هيتشحن
+      // غير لما الأدمن يشوف صورة التحويل ويأكّد.
+      const url = buildOrderWhatsAppUrl({
+        id: data.id,
+        name: snapForm.name,
+        phone: snapForm.phone,
+        area: snapForm.area || snapForm.province || "",
+        street: snapForm.street,
+        items: snapshot,
+        deliveryFee: data.deliveryFee,
+        total: data.total,
+        deposit: data.deposit,
+      });
+      setDone({
+        id: data.id,
+        url,
+        total: data.total,
+        deposit: data.deposit,
+        remainder: data.remainder,
+        wallet: data.depositWallet || DEPOSIT_WALLET,
+        note: data.deliveryNote,
+      });
     } catch (e) {
       shop.showToast("حصل خطأ، جرب تاني");
     } finally {
@@ -330,21 +334,53 @@ function CartSidebar() {
   );
 }
 
-// شاشة النجاح لأوردرات بنها — الأوردر اتسجل، وبنكمّل على واتساب
+// شاشة ما بعد الطلب: العربون + التحويل + واتساب.
+// الأوردر اتسجل عندنا خلاص، بس مش هيتحضّر ولا يتشحن غير لما
+// العربون يوصل ويتأكد من لوحة الأدمن.
 function OrderDonePopup({ done, onClose }) {
+  const [copied, setCopied] = useState(false);
+
+  function copyWallet() {
+    navigator.clipboard?.writeText(done.wallet).then(
+      () => { setCopied(true); setTimeout(() => setCopied(false), 1800); },
+      () => {}
+    );
+  }
+
   return (
     <div className="done-popup open" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="done-box">
-        <div className="done-icon"><Icon name="checkCircle" size={34} /></div>
-        <h3>تم تسجيل طلبك</h3>
+        <div className="done-icon"><Icon name="checkCircle" size={32} /></div>
+        <h3>طلبك اتسجل</h3>
         <p className="done-id">رقم الطلب: <strong>{done.id}</strong></p>
-        <p className="done-note">
-          طلبك وصلنا وهنجهزه. اضغط الزرار عشان تبعتلنا تفاصيل الطلب على واتساب ونتفق على ميعاد التوصيل.
-        </p>
-        <a href={done.url} target="_blank" rel="noreferrer" className="done-wa" onClick={onClose}>
-          <Icon name="chat" size={19} /> كمّل على واتساب
+
+        <div className="dep-box">
+          <span className="dep-label">المطلوب دفعه دلوقتي كعربون</span>
+          <span className="dep-amount">{done.deposit} <em>جنيه</em></span>
+          <span className="dep-rest">
+            الإجمالي {done.total} جنيه — الباقي {done.remainder} جنيه بعد ما تستلم
+          </span>
+        </div>
+
+        <ol className="dep-steps">
+          <li>
+            حوّل <strong>{done.deposit} جنيه</strong> على الرقم ده
+            <button type="button" className="dep-wallet" onClick={copyWallet}>
+              <span dir="ltr">{done.wallet}</span>
+              <Icon name={copied ? "check" : "clipboard"} size={15} />
+            </button>
+            <span className="dep-hint">فودافون كاش أو إنستاباي</span>
+          </li>
+          <li>ابعتلنا <strong>صورة إيصال التحويل</strong> على واتساب من الزرار تحت</li>
+          <li>أول ما نشوف التحويل بنأكّد طلبك ونبدأ نحضّره</li>
+        </ol>
+
+        {done.note && <p className="done-note">{done.note}</p>}
+
+        <a href={done.url} target="_blank" rel="noreferrer" className="done-wa">
+          <Icon name="chat" size={19} /> ابعت صورة التحويل على واتساب
         </a>
-        <button className="done-close" onClick={onClose}>تمام، أقفل</button>
+        <button className="done-close" onClick={onClose}>أقفل</button>
       </div>
     </div>
   );

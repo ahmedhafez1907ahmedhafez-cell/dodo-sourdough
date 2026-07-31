@@ -4,6 +4,7 @@ import AdminGuard from "../../components/AdminGuard";
 import { useAdminAuth } from "../../lib/useAdminAuth";
 
 import { ORDER_STATUSES as STATUSES } from "../../lib/orderStatus";
+import Icon from "../../components/Icon";
 
 function OrdersDashboard() {
   const { authedFetch, logout, user, loading: authLoading } = useAdminAuth();
@@ -40,6 +41,26 @@ function OrdersDashboard() {
     if (!res.ok) load(); // رجّع الحالة الصح لو فشل
   }
 
+  // تأكيد العربون — ده اللي بيبعت الشحنة لمايلرز. مفيش أوردر
+  // بيتشحن قبل ما تدوس هنا.
+  const [depBusy, setDepBusy] = useState(null);
+  async function setDeposit(id, paid) {
+    if (paid && !confirm("متأكد إن العربون وصل؟ الطلب هيتبعت لمايلرز على طول.")) return;
+    setDepBusy(id);
+    const res = await authedFetch(`/api/orders/${id}/deposit`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ paid }),
+    });
+    const data = await res.json().catch(() => ({}));
+    setDepBusy(null);
+    if (!res.ok) { alert(data.error || "فشل التأكيد"); return; }
+    if (data.mylerzError) alert("العربون اتأكد، بس الشحنة فشلت:\n" + data.mylerzError);
+    else if (data.skipped) alert("العربون اتأكد. الشحنة اتخطت: " + data.skipped);
+    else if (data.trackingNo) alert(`تمام — الشحنة اتعملت (${data.service})\nرقم التتبع: ${data.trackingNo}`);
+    load();
+  }
+
   async function deleteOrder(id) {
     if (!confirm("متأكد إنك عايز تحذف الطلب ده نهائياً؟ الخطوة دي مش هترجع.")) return;
     const prev = orders;
@@ -74,7 +95,32 @@ function OrdersDashboard() {
             {o.items?.map((it, i) => <span key={i}>{it.nameAr} ×{it.qty}{i < o.items.length - 1 ? "، " : ""}</span>)}
           </div>
           <div style={{ fontWeight: 700 }}>الإجمالي: {o.total} جنيه (توصيل {o.deliveryFee ?? "—"})</div>
-          {o.mylerzTrackingNo && <div style={{ fontSize: 12, color: "#1b7a3d" }}>رقم شحنة مايلرز: {o.mylerzTrackingNo}</div>}
+
+          <div className={"adm-dep" + (o.depositPaid ? " paid" : "")}>
+            <Icon name={o.depositPaid ? "checkCircle" : "clock"} size={17} />
+            <span className="adm-dep-txt">
+              {o.depositPaid
+                ? `العربون اتأكد (${o.deposit ?? "—"} جنيه)`
+                : `في انتظار عربون ${o.deposit ?? Math.ceil((o.total || 0) / 2)} جنيه`}
+            </span>
+            {o.depositPaid ? (
+              <button className="adm-dep-no" disabled={depBusy === o.id}
+                onClick={() => setDeposit(o.id, false)}>تراجع</button>
+            ) : (
+              <button className="adm-dep-yes" disabled={depBusy === o.id}
+                onClick={() => setDeposit(o.id, true)}>
+                {depBusy === o.id ? "..." : "تم استلام العربون"}
+              </button>
+            )}
+          </div>
+
+          {o.mylerzTrackingNo && (
+            <div className="adm-ship ok">
+              شحنة مايلرز: {o.mylerzTrackingNo}
+              {o.mylerzService === "SD" ? " — نفس اليوم" : o.mylerzService === "ND" ? " — اليوم التالي" : ""}
+            </div>
+          )}
+          {o.mylerzError && <div className="adm-ship err">فشل الشحن: {o.mylerzError}</div>}
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
             <select
               value={o.status}
