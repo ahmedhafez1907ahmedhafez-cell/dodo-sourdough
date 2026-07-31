@@ -3,7 +3,7 @@ import Link from "next/link";
 import AdminGuard from "../../components/AdminGuard";
 import { useAdminAuth } from "../../lib/useAdminAuth";
 
-import { ORDER_STATUSES as STATUSES } from "../../lib/orderStatus";
+import { ORDER_STATUSES as STATUSES, AWAITING_DEPOSIT } from "../../lib/orderStatus";
 import Icon from "../../components/Icon";
 
 function OrdersDashboard() {
@@ -32,7 +32,10 @@ function OrdersDashboard() {
   }, [user, authLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function changeStatus(id, status) {
-    setOrders((o) => o.map((x) => (x.id === id ? { ...x, status } : x))); // optimistic
+    // تغيير الحالة معناه إن العربون وصل (السيرفر بيعمل نفس الحاجة)
+    setOrders((o) => o.map((x) => (x.id === id
+      ? { ...x, status, depositPaid: status !== AWAITING_DEPOSIT, mylerzError: status === AWAITING_DEPOSIT ? x.mylerzError : null }
+      : x))); // optimistic
     const res = await authedFetch(`/api/orders/${id}/status`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -96,6 +99,7 @@ function OrdersDashboard() {
           </div>
           <div style={{ fontWeight: 700 }}>الإجمالي: {o.total} جنيه (توصيل {o.deliveryFee ?? "—"})</div>
 
+          {o.status === AWAITING_DEPOSIT && (
           <div className={"adm-dep" + (o.depositPaid ? " paid" : "")}>
             <Icon name={o.depositPaid ? "checkCircle" : "clock"} size={17} />
             <span className="adm-dep-txt">
@@ -113,6 +117,7 @@ function OrdersDashboard() {
               </button>
             )}
           </div>
+          )}
 
           {o.mylerzTrackingNo && (
             <div className="adm-ship ok">
