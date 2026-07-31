@@ -34,13 +34,6 @@ export default function AdSlot({ desktopOnly = true }) {
     <section className={"ad-slot" + (desktopOnly ? " ad-desktop-only" : "")}>
       {AFFILIATE_PRODUCTS.length > 0 ? (
         <>
-          <div className="section-title">
-            <span className="eyebrow">Also Useful</span>
-            <h2>حاجات تفيدك في الخبيز</h2>
-            <div className="title-line"></div>
-            <p>أدوات إحنا بنستخدمها بس مش بنبيعها</p>
-          </div>
-
           <div className="ad-products">
             {AFFILIATE_PRODUCTS.map((p) => (
               <a
