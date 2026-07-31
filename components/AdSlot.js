@@ -1,22 +1,26 @@
 // ============================================================
-// مكان الإعلان في الصفحة.
+// قسم المنتجات المرشّحة (روابط شراكة أمازون).
 //
-// • لو مفيش إعلان متظبط في lib/ads.js → مش بيرسم حاجة خالص.
-// • على الموبايل مخفي (desktopOnly) — الشاشة الصغيرة أضيق من إنها
-//   تستحمل إعلان جنب المنتجات من غير ما تزنق العميل.
+// • لو مفيش حاجة متظبطة في lib/ads.js → مش بيرسم حاجة خالص.
+// • على الموبايل مخفي — الشاشة الصغيرة أضيق من إنها تستحمل
+//   قسم زيادة بعد المنتجات من غير ما تزهّق العميل.
 // • الأفلييت له أولوية على AdSense لو الاتنين متظبطين.
+//
+// ⚠️ rel="sponsored nofollow" مطلوب من جوجل لروابط العمولة،
+//    و target="_blank" عشان العميل ميسبش سلته عندنا.
 // ============================================================
 
 import { useEffect } from "react";
 import Script from "next/script";
+import Icon from "./Icon";
 import {
-  AFFILIATE_BANNERS, ADSENSE_CLIENT, ADSENSE_SLOT, AD_DISCLOSURE, adsEnabled,
+  AFFILIATE_PRODUCTS, amazonLink, ADSENSE_CLIENT, ADSENSE_SLOT,
+  AD_DISCLOSURE, adsEnabled,
 } from "../lib/ads";
 
 export default function AdSlot({ desktopOnly = true }) {
-  const useAdsense = !AFFILIATE_BANNERS.length && !!ADSENSE_CLIENT && !!ADSENSE_SLOT;
+  const useAdsense = !AFFILIATE_PRODUCTS.length && !!ADSENSE_CLIENT && !!ADSENSE_SLOT;
 
-  // AdSense محتاج نقوله إن في وحدة إعلانية جديدة اتحطت في الصفحة
   useEffect(() => {
     if (!useAdsense) return;
     try {
@@ -28,25 +32,44 @@ export default function AdSlot({ desktopOnly = true }) {
 
   return (
     <section className={"ad-slot" + (desktopOnly ? " ad-desktop-only" : "")}>
-      <p className="ad-disclosure">{AD_DISCLOSURE}</p>
+      {AFFILIATE_PRODUCTS.length > 0 ? (
+        <>
+          <div className="section-title">
+            <span className="eyebrow">Also Useful</span>
+            <h2>حاجات تفيدك في الخبيز</h2>
+            <div className="title-line"></div>
+            <p>أدوات إحنا بنستخدمها بس مش بنبيعها</p>
+          </div>
 
-      {AFFILIATE_BANNERS.length > 0 ? (
-        <div className="ad-banners">
-          {AFFILIATE_BANNERS.map((b, i) => (
-            <a
-              key={i}
-              href={b.href}
-              target="_blank"
-              rel="sponsored noopener noreferrer"
-              className="ad-banner"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={b.img} alt={b.alt || "إعلان"} loading="lazy" />
-            </a>
-          ))}
-        </div>
+          <div className="ad-products">
+            {AFFILIATE_PRODUCTS.map((p) => (
+              <a
+                key={p.asin}
+                href={amazonLink(p.asin)}
+                target="_blank"
+                rel="sponsored nofollow noopener noreferrer"
+                className="ad-card reveal"
+              >
+                <div className="ad-card-img">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.img} alt={p.title} loading="lazy" />
+                </div>
+                <div className="ad-card-body">
+                  <h4>{p.title}</h4>
+                  {p.note && <p>{p.note}</p>}
+                  <span className="ad-card-cta">
+                    شوفه على أمازون <Icon name="chevron" size={14} style={{ transform: "scaleX(-1)" }} />
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <p className="ad-disclosure">{AD_DISCLOSURE}</p>
+        </>
       ) : (
         <>
+          <p className="ad-disclosure" style={{ marginBottom: 14 }}>{AD_DISCLOSURE}</p>
           <Script
             id="adsense-lib"
             async
