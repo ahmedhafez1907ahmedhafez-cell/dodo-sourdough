@@ -99,24 +99,19 @@ function OrdersDashboard() {
           </div>
           <div style={{ fontWeight: 700 }}>الإجمالي: {o.total} جنيه (توصيل {o.deliveryFee ?? "—"})</div>
 
-          {o.status === AWAITING_DEPOSIT && (
-          <div className={"adm-dep" + (o.depositPaid ? " paid" : "")}>
-            <Icon name={o.depositPaid ? "checkCircle" : "clock"} size={17} />
-            <span className="adm-dep-txt">
-              {o.depositPaid
-                ? `العربون اتأكد (${o.deposit ?? "—"} جنيه)`
-                : `في انتظار عربون ${o.deposit ?? Math.ceil((o.total || 0) / 2)} جنيه`}
-            </span>
-            {o.depositPaid ? (
-              <button className="adm-dep-no" disabled={depBusy === o.id}
-                onClick={() => setDeposit(o.id, false)}>تراجع</button>
-            ) : (
+          {/* الكارت بيختفي خالص أول ما العربون يتأكد أو الأوردر يتحرك
+              لحالة أبعد — مفيش لازمة لزرار على أوردر خلاص اتحصّل. */}
+          {!o.depositPaid && o.status === AWAITING_DEPOSIT && (
+            <div className="adm-dep">
+              <Icon name="clock" size={17} />
+              <span className="adm-dep-txt">
+                في انتظار عربون {o.deposit ?? Math.ceil((o.total || 0) / 2)} جنيه
+              </span>
               <button className="adm-dep-yes" disabled={depBusy === o.id}
                 onClick={() => setDeposit(o.id, true)}>
                 {depBusy === o.id ? "..." : "تم استلام العربون"}
               </button>
-            )}
-          </div>
+            </div>
           )}
 
           {o.mylerzTrackingNo && (
