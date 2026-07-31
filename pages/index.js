@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import Icon from "../components/Icon";
 import SplitText from "../components/SplitText";
+import AdSlot from "../components/AdSlot";
 import { useHeroIntro, useCardReveal, scatterStyle } from "../lib/useMotion";
 import { WHATSAPP_NUMBER } from "../lib/contact";
 
@@ -168,12 +169,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="contact-section">
-        <div className="section-title"><span className="eyebrow">Get in Touch</span><h2>تواصل معنا</h2><div className="title-line"></div><p>احنا هنا دايماً</p></div>
-        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="wa-cta">
-          <Icon name="chat" size={20} /> ابعتلنا على واتساب
-        </a>
-      </section>
+      {/* قسم "تواصل معنا" اتشال — زرار الواتساب العايم تحت على الشمال
+          بيعمل نفس الحاجة، ومكانه هنا بقى للإعلان. */}
+      <AdSlot />
     </div>
   );
 }
