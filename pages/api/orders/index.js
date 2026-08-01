@@ -1,5 +1,5 @@
 import { adminDb, requireAdmin, ApiError } from "../../../lib/firebaseAdmin";
-import { getDeliveryFee, getGovernorateFee, OTHER_GOVERNORATE } from "../../../lib/deliveryRates";
+import { getGovernorateFee, isBanhaArea, BANHA_DELIVERY_NOTE, OTHER_GOVERNORATE } from "../../../lib/deliveryRates";
 import { sendOrderNotification } from "../../../lib/sendMail";
 import { recalcItems, PriceError } from "../../../lib/pricing";
 import { DEFAULT_ORDER_STATUS } from "../../../lib/orderStatus";
@@ -49,7 +49,10 @@ async function createOrder(req, res) {
   let deliveryNote = "";
   if (b.zone === "banha") {
     if (!b.area) return res.status(400).json({ error: "اختار منطقتك في بنها" });
-    deliveryFee = getDeliveryFee(b.area);
+    if (!isBanhaArea(b.area)) return res.status(400).json({ error: "منطقة غير معروفة في بنها" });
+    // بنها بنوصّلها بنفسنا وسعرها بيتحدد على واتساب
+    deliveryFee = null;
+    deliveryNote = BANHA_DELIVERY_NOTE;
   } else if (b.zone === "nationwide") {
     if (!b.province) return res.status(400).json({ error: "اختار المحافظة" });
     if (b.province === OTHER_GOVERNORATE) {

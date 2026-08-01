@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useShop } from "../context/ShopContext";
-import { getDeliveryFee, getGovernorateFee, GOVERNORATE_NAMES, OTHER_GOVERNORATE } from "../lib/deliveryRates";
+import { getGovernorateFee, GOVERNORATE_NAMES, OTHER_GOVERNORATE, BANHA_DELIVERY_NOTE } from "../lib/deliveryRates";
 import { AREA_NAMES } from "../lib/areaNames";
 import { WHATSAPP_NUMBER } from "../lib/contact";
 import { buildOrderWhatsAppUrl } from "../lib/orderMessage";
@@ -134,9 +134,11 @@ function CartSidebar() {
 
   const forcedLocal = shop.cart.some((i) => i.localOnly);
   const zone = forcedLocal ? "banha" : form.zone;
-  const banhaFee = zone === "banha" ? getDeliveryFee(form.area) : null;
+  // بنها بنوصّلها بنفسنا وسعرها بيتحدد على واتساب، فمفيش رقم بيتعرض
   const govFee = zone === "nationwide" ? getGovernorateFee(form.province) : null;
-  const deliveryFee = zone === "banha" ? banhaFee : zone === "nationwide" ? govFee : null;
+  const deliveryFee = zone === "nationwide" ? govFee : null;
+  // الحالات اللي سعر التوصيل فيها لسه متحددش
+  const feeUnknown = zone === "banha" || (zone === "nationwide" && form.province === OTHER_GOVERNORATE);
 
   async function confirmOrder() {
     if (!form.name.trim()) return shop.showToast("من فضلك اكتب اسمك");
@@ -289,7 +291,7 @@ function CartSidebar() {
                 </select>
                 {form.area && (
                   <div className="delivery-estimate">
-                    <div className="del-price">التوصيل لـ <strong>{form.area}</strong>: <strong>{banhaFee} جنيه</strong></div>
+                    <div className="del-note">{BANHA_DELIVERY_NOTE} — بنتفق عليه بعد ما تبعتلنا.</div>
                   </div>
                 )}
               </div>
@@ -322,7 +324,7 @@ function CartSidebar() {
             </div>
             <div className="cart-total">
               <span className="cart-total-label">الإجمالي:</span>
-              <span className="cart-total-price">{shop.cartTotal + (deliveryFee || 0)} جنيه{zone === "nationwide" && form.province === OTHER_GOVERNORATE ? " + توصيل" : ""}</span>
+              <span className="cart-total-price">{shop.cartTotal + (deliveryFee || 0)} جنيه{feeUnknown ? " + توصيل" : ""}</span>
             </div>
             <button className="checkout-btn" disabled={busy} onClick={confirmOrder}>
               {busy ? "جاري الإرسال..." : <><Icon name="check" size={18} /> تأكيد الطلب</>}
