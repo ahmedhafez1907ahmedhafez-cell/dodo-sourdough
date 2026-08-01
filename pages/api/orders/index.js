@@ -96,7 +96,13 @@ async function createOrder(req, res) {
   const order = { ...b, id: orderRef.id, items, itemsTotal, deliveryFee, total, deposit };
 
   // إشعار إيميل — مايفشلش الطلب لو الإيميل وقع
-  sendOrderNotification(order).catch((e) => console.error("[order email]", e));
+  // بنسجّل فشل الإيميل على الأوردر نفسه عشان يبان في الأدمن،
+  // بدل ما يضيع في اللوج ومنعرفش ليه الإشعار مجاش.
+  sendOrderNotification(order).catch((e) => {
+    const msg = String(e.message || e).slice(0, 200);
+    console.error("[order email]", msg);
+    orderRef.update({ emailError: msg }).catch(() => {});
+  });
 
   // ⚠️ الشحنة مش بتتعمل هنا خالص.
   // الأوردر بيفضل "في انتظار العربون" لحد ما الأدمن يأكّد إن نص

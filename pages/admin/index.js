@@ -41,14 +41,23 @@ function OrdersDashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     });
-    if (!res.ok) load(); // رجّع الحالة الصح لو فشل
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) { load(); return; } // رجّع الحالة الصح لو فشل
+    if (data.cancelNote) alert(data.cancelNote);
   }
 
   // تأكيد العربون — ده اللي بيبعت الشحنة لمايلرز. مفيش أوردر
   // بيتشحن قبل ما تدوس هنا.
   const [depBusy, setDepBusy] = useState(null);
   async function setDeposit(id, paid) {
-    if (paid && !confirm("متأكد إن العربون وصل؟ الطلب هيتبعت لمايلرز على طول.")) return;
+    // أوردرات بنها بنوصّلها بنفسنا، فمش بتروح لمايلرز — الرسالة
+    // لازم تقول ده صح عشان متتلخبطش.
+    const o = orders.find((x) => x.id === id);
+    const localBanha = o?.zone === "banha";
+    const msg = localBanha
+      ? "متأكد إن العربون وصل؟ الطلب ده بنها — هيتعلّم كمدفوع بس مش هيروح لمايلرز."
+      : "متأكد إن العربون وصل؟ الطلب هيتبعت لمايلرز على طول.";
+    if (paid && !confirm(msg)) return;
     setDepBusy(id);
     const res = await authedFetch(`/api/orders/${id}/deposit`, {
       method: "PATCH",
@@ -60,8 +69,29 @@ function OrdersDashboard() {
     if (!res.ok) { alert(data.error || "فشل التأكيد"); return; }
     if (data.mylerzError) alert("العربون اتأكد، بس الشحنة فشلت:\n" + data.mylerzError);
     else if (data.skipped) alert("العربون اتأكد. الشحنة اتخطت: " + data.skipped);
-    else if (data.trackingNo) alert(`تمام — الشحنة اتعملت (${data.service})\nرقم التتبع: ${data.trackingNo}`);
+    else if (data.trackingNo) {
+      // الشحنة اتعملت — بنفتح البوليصة على طول عشان تطبعها وتلزقها
+      alert(`تمام — الشحنة اتعملت (${data.service})\nرقم التتبع: ${data.trackingNo}\n\nهنفتحلك البوليصة دلوقتي عشان تطبعها.`);
+      printAwb(id);
+    }
     load();
+  }
+
+  // بوليصة الشحن — بتتفتح في تاب جديد وبتطبع لوحدها.
+  // مايلرز بيطلبوا تلزقها على الطرد.
+  async function printAwb(id) {
+    const res = await authedFetch(`/api/orders/${id}/awb`);
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      alert(d.error || "مقدرناش نجيب البوليصة");
+      return;
+    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const w = window.open(url, "_blank");
+    // بنستنى الـ PDF يتحمّل الأول وبعدين نفتح شاشة الطباعة
+    if (w) w.addEventListener("load", () => { try { w.print(); } catch {} });
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
   async function deleteOrder(id) {
@@ -93,11 +123,24 @@ function OrdersDashboard() {
             <strong>{o.customerName}</strong>
             <span style={{ fontSize: 12, color: "#888" }}>{o.createdAt?.slice(0, 16).replace("T", " ")}</span>
           </div>
-          <div style={{ fontSize: 13, color: "#555" }}>{o.customerPhone} — {o.area}, {o.street}</div>
+          {/* بنوضّح نوع التوصيل الأول: بنها بنوصّلها بنفسنا، وبرّه بمايلرز.
+              وبنعرض المحافظة قبل باقي العنوان عشان تبان بسرعة. */}
+          <div style={{ fontSize: 12, fontWeight: 700, margin: "3px 0",
+            color: o.zone === "banha" ? "#2c7a4b" : "#8a4a28" }}>
+            {o.zone === "banha" ? "بنها ومحيطها — توصيل بنفسنا" : "خارج بنها — شحن مايلرز"}
+          </div>
+          <div style={{ fontSize: 13, color: "#555" }}>
+            {o.customerPhone} — {[o.zone === "banha" ? o.area : o.province, o.zone === "banha" ? null : o.area, o.street].filter(Boolean).join("، ")}
+          </div>
           <div style={{ fontSize: 13, margin: "6px 0" }}>
             {o.items?.map((it, i) => <span key={i}>{it.nameAr} ×{it.qty}{i < o.items.length - 1 ? "، " : ""}</span>)}
           </div>
-          <div style={{ fontWeight: 700 }}>الإجمالي: {o.total} جنيه (توصيل {o.deliveryFee ?? "—"})</div>
+          <div style={{ fontWeight: 700 }}>
+            الإجمالي: {o.total} جنيه{" "}
+            <span style={{ fontWeight: 400, fontSize: 13, color: "#777" }}>
+              (توصيل {o.zone === "banha" ? "بيتحدد على واتساب" : (o.deliveryFee ?? "لسه متحددش")})
+            </span>
+          </div>
 
           {/* الكارت بيختفي خالص أول ما العربون يتأكد أو الأوردر يتحرك
               لحالة أبعد — مفيش لازمة لزرار على أوردر خلاص اتحصّل. */}
@@ -118,9 +161,11 @@ function OrdersDashboard() {
             <div className="adm-ship ok">
               شحنة مايلرز: {o.mylerzTrackingNo}
               {o.mylerzService === "SD" ? " — نفس اليوم" : o.mylerzService === "ND" ? " — اليوم التالي" : ""}
+              <button className="adm-awb" onClick={() => printAwb(o.id)}>اطبع البوليصة</button>
             </div>
           )}
           {o.mylerzError && <div className="adm-ship err">فشل الشحن: {o.mylerzError}</div>}
+          {o.emailError && <div className="adm-ship err">إشعار الإيميل مبعتش: {o.emailError}</div>}
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
             <select
               value={o.status}
