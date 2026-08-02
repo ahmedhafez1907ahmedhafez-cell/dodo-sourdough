@@ -28,6 +28,7 @@ function ProductsAdmin() {
   const [editingId, setEditingId] = useState(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
+  const [uploading, setUploading] = useState("");
 
   // ------------------------------------------------------------
   // أداة العروض الجماعية — بتشتغل باتجاهين:
@@ -129,9 +130,24 @@ function ProductsAdmin() {
   }
   useEffect(() => { load(); }, []);
 
+  async function uploadImage(file, field) {
+    if (!file) return;
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) { setMsg("⚠️ ارفع صورة JPG أو PNG أو WebP"); return; }
+    if (file.size > 3 * 1024 * 1024) { setMsg("⚠️ حجم الصورة لازم يكون أقل من 3 ميجابايت"); return; }
+    setUploading(field); setMsg("");
+    try {
+      const dataUrl = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); });
+      const res = await authedFetch("/api/uploads/product-image", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ dataUrl, filename: file.name }) });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "فشل رفع الصورة");
+      setForm((current) => ({ ...current, [field]: data.url }));
+      setMsg("✅ تم رفع الصورة");
+    } catch (e) { setMsg("❌ " + e.message); } finally { setUploading(""); }
+  }
+
   async function submit(e) {
     e.preventDefault();
-    if (!form.mainImg.trim()) { setMsg("⚠️ لازم رابط صورة أساسية"); return; }
+    if (!form.mainImg.trim()) { setMsg("⚠️ لازم ترفع صورة أساسية"); return; }
     setBusy(true);
     setMsg("");
     try {
@@ -262,12 +278,12 @@ function ProductsAdmin() {
               </p>
             )}
             {bulkEligible.map((p) => (
-              <label key={p.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 10px", borderBottom: "1px solid #f2f2f2", cursor: "pointer", fontSize: 14 }}>
+              <label key={p.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 10px", borderBottom: "1px solid #f2f2f2", cursor: "pointer", fontSize: 14 }}>
                 <input type="checkbox" checked={bulkSelected.has(p.id)} onChange={() => toggleBulkOne(p.id)} />
                 <span style={{ flex: 1 }}>{p.nameAr}</span>
-                <span style={{ color: "#999" }}>
-                  {isCancel && <span style={{ textDecoration: "line-through", marginLeft: 6 }}>{p.oldPrice}</span>}
-                  {p.price} جنيه
+                <span style={{ color: "#999", display: "inline-flex", alignItems: "center", gap: 8, whiteSpace: "nowrap" }}>
+                  {isCancel && <span style={{ textDecoration: "line-through", color: "#b54a4a" }}>{p.oldPrice} جنيه</span>}
+                  <span>{p.price} جنيه</span>
                 </span>
                 {bulkSelected.has(p.id) && (isCancel || bulkPercent !== "") && (
                   <span style={{ color: isCancel ? "#2c7a4b" : "#e74c3c", fontWeight: 700 }}>← {newPriceFor(p)} جنيه</span>
@@ -355,6 +371,12 @@ function ProductsAdmin() {
         <div>
           <label style={{ fontSize: 13, fontWeight: 700, display: "block", marginBottom: 4 }}>😀 إيموجي بديل (لو الصورة اتعطلت)</label>
           <input placeholder="🧺" value={form.emoji} onChange={(e) => setForm({ ...form, emoji: e.target.value })} />
+        </div>
+        <div style={{ display: "grid", gap: 8, padding: 10, border: "1px dashed #c9a86a", borderRadius: 8 }}>
+          <strong style={{ fontSize: 13 }}>ارفع الصور من جهازك (بدلاً من روابط imgbb)</strong>
+          <label>الصورة الأساسية <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => uploadImage(e.target.files?.[0], "mainImg")} disabled={!!uploading} /></label>
+          <label>صورة ثانية <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => uploadImage(e.target.files?.[0], "secondImg")} disabled={!!uploading} /></label>
+          {uploading && <small>جاري رفع الصورة…</small>}
         </div>
         {form.mainImg && (
           // eslint-disable-next-line @next/next/no-img-element

@@ -338,6 +338,12 @@ export function ShopProvider({ children }) {
     localStorage.setItem(ORDERS_KEY, JSON.stringify(orders.slice(0, 50)));
   }
 
+  function replaceOrderLocally(id, patch) {
+    const orders = getOrders().map((o) => o.id === id ? { ...o, ...patch } : o);
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders.slice(0, 50)));
+    return orders;
+  }
+
   const cartCount = useMemo(() => cart.reduce((s, i) => s + i.qty, 0), [cart]);
   const cartTotal = useMemo(() => cart.reduce((s, i) => s + i.totalPrice, 0), [cart]);
 
@@ -352,7 +358,7 @@ export function ShopProvider({ children }) {
     pendingLogin, verifyLoginCode, resendLoginCode, cancelLoginCode,
     resendVerification, resetPassword,
     getFavs, toggleFav,
-    getOrders, saveOrderLocally,
+    getOrders, saveOrderLocally, replaceOrderLocally,
     ready,
   };
 

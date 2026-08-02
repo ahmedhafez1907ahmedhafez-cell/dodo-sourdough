@@ -15,8 +15,9 @@ export default function Document() {
         <NextScript />
         <script 
   data-gabster-widget="" 
-  src="https://widget.gabster.ai/loader?cbid=6a6f23717a114fe7ff481db2" 
+  src="https://widget.gabster.ai/loader?cbid=6a6f23717a114fe7ff481db2"
   data-embed-type="widget"
+  data-title="Dodo's assistant"
   async
 />
       </body>

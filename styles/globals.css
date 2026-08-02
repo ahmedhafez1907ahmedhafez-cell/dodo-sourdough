@@ -413,6 +413,9 @@ a{color:inherit;}
 .order-item-status{font-size:12px;font-weight:700;color:#27ae60;background:#e8f5e9;padding:3px 10px;border-radius:10px;}
 .order-item-products{font-size:13px;color:var(--brown-mid);margin-bottom:8px;line-height:1.6;}
 .order-item-total{font-size:15px;font-weight:800;color:var(--brown-dark);}
+.order-cancel-btn{margin-top:10px;background:#fff;color:#b42318;border:1px solid #e38a8a;border-radius:8px;padding:7px 10px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;}
+/* الجاليري اتشال؛ نخفي حقل الفيديو القديم من لوحة المنتجات. */
+.adm label:has(+ input[placeholder*="basket-demo"]),.adm input[placeholder*="basket-demo"]{display:none;}
 .logout-btn{width:100%;background:white;color:#e74c3c;border:2px solid #e74c3c;padding:11px;border-radius:11px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px;transition:all 0.3s;}
 .logout-btn:hover{background:#e74c3c;color:white;}
 .fav-item{display:flex;align-items:center;gap:12px;background:var(--cream);border-radius:11px;padding:11px 14px;margin-bottom:8px;border:1px solid var(--cream-dark);}

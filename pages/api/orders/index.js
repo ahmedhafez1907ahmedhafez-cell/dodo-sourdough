@@ -4,6 +4,7 @@ import { sendOrderNotification } from "../../../lib/sendMail";
 import { recalcItems, PriceError } from "../../../lib/pricing";
 import { DEFAULT_ORDER_STATUS } from "../../../lib/orderStatus";
 import { depositFor, remainderFor, DEPOSIT_WALLET } from "../../../lib/payment";
+import crypto from "crypto";
 
 export default async function handler(req, res) {
   try {
@@ -70,6 +71,9 @@ async function createOrder(req, res) {
   // العربون: نص المبلغ، بيتحسب في السيرفر عشان العميل ميقدرش يقلله
   const deposit = depositFor(total);
 
+  // المفتاح يُحفظ في جهاز العميل فقط؛ قاعدة البيانات لا تحفظ إلا الهاش.
+  const customerCancelToken = crypto.randomBytes(24).toString("hex");
+  const customerCancelTokenHash = crypto.createHash("sha256").update(customerCancelToken).digest("hex");
   const orderRef = await adminDb.collection("orders").add({
     customerName: String(b.customerName).slice(0, 80),
     customerPhone: String(b.customerPhone).slice(0, 20),
@@ -87,6 +91,7 @@ async function createOrder(req, res) {
     total,
     deposit,
     depositPaid: false,
+    customerCancelTokenHash,
     status: DEFAULT_ORDER_STATUS,
     mylerzTrackingNo: null,
     createdAt: new Date().toISOString(),
@@ -119,6 +124,8 @@ async function createOrder(req, res) {
     deposit,
     remainder: remainderFor(total),
     depositWallet: DEPOSIT_WALLET,
+    status: DEFAULT_ORDER_STATUS,
+    customerCancelToken,
   });
 }
 

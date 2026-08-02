@@ -22,6 +22,10 @@ export default async function handler(req, res) {
     const patch = { status };
     if (status === AWAITING_DEPOSIT) {
       patch.depositPaid = false;
+    } else if (status === "ملغي") {
+      // الإلغاء لا يعني أن العربون وصل، ولا نغيّر سجلّ دفع موجود.
+      const existing = await adminDb.collection("orders").doc(id).get();
+      patch.depositPaid = !!existing.data()?.depositPaid;
     } else {
       patch.depositPaid = true;
       patch.mylerzError = null;

@@ -19,7 +19,21 @@ export default function MyOrders() {
 
   useEffect(() => {
     if (!shop.ready) return;
-    setOrders(shop.getOrders());
+    const localOrders = shop.getOrders();
+    setOrders(localOrders);
+    Promise.all(localOrders.filter((o) => o.cancelToken).map(async (o) => {
+      const res = await fetch(`/api/orders/${o.id}/customer?token=${encodeURIComponent(o.cancelToken)}`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return { id: o.id, status: data.status, depositPaid: data.depositPaid };
+    })).then((updates) => {
+      const valid = updates.filter(Boolean);
+      if (!valid.length) return;
+      const byId = Object.fromEntries(valid.map((u) => [u.id, u]));
+      const next = localOrders.map((o) => byId[o.id] ? { ...o, ...byId[o.id] } : o);
+      valid.forEach((u) => shop.replaceOrderLocally(u.id, u));
+      setOrders(next);
+    }).catch(() => {});
     fetch("/api/products")
       .then((r) => r.json())
       .then((d) => {
@@ -35,6 +49,19 @@ export default function MyOrders() {
     setFavProducts((f) => f.filter((p) => p.id !== pid));
   }
 
+  async function cancelOrder(order) {
+    if (!order.cancelToken) { shop.showToast("الطلب ده قديم ومش متاح إلغاؤه من الموقع؛ كلمنا على واتساب"); return; }
+    if (!confirm("متأكد إنك عايز تلغي الطلب؟")) return;
+    const res = await fetch(`/api/orders/${order.id}/customer`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: order.cancelToken }) });
+    const data = await res.json();
+    if (!res.ok) { shop.showToast(data.error || "تعذر إلغاء الطلب"); return; }
+    const patch = { status: "ملغي", cancelledByCustomer: true };
+    shop.replaceOrderLocally(order.id, patch);
+    setOrders((current) => current.map((o) => o.id === order.id ? { ...o, ...patch } : o));
+    shop.showToast("تم إلغاء الطلب");
+    if (order.depositPaid) window.open(`https://wa.me/201006461698?text=${encodeURIComponent(`ألغيت طلبي رقم ${order.id}، وكنت دفعت العربون. محتاج استرداده.`)}`, "_blank", "noopener,noreferrer");
+  }
+
   return (
     <div className="profile-page">
       <div className="profile-card">
@@ -45,7 +72,7 @@ export default function MyOrders() {
         </div>
 
         <hr className="section-divider" />
-        <div className="mine-head"><Icon name="heart" size={16} className="lbl-ico" />المفضلة</div>
+        <div className="mine-head" id="favorites"><Icon name="heart" size={16} className="lbl-ico" />المفضلة</div>
         {!favProducts.length && <p className="mine-empty">لسه مضفتش حاجة للمفضلة</p>}
         {favProducts.map((p) => (
           <div className="fav-item" key={p.id}>
@@ -71,6 +98,7 @@ export default function MyOrders() {
             </div>
             <div className="order-item-products">{o.items}</div>
             <div className="order-item-total">الإجمالي: {o.total} جنيه</div>
+            {o.status !== "ملغي" && o.status !== "تم التوصيل" && <button className="order-cancel-btn" onClick={() => cancelOrder(o)}>إلغاء الطلب</button>}
           </div>
         ))}
 

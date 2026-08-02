@@ -34,7 +34,7 @@ function OrdersDashboard() {
   async function changeStatus(id, status) {
     // تغيير الحالة معناه إن العربون وصل (السيرفر بيعمل نفس الحاجة)
     setOrders((o) => o.map((x) => (x.id === id
-      ? { ...x, status, depositPaid: status !== AWAITING_DEPOSIT, mylerzError: status === AWAITING_DEPOSIT ? x.mylerzError : null }
+      ? { ...x, status, depositPaid: status === AWAITING_DEPOSIT ? false : status === "ملغي" ? x.depositPaid : true, mylerzError: status === AWAITING_DEPOSIT ? x.mylerzError : null }
       : x))); // optimistic
     const res = await authedFetch(`/api/orders/${id}/status`, {
       method: "PATCH",
@@ -118,7 +118,7 @@ function OrdersDashboard() {
       {loading && <p>جاري التحميل...</p>}
       {!loading && !err && !orders.length && <p style={{ color: "#888" }}>مفيش طلبات لسه</p>}
       {orders.map((o) => (
-        <div key={o.id} style={{ background: "#f7f3ec", borderRadius: 10, padding: 14, marginBottom: 10 }}>
+        <div key={o.id} style={{ background: o.cancelledByCustomer ? "#fff0f0" : "#f7f3ec", border: o.cancelledByCustomer ? "1px solid #e38a8a" : "1px solid transparent", borderRadius: 10, padding: 14, marginBottom: 10 }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <strong>{o.customerName}</strong>
             <span style={{ fontSize: 12, color: "#888" }}>{o.createdAt?.slice(0, 16).replace("T", " ")}</span>
@@ -141,6 +141,7 @@ function OrdersDashboard() {
               (توصيل {o.zone === "banha" ? "بيتحدد على واتساب" : (o.deliveryFee ?? "لسه متحددش")})
             </span>
           </div>
+          {o.cancelledByCustomer && <div style={{ color: "#b42318", fontWeight: 800, marginTop: 8 }}>⚠️ العميل ألغى الطلب بنفسه</div>}
 
           {/* الكارت بيختفي خالص أول ما العربون يتأكد أو الأوردر يتحرك
               لحالة أبعد — مفيش لازمة لزرار على أوردر خلاص اتحصّل. */}

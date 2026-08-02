@@ -137,10 +137,14 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
         )}
 
         <div className="product-footer">
-          <div className="price">
-            {hasSale && <span className="price-old">{p.oldPrice} {p.priceNote || "جنيه"}</span>}
-            {p.price} <span>{p.priceNote || "جنيه"}</span>
-          </div>
+          {p.isStarter ? (
+            <div className="price" style={{ fontSize: 12, lineHeight: 1.5 }}>السعر: {p.pricePerGram} جنيه / جرام</div>
+          ) : (
+            <div className="price">
+              {hasSale && <span className="price-old">{p.oldPrice} {p.priceNote || "جنيه"}</span>}
+              {p.price} <span>{p.priceNote || "جنيه"}</span>
+            </div>
+          )}
           <button className="add-to-cart-btn" onClick={handleAdd}><Icon name="plus" size={16} /> أضف للسلة</button>
         </div>
       </div>

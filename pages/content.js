@@ -98,7 +98,7 @@ export default function Content() {
         </div>
       )}
 
-      <div className="gallery-page-wrap" style={{ maxWidth: 640 }}>
+      <div className="gallery-page-wrap" style={{ maxWidth: 920, width: "min(100%, 920px)" }}>
         <div style={{ textAlign: "center", marginBottom: 18 }}>
           <a href={PROFILE_LINKS[platform]} target="_blank" rel="noreferrer" className="btn-secondary" style={{ display: "inline-flex" }}>
             شوف كل حاجة على {PLATFORMS.find((p) => p.key === platform)?.label} ↗
@@ -115,11 +115,6 @@ export default function Content() {
             <div key={it.id} className="reveal" style={{ transitionDelay: Math.min(idx * 0.08, 0.5) + "s", background: "#fff", borderRadius: 16, overflow: "hidden", padding: platform === "youtube" ? 0 : 8 }}>
               {it.caption && <p style={{ padding: "10px 14px 0", fontSize: 13, color: "#555" }}>{it.caption}</p>}
               <EmbedCard platform={it.platform} url={it.url} />
-              <div style={{ padding: "10px 14px" }}>
-                <a href={it.url} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: "var(--gold)", fontWeight: 700 }}>
-                  <Icon name="heart" size={15} /> لايك / كومنت على المنشور الأصلي ↗
-                </a>
-              </div>
             </div>
           ))}
         </div>
@@ -157,16 +152,17 @@ function EmbedCard({ platform, url }) {
     );
   }
   if (platform === "tiktok") {
-    // منشورات "photo" (سلايد شو) مالهاش embed رسمي من تيك توك — بيبان ليها
-    // اللينك بس. أما فيديو عادي (/video/ID) فبيتعرض بـ iframe مباشر.
+    // TikTok photo posts لا تعمل مع iframe الفيديو. الـ embed الرسمي يعمل
+    // للـ photo posts والفيديو، لذلك لا نترك بطاقة فيها رابط فقط.
     const idMatch = url.match(/\/video\/(\d+)/);
     const videoId = idMatch ? idMatch[1] : null;
     if (!videoId) {
       return (
-        <div style={{ padding: 24, textAlign: "center" }}>
-          <a href={url} target="_blank" rel="noreferrer" style={{ fontWeight: 700 }}>
-            عرض المنشور على تيك توك ↗
-          </a>
+        <div style={{ minHeight: 420, display: "grid", placeItems: "center", padding: 12 }}>
+          <blockquote className="tiktok-embed" cite={url} data-video-id="" style={{ maxWidth: 605, minWidth: 325, width: "100%" }}>
+            <section><a target="_blank" rel="noreferrer" href={url}>TikTok</a></section>
+          </blockquote>
+          <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
         </div>
       );
     }

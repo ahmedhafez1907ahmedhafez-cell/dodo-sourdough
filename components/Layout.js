@@ -11,14 +11,7 @@ import Icon from "./Icon";
 export default function Layout({ children }) {
   const router = useRouter();
   const shop = useShop();
-  const [scrollVisible, setScrollVisible] = useState(false);
   const [socialOpen, setSocialOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrollVisible(window.scrollY > 400);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.classList.toggle("cart-open", shop.cartOpen);
@@ -69,6 +62,7 @@ export default function Layout({ children }) {
         {menuLink("/reviews", "آراء العملاء", <Icon name="chat" size={21} />)}
         {menuLink("/content", "المحتوى", <Icon name="clipboard" size={21} />)}
         {menuLink("/profile", "طلباتي", <Icon name="bag" size={21} />)}
+        {menuLink("/profile#favorites", "المفضلة", <Icon name="heart" size={21} />)}
         <div
           className="menu-item"
           role="button"
@@ -103,9 +97,6 @@ export default function Layout({ children }) {
           <span>كلّمنا هنا لو حصلت مشكلة أو في حاجة مستعجلة.<br />أما طلبك، اعمله من الموقع على طول.</span>
         </div>
       </div>
-      <button className={"scroll-top" + (scrollVisible ? " visible" : "")} aria-label="لأعلى الصفحة" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-        <Icon name="arrowUp" size={19} />
-      </button>
       <div className={"toast" + (shop.toast ? " show" : "")}>{shop.toast}</div>
       <div className={"cart-overlay" + (shop.cartOpen ? " open" : "")} onClick={() => shop.setCartOpen(false)}></div>
 
@@ -173,10 +164,11 @@ function CartSidebar() {
 
       shop.saveOrderLocally({
         id: data.id,
+        cancelToken: data.customerCancelToken,
         date: new Date().toLocaleDateString("ar-EG"),
         items: snapshot.map((i) => i.nameAr + " ×" + i.qty).join("، "),
         total: data.total,
-        status: "قيد التحضير",
+        status: data.status,
       });
       shop.clearCart();
       setForm(EMPTY_FORM);
@@ -216,7 +208,7 @@ function CartSidebar() {
 
   return (
     <>
-      {done && <OrderDonePopup done={done} onClose={() => setDone(null)} />}
+      {done && <OrderDonePopup done={done} onClose={() => { setDone(null); shop.showToast("الطلب لن يبدأ إلا بعد دفع العربون. حوّل العربون ثم ابعت الإيصال على واتساب."); }} />}
 
       <div className={"cart-sidebar" + (shop.cartOpen ? " open" : "")}>
         <div className="cart-header">
@@ -427,4 +419,3 @@ function Lightbox() {
     </div>
   );
 }
-
