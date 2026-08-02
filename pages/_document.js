@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="ar" dir="rtl">
       <Head>
+        <meta name="google-site-verification" content="M8Ye4kBa0jmMiobeASOCFvnlqYgptcXPb54uStf4k0E" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Aref+Ruqaa:wght@400;700&family=Playfair+Display:wght@700;800;900&family=Dancing+Script:wght@600;700&display=swap"
