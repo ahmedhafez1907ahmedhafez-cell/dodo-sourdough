@@ -13,6 +13,12 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <script 
+  data-gabster-widget="" 
+  src="https://widget.gabster.ai/loader?cbid=6a6f23717a114fe7ff481db2" 
+  data-embed-type="widget"
+  async
+/>
       </body>
     </Html>
   );
