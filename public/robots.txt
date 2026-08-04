@@ -43,4 +43,4 @@ Disallow: /admin/
 Content-Signal: ai-train=no, search=yes, ai-input=no
 
 # Sitemap
-Sitemap: /sitemap.xml
+Sitemap: https://dodo-sourdough.vercel.app/sitemap.xml
