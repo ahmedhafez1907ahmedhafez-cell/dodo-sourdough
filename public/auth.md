@@ -1,10 +1,36 @@
-# Dodo Sourdough App - Agent Authentication
+# Auth.md
+
+# Dodo Sourdough App
+
+## Agent Authentication & Registration
 
 This document describes how AI agents can authenticate and interact with the Dodo Sourdough App API.
 
-## Overview
+---
 
-The Dodo Sourdough App provides REST APIs for product browsing, order management, and content delivery. AI agents can access these APIs following the authentication methods described below.
+## Agent Registration
+
+### Registration Endpoint
+`POST https://your-domain.com/api/auth/agent-register`
+
+### Required Information
+- **Agent Name**: Your agent's identifier
+- **Description**: What your agent does
+- **Use Case**: Intended usage
+- **Contact**: Support contact information
+- **Capabilities**: List of API endpoints needed
+
+### Registration Process
+1. Submit registration request with agent details
+2. Receive approval and credentials
+3. Configure your agent with provided credentials
+
+### Credentials Provided
+- `client_id`: Unique agent identifier
+- `client_secret`: Secret for authentication
+- `api_key`: Alternative simple API key
+
+---
 
 ## Authentication Methods
 
@@ -22,21 +48,6 @@ The following endpoints require authentication:
 - `GET /api/profile` - Access user profile
 - `PUT /api/profile` - Update user profile
 
-## Agent Registration
-
-### Step 1: Register Your Agent
-To register as an AI agent, contact our support team with:
-- Agent name and description
-- Intended use case
-- Contact information
-- Technical specifications
-
-### Step 2: Obtain API Credentials
-After approval, you will receive:
-- `client_id` - Your unique agent identifier
-- `client_secret` - Your secret key for authentication
-- `api_key` - Alternative simple API key for basic operations
-
 ### Step 3: Use Your Credentials
 Include your credentials in API requests:
 
@@ -47,6 +58,8 @@ curl -H "X-API-Key: your_api_key" https://your-domain.com/api/orders
 # Using OAuth 2.0 Bearer Token
 curl -H "Authorization: Bearer your_access_token" https://your-domain.com/api/orders
 ```
+
+---
 
 ## OAuth 2.0 Flow
 
@@ -69,6 +82,8 @@ curl -H "Authorization: Bearer your_access_token" https://your-domain.com/api/or
 
 4. Use access token in API requests
 
+---
+
 ## Agent Capabilities
 
 ### Supported Operations
@@ -81,6 +96,8 @@ curl -H "Authorization: Bearer your_access_token" https://your-domain.com/api/or
 - Public endpoints: 100 requests/minute
 - Authenticated endpoints: 1000 requests/minute
 - Burst limit: 200 requests/10 seconds
+
+---
 
 ## API Endpoints
 
@@ -100,6 +117,8 @@ curl -H "Authorization: Bearer your_access_token" https://your-domain.com/api/or
 
 ### Content
 - `GET /api/content` - Get public content
+
+---
 
 ## Error Handling
 
@@ -123,12 +142,16 @@ Error response format:
 }
 ```
 
+---
+
 ## Support
 
 For agent registration and API support:
 - Email: support@dodosourdough.com
 - Documentation: https://your-domain.com/docs/api
 - Status: https://your-domain.com/api/status
+
+---
 
 ## Compliance
 
@@ -138,9 +161,13 @@ This API complies with:
 - RFC 9309 (robots.txt)
 - OAuth 2.0 and OpenID Connect specifications
 
+---
+
 ## Additional Resources
 
 - API Catalog: `/.well-known/api-catalog`
 - Agent Skills: `/.well-known/agent-skills/index.json`
 - MCP Server Card: `/.well-known/mcp/server-card.json`
 - robots.txt: `/robots.txt`
+- OAuth Protected Resource: `/.well-known/oauth-protected-resource`
+- OAuth Authorization Server: `/.well-known/oauth-authorization-server`

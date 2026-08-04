@@ -2,6 +2,8 @@
 
 This document summarizes the agent-ready standards implemented for the Dodo Sourdough App.
 
+## Current Score: 79/100 (improved from 7/100)
+
 ## Completed Implementations
 
 ### 1. ✅ robots.txt with AI Crawler Rules and Content Signals
@@ -120,13 +122,46 @@ This document summarizes the agent-ready standards implemented for the Dodo Sour
   - Execute callback function
 - Added to app via `_app.js`
 
+### 10. ✅ OAuth Metadata API Endpoints
+**Files:** 
+- `pages/api/well-known/oauth-protected-resource.js`
+- `pages/api/well-known/oauth-authorization-server.js`
+
+- Created API endpoints for OAuth metadata
+- Made OAuth protected resource metadata accessible via API
+- Added agent_auth block with registration information
+- Proper JSON responses with correct Content-Type headers
+
+### 11. ✅ Fixed auth.md Format
+**File:** `public/auth.md`
+
+- Added proper "Auth.md" heading as per specification
+- Improved structure with clear sections
+- Added OAuth metadata references
+- Enhanced agent registration instructions
+
+## Remaining Issues (Requires External Configuration)
+
+### DNS-AID (DNS for AI Discovery)
+**Status:** ⏳ Requires DNS provider configuration
+
+The DNS-AID implementation requires:
+- SVCB/HTTPS records at your DNS provider
+- DNSSEC configuration at your domain registrar
+- See `DNS_AID_SETUP.md` for detailed instructions
+
+This cannot be done through application code - it requires:
+1. Access to your domain's DNS management console
+2. DNS provider that supports SVCB/HTTPS records
+3. DNSSEC enablement at your domain registrar
+
 ## File Structure Summary
 
 ```
 dod/
 ├── public/
 │   ├── robots.txt                          # AI crawler rules + Content Signals
-│   ├── auth.md                             # Agent authentication guide
+│   ├── auth.md                             # Agent authentication guide (fixed format)
 │   └── .well-known/
 │       ├── api-catalog                     # API catalog (RFC 9727)
 │       ├── oauth-protected-resource        # OAuth protected resource metadata
@@ -139,11 +174,16 @@ dod/
 │   └── WebMCPProvider.js                  # WebMCP implementation
 ├── pages/
 │   ├── api/
-│   │   └── markdown.js                    # Markdown content negotiation
+│   │   ├── markdown.js                    # Markdown content negotiation
+│   │   └── well-known/
+│   │       ├── oauth-protected-resource.js  # OAuth metadata API
+│   │       └── oauth-authorization-server.js  # OAuth server API
 │   ├── _app.js                            # Updated with WebMCPProvider
 │   └── _document.js                       # Document structure
 ├── middleware.js                          # Request/response headers
-└── next.config.js                         # Next.js configuration with headers
+├── next.config.js                         # Next.js configuration with headers
+├── AGENT_READY_IMPLEMENTATION.md          # This document
+└── DNS_AID_SETUP.md                       # DNS-AID configuration guide
 ```
 
 ## Verification Steps
@@ -184,6 +224,12 @@ To verify the implementation:
    ```bash
    curl https://your-domain.com/.well-known/oauth-authorization-server
    curl https://your-domain.com/.well-known/oauth-protected-resource
+   ```
+
+8. **Test OAuth Metadata API Endpoints:**
+   ```bash
+   curl https://your-domain.com/api/well-known/oauth-authorization-server
+   curl https://your-domain.com/api/well-known/oauth-protected-resource
    ```
 
 ## Standards Compliance
