@@ -806,3 +806,9 @@ footer{background:var(--clay-900);color:var(--sand);}
   border-radius:6px;padding:3px 11px;font-family:'Tajawal',sans-serif;font-size:11.5px;
   font-weight:700;cursor:pointer;transition:all .2s;}
 .adm-awb:hover{background:#2c7a4b;color:#fff;}
+
+/* Hide redundant floating up-arrow. */
+.scroll-top{display:none !important;}
+.assistant-name-label{position:fixed;right:18px;bottom:92px;z-index:1499;background:rgba(27,20,16,.92);color:#fbf6ee;border:1px solid rgba(201,168,76,.7);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.22);pointer-events:none;}
+.starter-add-btn{margin-top:10px;width:100%;justify-content:center;}
+.order-item-status.cancelled{color:#b42318;background:#fff0f0;border-color:#e38a8a;}

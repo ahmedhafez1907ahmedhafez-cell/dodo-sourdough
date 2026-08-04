@@ -365,10 +365,6 @@ function ProductsAdmin() {
           <input placeholder="رابط الصورة الثانية" value={form.secondImg} onChange={(e) => setForm({ ...form, secondImg: e.target.value })} />
         </div>
         <div>
-          <label style={{ fontSize: 13, fontWeight: 700, display: "block", marginBottom: 4 }}>🎬 رابط فيديو (اختياري — بيظهر في الجاليري/الريلز)</label>
-          <input placeholder="/basket-demo.mp4 أو رابط فيديو مباشر" value={form.video} onChange={(e) => setForm({ ...form, video: e.target.value })} />
-        </div>
-        <div>
           <label style={{ fontSize: 13, fontWeight: 700, display: "block", marginBottom: 4 }}>😀 إيموجي بديل (لو الصورة اتعطلت)</label>
           <input placeholder="🧺" value={form.emoji} onChange={(e) => setForm({ ...form, emoji: e.target.value })} />
         </div>

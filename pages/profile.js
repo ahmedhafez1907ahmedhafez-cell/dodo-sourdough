@@ -76,7 +76,7 @@ export default function MyOrders() {
         {!favProducts.length && <p className="mine-empty">لسه مضفتش حاجة للمفضلة</p>}
         {favProducts.map((p) => (
           <div className="fav-item" key={p.id}>
-            <div className="fav-item-emoji"><Icon name="bread" size={24} /></div>
+            <div className="fav-item-emoji">{p.mainImg ? <img src={p.mainImg} alt="" style={{ width: 46, height: 46, objectFit: "cover", borderRadius: 8 }} /> : <Icon name="bread" size={24} />}</div>
             <div className="fav-item-info">
               <div className="fav-item-name">{p.nameAr}</div>
               <div className="fav-item-price">{p.isStarter ? `${p.pricePerGram} جنيه/جرام` : `${p.price} جنيه`}</div>
@@ -94,7 +94,7 @@ export default function MyOrders() {
           <div className="order-item" key={i}>
             <div className="order-item-header">
               <span className="order-item-date">{o.date}</span>
-              <span className="order-item-status">{o.status}</span>
+              <span className={"order-item-status" + (o.status === "ملغي" ? " cancelled" : "")}>{o.status}</span>
             </div>
             <div className="order-item-products">{o.items}</div>
             <div className="order-item-total">الإجمالي: {o.total} جنيه</div>

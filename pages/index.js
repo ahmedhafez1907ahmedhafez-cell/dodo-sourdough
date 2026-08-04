@@ -36,7 +36,16 @@ const FEATURES = [
   ["truck", "توصيل سريع", "نوصلك بعد التأكيد"],
 ];
 
-export default function Home() {
+export default function Home({ markdownContent, isMarkdown }) {
+  // Return markdown if requested
+  if (isMarkdown) {
+    return (
+      <div style={{ fontFamily: 'monospace', whiteSpace: 'pre-wrap', padding: '20px' }}>
+        {markdownContent}
+      </div>
+    );
+  }
+
   useHeroIntro();
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);

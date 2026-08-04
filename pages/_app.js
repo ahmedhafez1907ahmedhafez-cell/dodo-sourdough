@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../styles/globals.css";
 import { ShopProvider } from "../context/ShopContext";
 import Layout from "../components/Layout";
+import WebMCPProvider from "../components/WebMCPProvider";
 
 // ============================================================
 // إحصائيات Vercel
@@ -37,6 +38,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ShopProvider>
+      <WebMCPProvider />
       <Layout>
         <Component {...pageProps} />
       </Layout>

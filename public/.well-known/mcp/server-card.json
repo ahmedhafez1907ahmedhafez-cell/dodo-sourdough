@@ -1,0 +1,154 @@
+{
+  "schema": "https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2127",
+  "serverInfo": {
+    "name": "Dodo Sourdough App",
+    "version": "1.0.0",
+    "description": "AI agent interface for Dodo Sourdough - premium sourdough bread marketplace",
+    "author": "Dodo Sourdough Team",
+    "homepage": "https://your-domain.com"
+  },
+  "transport": {
+    "type": "http",
+    "endpoint": "https://your-domain.com/api/mcp",
+    "method": "POST"
+  },
+  "capabilities": {
+    "tools": {
+      "listChanged": true
+    },
+    "resources": {
+      "subscribe": true,
+      "listChanged": true
+    },
+    "prompts": {
+      "listChanged": true
+    }
+  },
+  "tools": [
+    {
+      "name": "search_products",
+      "description": "Search and browse the sourdough product catalog",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query for products"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["all", "sourdough", "stuffed", "plain", "starter", "tools"],
+            "description": "Product category filter"
+          },
+          "priceRange": {
+            "type": "object",
+            "properties": {
+              "min": {"type": "number"},
+              "max": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "get_product_details",
+      "description": "Get detailed information about a specific product",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Unique product identifier"
+          }
+        },
+        "required": ["productId"]
+      }
+    },
+    {
+      "name": "create_order",
+      "description": "Create a new order for sourdough products",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "productId": {"type": "string"},
+                "quantity": {"type": "number"}
+              }
+            }
+          },
+          "customerInfo": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "phone": {"type": "string"},
+              "address": {"type": "string"}
+            }
+          }
+        },
+        "required": ["items", "customerInfo"]
+      }
+    },
+    {
+      "name": "get_reviews",
+      "description": "Get customer reviews for products",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Filter reviews by product (optional)"
+          },
+          "limit": {
+            "type": "number",
+            "description": "Maximum number of reviews to return"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_content",
+      "description": "Get public content about sourdough baking and tips",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "contentType": {
+            "type": "string",
+            "enum": ["tips", "recipes", "guides"],
+            "description": "Type of content to retrieve"
+          }
+        }
+      }
+    }
+  ],
+  "resources": [
+    {
+      "uri": "products://catalog",
+      "name": "Product Catalog",
+      "description": "Complete catalog of sourdough products",
+      "mimeType": "application/json"
+    },
+    {
+      "uri": "content://baking-tips",
+      "name": "Baking Tips",
+      "description": "Tips and techniques for sourdough baking",
+      "mimeType": "text/markdown"
+    }
+  ],
+  "authentication": {
+    "type": "oauth2",
+    "config": {
+      "issuer": "https://your-domain.com/api/auth",
+      "tokenEndpoint": "https://your-domain.com/api/auth/token",
+      "scopes": ["products:read", "orders:write", "reviews:read"]
+    }
+  },
+  "metadata": {
+    "apiCatalog": "/.well-known/api-catalog",
+    "authDocs": "/auth.md",
+    "agentSkills": "/.well-known/agent-skills/index.json"
+  }
+}

@@ -1,0 +1,46 @@
+# robots.txt for Dodo Sourdough App
+# Allows crawling of public content while restricting sensitive areas
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+# AI Crawler Rules
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Content Signals
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
+# Sitemap
+Sitemap: /sitemap.xml

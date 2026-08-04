@@ -46,7 +46,7 @@ export default function Content() {
   }, []);
 
   const list = useMemo(
-    () => items.filter((i) => i.platform === platform && (subtype === "all" || i.type === subtype)),
+    () => items.filter((i) => /^https?:\/\//i.test(i.url || "") && i.platform === platform && (subtype === "all" || i.type === subtype)),
     [items, platform, subtype]
   );
 
@@ -62,6 +62,7 @@ export default function Content() {
     if (typeof window === "undefined") return;
     const t = setTimeout(() => {
       if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
+      if (window.tiktok?.embed?.render) window.tiktok.embed.render();
     }, 600);
     return () => clearTimeout(t);
   }, [list]);

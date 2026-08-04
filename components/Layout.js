@@ -97,6 +97,7 @@ export default function Layout({ children }) {
           <span>كلّمنا هنا لو حصلت مشكلة أو في حاجة مستعجلة.<br />أما طلبك، اعمله من الموقع على طول.</span>
         </div>
       </div>
+      <div className="assistant-name-label" aria-hidden="true">Dodo's assistant</div>
       <div className={"toast" + (shop.toast ? " show" : "")}>{shop.toast}</div>
       <div className={"cart-overlay" + (shop.cartOpen ? " open" : "")} onClick={() => shop.setCartOpen(false)}></div>
 

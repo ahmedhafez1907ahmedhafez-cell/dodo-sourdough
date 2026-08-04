@@ -1,0 +1,126 @@
+{
+  "$schema": "https://github.com/cloudflare/agent-skills-discovery-rfc",
+  "version": "0.2.0",
+  "skills": [
+    {
+      "name": "product-search",
+      "type": "api",
+      "description": "Search and browse the complete sourdough product catalog with filters for categories, price ranges, and specific product types",
+      "url": "/api/products",
+      "sha256": "a1b2c3d4e5f6...",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "description": "Search query for products"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["all", "sourdough", "stuffed", "plain", "starter", "tools"],
+          "description": "Product category filter"
+        }
+      },
+      "authentication": "none",
+      "rateLimit": "100 requests/minute"
+    },
+    {
+      "name": "order-management",
+      "type": "api",
+      "description": "Create, update, and manage orders for sourdough products including customer information and delivery details",
+      "url": "/api/orders",
+      "sha256": "b2c3d4e5f6a1...",
+      "parameters": {
+        "action": {
+          "type": "string",
+          "enum": ["create", "update", "cancel", "list"],
+          "description": "Order action to perform"
+        },
+        "orderId": {
+          "type": "string",
+          "description": "Order ID (required for update/cancel)"
+        }
+      },
+      "authentication": "required",
+      "authenticationType": "oauth2",
+      "rateLimit": "1000 requests/minute"
+    },
+    {
+      "name": "review-access",
+      "type": "api",
+      "description": "Access customer reviews and ratings for products to help users make informed purchasing decisions",
+      "url": "/api/reviews",
+      "sha256": "c3d4e5f6a1b2...",
+      "parameters": {
+        "productId": {
+          "type": "string",
+          "description": "Filter reviews by specific product"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of reviews to return"
+        }
+      },
+      "authentication": "none",
+      "rateLimit": "100 requests/minute"
+    },
+    {
+      "name": "content-delivery",
+      "type": "api",
+      "description": "Access educational content about sourdough baking including tips, recipes, and guides",
+      "url": "/api/content",
+      "sha256": "d4e5f6a1b2c3...",
+      "parameters": {
+        "contentType": {
+          "type": "string",
+          "enum": ["tips", "recipes", "guides"],
+          "description": "Type of content to retrieve"
+        }
+      },
+      "authentication": "none",
+      "rateLimit": "100 requests/minute"
+    },
+    {
+      "name": "sourdough-expert",
+      "type": "knowledge",
+      "description": "Expert knowledge about sourdough bread baking techniques, fermentation processes, ingredient selection, and troubleshooting common issues",
+      "url": "/content/sourdough-expert-knowledge",
+      "sha256": "e5f6a1b2c3d4...",
+      "capabilities": [
+        "fermentation_guidance",
+        "ingredient_recommendations",
+        "baking_techniques",
+        "troubleshooting",
+        "recipe_customization"
+      ],
+      "authentication": "none"
+    },
+    {
+      "name": "product-recommendation",
+      "type": "inference",
+      "description": "AI-powered product recommendations based on user preferences, baking experience level, and dietary requirements",
+      "url": "/api/recommendations",
+      "sha256": "f6a1b2c3d4e5...",
+      "parameters": {
+        "preferences": {
+          "type": "object",
+          "description": "User preferences and requirements"
+        },
+        "experienceLevel": {
+          "type": "string",
+          "enum": ["beginner", "intermediate", "advanced"],
+          "description": "User's baking experience level"
+        }
+      },
+      "authentication": "optional",
+      "rateLimit": "50 requests/minute"
+    }
+  ],
+  "metadata": {
+    "name": "Dodo Sourdough Agent Skills",
+    "description": "Collection of AI agent skills for interacting with the Dodo Sourdough marketplace",
+    "version": "1.0.0",
+    "updated": "2026-08-04T10:25:00Z",
+    "homepage": "https://your-domain.com",
+    "documentation": "/auth.md",
+    "support": "support@dodosourdough.com"
+  }
+}

@@ -125,6 +125,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
               </div>
               <button className="gram-btn" onClick={() => setGrams((g) => g + 1)}>+</button>
             </div>
+          <button className="add-to-cart-btn starter-add-btn" onClick={handleAdd}><Icon name="plus" size={16} /> أضف للسلة</button>
           </div>
         ) : (
           <div className="product-qty-row">
@@ -145,7 +146,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
               {p.price} <span>{p.priceNote || "جنيه"}</span>
             </div>
           )}
-          <button className="add-to-cart-btn" onClick={handleAdd}><Icon name="plus" size={16} /> أضف للسلة</button>
+          {!p.isStarter && <button className="add-to-cart-btn" onClick={handleAdd}><Icon name="plus" size={16} /> أضف للسلة</button>}
         </div>
       </div>
     </div>

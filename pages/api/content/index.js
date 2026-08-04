@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 async function listContent(req, res) {
   // كانت الـ limit(100) بتخفي أي منشورات بعد أول 100. الحد ده يغطّي
   // الأرشيف الحالي (أكثر من 200) من غير ما نغيّر ترتيب المنشورات.
-  const snap = await adminDb.collection("content").orderBy("createdAt", "desc").limit(500).get();
+  const snap = await adminDb.collection("content").orderBy("createdAt", "desc").limit(1000).get();
   const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
   return res.status(200).json({ items });
 }
