@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import AdminGuard from "../../components/AdminGuard";
 import { useAdminAuth } from "../../lib/useAdminAuth";
+import { NOTE_TEMPLATES } from "../../lib/productNotes";
 
 // ============================================================
 // ملحوظة: شلنا رفع الصور عن طريق Firebase Storage خالص، لأن Firebase
@@ -15,7 +16,7 @@ import { useAdminAuth } from "../../lib/useAdminAuth";
 // ============================================================
 
 const EMPTY = {
-  name: "", nameAr: "", price: "", oldPrice: "", description: "", category: "",
+  name: "", nameAr: "", price: "", oldPrice: "", description: "", notes: "", category: "",
   tag: "", catalog: "bread", isNew: false, isBestseller: false,
   mainImg: "", secondImg: "", hasExtras: false, isStarter: false, pricePerGram: "",
   video: "", emoji: "", localOnly: true,
@@ -182,7 +183,7 @@ function ProductsAdmin() {
   function startEdit(p) {
     setEditingId(p.id);
     setForm({
-      name: p.name || "", nameAr: p.nameAr || "", price: p.price || "", oldPrice: p.oldPrice || "", description: p.description || "",
+      name: p.name || "", nameAr: p.nameAr || "", price: p.price || "", oldPrice: p.oldPrice || "", description: p.description || "", notes: p.notes || "",
       category: p.category || "", tag: p.tag || "", catalog: p.catalog || "bread",
       isNew: !!p.isNew, isBestseller: !!p.isBestseller,
       mainImg: p.mainImg || "", secondImg: p.secondImg || "", hasExtras: !!p.hasExtras,
@@ -316,6 +317,35 @@ function ProductsAdmin() {
         <input placeholder="الاسم بالعربي" value={form.nameAr} onChange={(e) => setForm({ ...form, nameAr: e.target.value })} />
         <input placeholder="الاسم بالإنجليزي" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
         <textarea placeholder="الوصف" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+
+        {/* نوتس طريقة الاستخدام — اختيارية.
+            لو سيبتها فاضية، الزرار مش هيظهر على المنتج في الموقع. */}
+        <div className="adm-notes">
+          <label>
+            نوتس طريقة الاستخدام <span>(اختياري — لو كتبت هنا هيظهر زرار «إزاي أستخدمه؟» على المنتج)</span>
+          </label>
+          <textarea
+            rows={8}
+            placeholder={"اكتب الخطوات سطر ورا سطر.\n\nسيب سطر فاضي بين كل مرحلة والتانية، وأول سطر في المرحلة لو قصير هيطلع كعنوان."}
+            value={form.notes}
+            onChange={(e) => setForm({ ...form, notes: e.target.value })}
+          />
+          <div className="adm-notes-tpl">
+            <span>قوالب جاهزة:</span>
+            {NOTE_TEMPLATES.map((t) => (
+              <button
+                key={t.key}
+                type="button"
+                onClick={() => setForm((f) => ({ ...f, notes: t.text }))}
+              >{t.label}</button>
+            ))}
+            {form.notes && (
+              <button type="button" className="clear" onClick={() => setForm((f) => ({ ...f, notes: "" }))}>
+                امسح النوتس
+              </button>
+            )}
+          </div>
+        </div>
 
         <label style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <input

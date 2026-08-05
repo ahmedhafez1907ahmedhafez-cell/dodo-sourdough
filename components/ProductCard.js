@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useShop } from "../context/ShopContext";
 import Icon from "./Icon";
+import NotesModal from "./NotesModal";
+import { hasNotes } from "../lib/productNotes";
 
 // الأسعار جاية من lib/pricing.js — نفس المصدر اللي السيرفر بيتحقق بيه،
 // عشان مستحيل يحصل اختلاف بين اللي العميل شايفه واللي بيتحسب فعلاً
@@ -24,6 +26,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
   const [grams, setGrams] = useState(1);
   const [checkedExtras, setCheckedExtras] = useState([]);
   const [imgOk, setImgOk] = useState(true);
+  const [notesOpen, setNotesOpen] = useState(false);
   
   const mainImg = normalizeImageUrl(p.mainImg);
   const secondImg = normalizeImageUrl(p.secondImg);
@@ -61,6 +64,9 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
 
   return (
     <div className={`product-card scatter-card ${sizeClass}`} style={style}>
+      {notesOpen && (
+        <NotesModal title={p.nameAr || p.name} notes={p.notes} onClose={() => setNotesOpen(false)} />
+      )}
       <div className="product-img-wrapper" onClick={() => images.length && shop.openLightbox(images, 0)}>
         {mainImg && imgOk ? (
           <img className="img-main" src={mainImg} alt={p.nameAr} onError={() => setImgOk(false)} />
@@ -99,6 +105,14 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
         <h3>{p.name}</h3>
         <p className="ar-name">{p.nameAr}</p>
         {p.description && <p className="desc">{p.description}</p>}
+
+        {/* الزرار ده مبيظهرش غير لو الأدمن كتب نوتس للمنتج ده */}
+        {hasNotes(p) && (
+          <button type="button" className="notes-btn" onClick={() => setNotesOpen(true)}>
+            <Icon name="info" size={15} />
+            إزاي أستخدمه؟
+          </button>
+        )}
 
         {p.hasExtras && (
           <div className="extras-section">

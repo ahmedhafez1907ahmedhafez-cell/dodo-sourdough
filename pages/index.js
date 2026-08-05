@@ -145,41 +145,6 @@ export default function Home({ markdownContent, isMarkdown }) {
         </div>
       </section>
 
-      {favProducts.length > 0 && (
-        <section className="favorites-section">
-          <div className="section-title">
-            <span className="eyebrow">Your Favorites</span>
-            <h2>المفضلة</h2>
-            <div className="title-line"></div>
-            <p>المنتجات اللي ضفتها للمفضلة</p>
-          </div>
-          <div className="favorites-grid">
-            {favProducts.map((p) => (
-              <div className="fav-item-card" key={p.id}>
-                <div className="fav-item-image">
-                  {p.mainImg ? (
-                    <img src={p.mainImg} alt={p.nameAr} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }} />
-                  ) : (
-                    <Icon name="bread" size={32} />
-                  )}
-                </div>
-                <div className="fav-item-details">
-                  <h4>{p.nameAr}</h4>
-                  <p className="fav-item-price">{p.isStarter ? `${p.pricePerGram} جنيه/جرام` : `${p.price} جنيه`}</p>
-                </div>
-                <button 
-                  className="fav-remove-btn" 
-                  aria-label="شيل من المفضلة" 
-                  onClick={() => removeFav(p.id)}
-                >
-                  <Icon name="close" size={14} />
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
       <section id="products">
         <div className="catalog-hero-strip">
           <div className="catalog-switch-badges">
@@ -211,6 +176,41 @@ export default function Home({ markdownContent, isMarkdown }) {
             </button>
           </div>
           <p className="catalog-nudge">دوس على القسم اللي عايزه — الأدوات أو الخبز</p>
+
+          {/* المفضلة — شريط أفقي تحت التابين مباشرة.
+              شكل مختلف عن كروت المنتجات عشان ما يتلخبطش معاها:
+              كروت صغيرة أفقية بتتسحب على الموبايل. */}
+          {favProducts.length > 0 && (
+            <div className="fav-strip">
+              <div className="fav-strip-head">
+                <Icon name="heart" size={16} />
+                <span>مفضلتك</span>
+                <em>{favProducts.length}</em>
+              </div>
+              <div className="fav-strip-rail">
+                {favProducts.map((p) => (
+                  <div className="fav-chip" key={p.id}>
+                    <div className="fav-chip-img">
+                      {p.mainImg
+                        ? <img src={p.mainImg} alt="" loading="lazy" />
+                        : <Icon name="bread" size={20} />}
+                    </div>
+                    <div className="fav-chip-txt">
+                      <span className="fav-chip-name">{p.nameAr}</span>
+                      <span className="fav-chip-price">
+                        {p.isStarter ? `${p.pricePerGram} جنيه/جرام` : `${p.price} جنيه`}
+                      </span>
+                    </div>
+                    <button
+                      className="fav-chip-x"
+                      aria-label={`شيل ${p.nameAr} من المفضلة`}
+                      onClick={() => removeFav(p.id)}
+                    ><Icon name="close" size={12} /></button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="section-title"><span className="eyebrow">{meta.eyebrow}</span><h2>{meta.title}</h2><div className="title-line"></div><p>{meta.sub}</p></div>

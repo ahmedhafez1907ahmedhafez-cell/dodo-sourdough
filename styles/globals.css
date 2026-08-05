@@ -244,17 +244,8 @@ a{color:inherit;}
 .feature-card p{font-size:12px;color:#777;line-height:1.6;}
 
 /* FAVORITES */
-.favorites-section{background:var(--sand);padding:50px 20px;}
-.favorites-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;max-width:1200px;margin:0 auto;}
-.fav-item-card{background:#fff;border-radius:var(--r-md);border:1px solid var(--sand-3);box-shadow:var(--shadow-sm);padding:16px;position:relative;transition:all .3s var(--ease);display:flex;flex-direction:column;gap:12px;}
-.fav-item-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--ochre-soft);}
-.fav-item-image{width:100%;height:140px;border-radius:var(--r-sm);overflow:hidden;background:linear-gradient(135deg,#c4956a,#6b3a1f);display:flex;align-items:center;justify-content:center;}
-.fav-item-image img{width:100%;height:100%;object-fit:cover;}
-.fav-item-details{flex:1;}
-.fav-item-details h4{font-size:15px;font-weight:700;color:var(--brown-dark);margin-bottom:4px;}
 .fav-item-price{font-size:14px;color:var(--terra);font-weight:600;}
 .fav-remove-btn{position:absolute;top:12px;right:12px;background:var(--clay-900);color:var(--cream);border:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;opacity:0;transform:scale(0.9);}
-.fav-item-card:hover .fav-remove-btn{opacity:1;transform:scale(1);}
 .fav-remove-btn:hover{background:var(--terra);transform:scale(1.1);}
 
 /* CART */
@@ -826,3 +817,97 @@ footer{background:var(--clay-900);color:var(--sand);}
 .assistant-name-label{position:fixed;right:18px;bottom:92px;z-index:1499;background:rgba(27,20,16,.92);color:#fbf6ee;border:1px solid rgba(201,168,76,.7);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.22);pointer-events:none;}
 .starter-add-btn{margin-top:10px;width:100%;justify-content:center;}
 .order-item-status.cancelled{color:#b42318;background:#fff0f0;border-color:#e38a8a;}
+/* ==================================================================
+   المفضلة — شريط أفقي تحت تابين الأقسام
+   شكله مختلف عن كروت المنتجات عن قصد: كروت صغيرة أفقية بتتسحب،
+   عشان تبان كاختصار مش كقسم منتجات تاني.
+   ================================================================== */
+.fav-strip{max-width:760px;margin:22px auto 0;padding-top:18px;
+  border-top:1px solid rgba(232,216,194,.5);}
+.fav-strip-head{display:flex;align-items:center;gap:8px;margin-bottom:11px;
+  font-size:13px;font-weight:700;color:var(--clay-700);}
+.fav-strip-head .ico{color:var(--terra);}
+.fav-strip-head em{font-style:normal;background:var(--terra);color:#fff;
+  border-radius:var(--r-pill);padding:1px 8px;font-size:11px;}
+.catalog-tab.active ~ * .fav-strip-head{color:var(--clay-700);}
+
+.fav-strip-rail{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;
+  scrollbar-width:thin;scroll-snap-type:x proximity;}
+.fav-strip-rail::-webkit-scrollbar{height:5px;}
+.fav-strip-rail::-webkit-scrollbar-thumb{background:var(--sand-3);border-radius:99px;}
+
+.fav-chip{position:relative;display:flex;align-items:center;gap:9px;flex:0 0 auto;
+  background:#fff;border:1px solid var(--sand-3);border-radius:var(--r-pill);
+  padding:6px 32px 6px 6px;scroll-snap-align:start;transition:all .3s var(--ease);}
+.fav-chip:hover{border-color:var(--ochre);transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+.fav-chip-img{width:38px;height:38px;border-radius:50%;overflow:hidden;flex-shrink:0;
+  background:var(--sand-2);color:var(--terra);display:flex;align-items:center;justify-content:center;}
+.fav-chip-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.fav-chip-txt{display:flex;flex-direction:column;gap:1px;padding-left:4px;}
+.fav-chip-name{font-size:12.5px;font-weight:700;color:var(--clay-900);white-space:nowrap;
+  max-width:150px;overflow:hidden;text-overflow:ellipsis;}
+.fav-chip-price{font-size:11px;color:var(--terra);font-weight:700;}
+.fav-chip-x{position:absolute;left:8px;top:50%;transform:translateY(-50%);
+  width:19px;height:19px;border:none;border-radius:50%;background:var(--sand-2);
+  color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;}
+.fav-chip-x:hover{background:var(--terra);color:#fff;}
+
+/* ==================================================================
+   نوتس طريقة الاستخدام
+   ================================================================== */
+.notes-btn{display:inline-flex;align-items:center;gap:6px;margin:2px 0 10px;
+  background:var(--sand-2);border:1px solid var(--sand-3);color:var(--clay-800);
+  border-radius:var(--r-pill);padding:6px 13px;font-family:'Tajawal',sans-serif;
+  font-size:12px;font-weight:700;cursor:pointer;transition:all .3s var(--ease);}
+.notes-btn:hover{background:var(--ochre-soft);border-color:var(--ochre);}
+.notes-btn .ico{color:var(--terra);}
+
+.notes-overlay{position:fixed;inset:0;z-index:7500;display:flex;align-items:center;
+  justify-content:center;padding:20px;background:rgba(42,24,16,.42);
+  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
+  animation:notesFade .28s ease both;}
+@keyframes notesFade{from{opacity:0;}to{opacity:1;}}
+
+.notes-box{background:var(--sand);border-radius:var(--r-lg);width:min(560px,100%);
+  max-height:86vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);
+  border:1px solid rgba(255,255,255,.5);animation:notesPop .35s var(--ease) both;}
+@keyframes notesPop{from{opacity:0;transform:translateY(20px) scale(.97);}to{opacity:1;transform:none;}}
+
+.notes-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:20px 22px 14px;border-bottom:1px solid var(--sand-3);}
+.notes-eyebrow{display:block;font-family:'Dancing Script',cursive;font-size:1.05rem;
+  color:var(--terra);line-height:1.2;}
+.notes-head h3{font-family:'Aref Ruqaa','Playfair Display',serif;font-size:21px;
+  color:var(--clay-900);line-height:1.9;}
+.notes-close{background:none;border:none;color:var(--ink-soft);cursor:pointer;
+  padding:5px;border-radius:50%;flex-shrink:0;transition:all .2s;}
+.notes-close:hover{background:var(--sand-2);color:var(--clay-900);}
+
+.notes-body{overflow-y:auto;padding:18px 22px 6px;}
+.notes-block{margin-bottom:18px;}
+.notes-block h4{font-size:14.5px;font-weight:800;color:var(--terra);margin-bottom:6px;}
+.notes-block p{font-size:14px;line-height:1.95;color:var(--clay-800);margin-bottom:3px;}
+
+.notes-done{margin:6px 22px 20px;padding:13px;border:none;border-radius:var(--r-pill);
+  background:var(--terra);color:var(--sand);font-family:'Tajawal',sans-serif;
+  font-size:15px;font-weight:700;cursor:pointer;transition:all .3s var(--ease);}
+.notes-done:hover{background:var(--clay-900);}
+
+@media(max-width:600px){
+  .notes-box{max-height:90vh;}
+  .notes-head h3{font-size:18px;}
+  .notes-block p{font-size:13.5px;}
+}
+
+/* حقل النوتس في الأدمن */
+.adm-notes{display:flex;flex-direction:column;gap:6px;}
+.adm-notes label{font-size:13px;font-weight:700;color:#333;}
+.adm-notes label span{font-weight:400;color:#888;font-size:11.5px;}
+.adm-notes textarea{font-family:'Tajawal',sans-serif;line-height:1.9;}
+.adm-notes-tpl{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12px;color:#777;}
+.adm-notes-tpl button{border:1px solid #ccc;background:#fff;border-radius:6px;padding:4px 11px;
+  font-family:'Tajawal',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
+.adm-notes-tpl button:hover{background:#1b1410;color:#fff;border-color:#1b1410;}
+.adm-notes-tpl button.clear{border-color:#e74c3c;color:#e74c3c;}
+.adm-notes-tpl button.clear:hover{background:#e74c3c;color:#fff;}
