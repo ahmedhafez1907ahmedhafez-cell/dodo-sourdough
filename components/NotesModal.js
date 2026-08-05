@@ -8,11 +8,20 @@
 // اللي وراها عشان الصفحة ما تتحركش تحت إيده.
 // ============================================================
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Icon from "./Icon";
 import { parseNotes } from "../lib/productNotes";
 
 export default function NotesModal({ title, notes, onClose }) {
+  // ⚠️ لازم Portal لـ document.body.
+  // كارت المنتج عليه transform (أنيميشن الدخول)، وأي عنصر جوه عنصر
+  // متحوّل بـ transform بيبقى position:fixed بتاعه نسبة للكارت مش
+  // للشاشة — فالنافذة كانت بتتحبس جوه الكارت وتتقص. الـ Portal
+  // بيطلعها بره الشجرة خالص فتغطي الشاشة كلها زي ما المفروض.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     function onKey(e) { if (e.key === "Escape") onClose(); }
     document.addEventListener("keydown", onKey);
@@ -26,8 +35,9 @@ export default function NotesModal({ title, notes, onClose }) {
   }, [onClose]);
 
   const blocks = parseNotes(notes);
+  if (!mounted) return null;
 
-  return (
+  return createPortal((
     <div
       className="notes-overlay"
       role="dialog"
@@ -58,5 +68,5 @@ export default function NotesModal({ title, notes, onClose }) {
         <button className="notes-done" onClick={onClose}>تمام، فهمت</button>
       </div>
     </div>
-  );
+  ), document.body);
 }

@@ -31,6 +31,15 @@ const CATALOG_META = {
   },
 };
 
+// المفضلة قسم كامل زي الأدوات والخبز، مش تاب صغير جنبهم
+const FAVORITES_META = {
+  eyebrow: "Your Favorites",
+  title: "المفضلة",
+  sub: "المنتجات اللي عجبتك وحبيت ترجعلها",
+  badges: ["اختيارك", "محفوظة على جهازك"],
+  filters: [{ key: "all", label: "الكل" }],
+};
+
 const FEATURES = [
   ["leaf", "طبيعي 100%", "بدون إضافات صناعية أو حافظات"],
   ["clock", "تخمير طويل", "أكثر من 24 ساعة لأفضل طعم"],
@@ -74,13 +83,16 @@ export default function Home({ markdownContent, isMarkdown }) {
     setFavProducts(allProducts.filter((p) => favs.includes(p.id)));
   }, [shop.favsTick]);
 
-  function removeFav(pid) {
-    shop.toggleFav(pid);
-  }
-
   useEffect(() => setFilter("all"), [catalog]);
 
+  // لو شال آخر منتج من المفضلة والتاب مفتوح، بنرجّعه للأدوات
+  useEffect(() => {
+    if (catalog === "favorites" && favProducts.length === 0) setCatalog("tools");
+  }, [favProducts.length, catalog]);
+
   const list = useMemo(() => {
+    // تاب المفضلة بيعرض المنتجات المحفوظة بغض النظر عن القسم
+    if (catalog === "favorites") return favProducts.filter((p) => p.active !== false);
     let items = allProducts.filter((p) => (p.catalog || "bread") === catalog && p.active !== false);
     if (filter === "price-low") items = [...items].sort((a, b) => a.price - b.price);
     else if (filter === "price-high") items = [...items].sort((a, b) => b.price - a.price);
@@ -90,11 +102,11 @@ export default function Home({ markdownContent, isMarkdown }) {
     else if (filter === "nationwide") items = items.filter((p) => p.localOnly === false);
     else if (filter !== "all") items = items.filter((p) => p.category === filter);
     return items;
-  }, [allProducts, catalog, filter]);
+  }, [allProducts, catalog, filter, favProducts]);
 
   useCardReveal([list, loading]);
 
-  const meta = CATALOG_META[catalog];
+  const meta = catalog === "favorites" ? FAVORITES_META : CATALOG_META[catalog];
 
   function goToProducts(e) {
     e.preventDefault();
@@ -174,43 +186,26 @@ export default function Home({ markdownContent, isMarkdown }) {
               <div className="ctab-sub">ساوردو طازج ومحشي وخميرة حية</div>
               <div className="ctab-pointer"></div>
             </button>
-          </div>
-          <p className="catalog-nudge">دوس على القسم اللي عايزه — الأدوات أو الخبز</p>
 
-          {/* المفضلة — شريط أفقي تحت التابين مباشرة.
-              شكل مختلف عن كروت المنتجات عشان ما يتلخبطش معاها:
-              كروت صغيرة أفقية بتتسحب على الموبايل. */}
-          {favProducts.length > 0 && (
-            <div className="fav-strip">
-              <div className="fav-strip-head">
-                <Icon name="heart" size={16} />
-                <span>مفضلتك</span>
-                <em>{favProducts.length}</em>
-              </div>
-              <div className="fav-strip-rail">
-                {favProducts.map((p) => (
-                  <div className="fav-chip" key={p.id}>
-                    <div className="fav-chip-img">
-                      {p.mainImg
-                        ? <img src={p.mainImg} alt="" loading="lazy" />
-                        : <Icon name="bread" size={20} />}
-                    </div>
-                    <div className="fav-chip-txt">
-                      <span className="fav-chip-name">{p.nameAr}</span>
-                      <span className="fav-chip-price">
-                        {p.isStarter ? `${p.pricePerGram} جنيه/جرام` : `${p.price} جنيه`}
-                      </span>
-                    </div>
-                    <button
-                      className="fav-chip-x"
-                      aria-label={`شيل ${p.nameAr} من المفضلة`}
-                      onClick={() => removeFav(p.id)}
-                    ><Icon name="close" size={12} /></button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+            {/* تاب المفضلة — بنفس شكل ومقاس التابين التانيين،
+                وبيظهر بس لما يكون في منتجات محفوظة فعلاً */}
+            {favProducts.length > 0 && (
+              <button
+                type="button"
+                className={"catalog-tab reveal" + (catalog === "favorites" ? " active" : "")}
+                style={{ transitionDelay: ".24s" }}
+                onClick={() => setCatalog("favorites")}
+                aria-pressed={catalog === "favorites"}
+              >
+                <div className="ctab-icon"><Icon name="heart" size={28} /></div>
+                <div className="ctab-title">المفضلة <span className="ctab-count">{favProducts.length}</span></div>
+                <div className="ctab-sub">المنتجات اللي عجبتك وحبيت ترجعلها</div>
+                <div className="ctab-pointer"></div>
+              </button>
+            )}
+          </div>
+          <p className="catalog-nudge">دوس على القسم اللي عايزه</p>
+
         </div>
 
         <div className="section-title"><span className="eyebrow">{meta.eyebrow}</span><h2>{meta.title}</h2><div className="title-line"></div><p>{meta.sub}</p></div>
