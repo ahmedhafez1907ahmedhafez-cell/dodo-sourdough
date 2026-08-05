@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { useShop } from "../context/ShopContext";
 import { getGovernorateFee, GOVERNORATE_NAMES, OTHER_GOVERNORATE, BANHA_DELIVERY_NOTE } from "../lib/deliveryRates";
 import { AREA_NAMES } from "../lib/areaNames";
@@ -17,17 +18,20 @@ export default function Layout({ children }) {
     document.body.classList.toggle("cart-open", shop.cartOpen);
   }, [shop.cartOpen]);
 
+  // ⚠️ لازم <Link> حقيقي مش <div onClick>.
+  // جوجل بيمشي على وسوم <a href> بس عشان يكتشف صفحات الموقع — الـ div
+  // اللي بيعمل router.push شغال للمستخدم لكن الزاحف مبيشوفهوش، وده كان
+  // سبب إن /reviews و /content مش متفهرسين. وكمان بيصلح التنقل بالكيبورد
+  // وفتح الصفحة في تاب جديد بزرار الماوس الأوسط.
   const menuLink = (href, label, icon) => (
-    <div
+    <Link
+      href={href}
       className={"menu-item" + (router.pathname === href ? " active" : "")}
-      role="link"
-      tabIndex={0}
-      onClick={() => { shop.setMenuOpen(false); router.push(href); }}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); shop.setMenuOpen(false); router.push(href); } }}
+      onClick={() => shop.setMenuOpen(false)}
     >
       {icon}
       {label}
-    </div>
+    </Link>
   );
 
   return (

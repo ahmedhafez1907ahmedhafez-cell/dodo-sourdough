@@ -911,3 +911,7 @@ footer{background:var(--clay-900);color:var(--sand);}
 .adm-notes-tpl button:hover{background:#1b1410;color:#fff;border-color:#1b1410;}
 .adm-notes-tpl button.clear{border-color:#e74c3c;color:#e74c3c;}
 .adm-notes-tpl button.clear:hover{background:#e74c3c;color:#fff;}
+
+/* .menu-item بقى <a> — بنشيل التسطير ونثبت لون النص */
+a.menu-item{text-decoration:none;color:var(--brown-dark);}
+a.menu-item.active{color:var(--cream);}
