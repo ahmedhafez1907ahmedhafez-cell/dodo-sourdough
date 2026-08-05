@@ -62,7 +62,6 @@ export default function Layout({ children }) {
         {menuLink("/reviews", "آراء العملاء", <Icon name="chat" size={21} />)}
         {menuLink("/content", "المحتوى", <Icon name="clipboard" size={21} />)}
         {menuLink("/profile", "طلباتي", <Icon name="bag" size={21} />)}
-        {menuLink("/profile#favorites", "المفضلة", <Icon name="heart" size={21} />)}
         <div
           className="menu-item"
           role="button"

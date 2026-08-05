@@ -5,6 +5,7 @@ import SplitText from "../components/SplitText";
 import AdSlot from "../components/AdSlot";
 import { useHeroIntro, useCardReveal, scatterStyle } from "../lib/useMotion";
 import { WHATSAPP_NUMBER } from "../lib/contact";
+import { useShop } from "../context/ShopContext";
 
 const CATALOG_META = {
   tools: {
@@ -24,6 +25,7 @@ const CATALOG_META = {
       { key: "stuffed", label: "محشوة" }, { key: "plain", label: "سادة" },
       { key: "slices", label: "شرائح" }, { key: "starter", label: "خميرة" },
       { key: "newest", label: "الأحدث" },
+      { key: "banha-only", label: "بنها فقط" }, { key: "nationwide", label: "كل المحافظات" },
       { key: "price-low", label: "الأقل سعراً" }, { key: "price-high", label: "الأعلى سعراً" },
     ],
   },
@@ -46,19 +48,35 @@ export default function Home({ markdownContent, isMarkdown }) {
     );
   }
 
+  const shop = useShop();
   useHeroIntro();
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [catalog, setCatalog] = useState("tools");
   const [filter, setFilter] = useState("all");
+  const [favProducts, setFavProducts] = useState([]);
 
   useEffect(() => {
     fetch("/api/products")
       .then((r) => r.json())
-      .then((d) => setAllProducts(d.products || []))
+      .then((d) => {
+        setAllProducts(d.products || []);
+        const favs = shop.getFavs();
+        setFavProducts((d.products || []).filter((p) => favs.includes(p.id)));
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  // Update favorites when favsTick changes (when user toggles favorites)
+  useEffect(() => {
+    const favs = shop.getFavs();
+    setFavProducts(allProducts.filter((p) => favs.includes(p.id)));
+  }, [shop.favsTick]);
+
+  function removeFav(pid) {
+    shop.toggleFav(pid);
+  }
 
   useEffect(() => setFilter("all"), [catalog]);
 
@@ -68,6 +86,8 @@ export default function Home({ markdownContent, isMarkdown }) {
     else if (filter === "price-high") items = [...items].sort((a, b) => b.price - a.price);
     else if (filter === "sourdough") items = items.filter((p) => p.isBestseller);
     else if (filter === "newest") items = items.filter((p) => p.isNew);
+    else if (filter === "banha-only") items = items.filter((p) => p.localOnly === true);
+    else if (filter === "nationwide") items = items.filter((p) => p.localOnly === false);
     else if (filter !== "all") items = items.filter((p) => p.category === filter);
     return items;
   }, [allProducts, catalog, filter]);
@@ -124,6 +144,41 @@ export default function Home({ markdownContent, isMarkdown }) {
           ))}
         </div>
       </section>
+
+      {favProducts.length > 0 && (
+        <section className="favorites-section">
+          <div className="section-title">
+            <span className="eyebrow">Your Favorites</span>
+            <h2>المفضلة</h2>
+            <div className="title-line"></div>
+            <p>المنتجات اللي ضفتها للمفضلة</p>
+          </div>
+          <div className="favorites-grid">
+            {favProducts.map((p) => (
+              <div className="fav-item-card" key={p.id}>
+                <div className="fav-item-image">
+                  {p.mainImg ? (
+                    <img src={p.mainImg} alt={p.nameAr} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }} />
+                  ) : (
+                    <Icon name="bread" size={32} />
+                  )}
+                </div>
+                <div className="fav-item-details">
+                  <h4>{p.nameAr}</h4>
+                  <p className="fav-item-price">{p.isStarter ? `${p.pricePerGram} جنيه/جرام` : `${p.price} جنيه`}</p>
+                </div>
+                <button 
+                  className="fav-remove-btn" 
+                  aria-label="شيل من المفضلة" 
+                  onClick={() => removeFav(p.id)}
+                >
+                  <Icon name="close" size={14} />
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section id="products">
         <div className="catalog-hero-strip">

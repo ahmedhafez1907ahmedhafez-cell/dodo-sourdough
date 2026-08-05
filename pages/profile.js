@@ -14,7 +14,6 @@ import Icon from "../components/Icon";
 
 export default function MyOrders() {
   const shop = useShop();
-  const [favProducts, setFavProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -34,20 +33,8 @@ export default function MyOrders() {
       valid.forEach((u) => shop.replaceOrderLocally(u.id, u));
       setOrders(next);
     }).catch(() => {});
-    fetch("/api/products")
-      .then((r) => r.json())
-      .then((d) => {
-        const favs = shop.getFavs();
-        setFavProducts((d.products || []).filter((p) => favs.includes(p.id)));
-      })
-      .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shop.ready]);
-
-  function removeFav(pid) {
-    shop.toggleFav(pid);
-    setFavProducts((f) => f.filter((p) => p.id !== pid));
-  }
 
   async function cancelOrder(order) {
     if (!order.cancelToken) { shop.showToast("الطلب ده قديم ومش متاح إلغاؤه من الموقع؛ كلمنا على واتساب"); return; }
@@ -70,22 +57,6 @@ export default function MyOrders() {
           <h2>طلباتي</h2>
           <div className="title-line"></div>
         </div>
-
-        <hr className="section-divider" />
-        <div className="mine-head" id="favorites"><Icon name="heart" size={16} className="lbl-ico" />المفضلة</div>
-        {!favProducts.length && <p className="mine-empty">لسه مضفتش حاجة للمفضلة</p>}
-        {favProducts.map((p) => (
-          <div className="fav-item" key={p.id}>
-            <div className="fav-item-emoji">{p.mainImg ? <img src={p.mainImg} alt="" style={{ width: 46, height: 46, objectFit: "cover", borderRadius: 8 }} /> : <Icon name="bread" size={24} />}</div>
-            <div className="fav-item-info">
-              <div className="fav-item-name">{p.nameAr}</div>
-              <div className="fav-item-price">{p.isStarter ? `${p.pricePerGram} جنيه/جرام` : `${p.price} جنيه`}</div>
-            </div>
-            <button className="fav-remove-btn" aria-label="شيل من المفضلة" onClick={() => removeFav(p.id)}>
-              <Icon name="close" size={14} />
-            </button>
-          </div>
-        ))}
 
         <hr className="section-divider" />
         <div className="mine-head"><Icon name="bag" size={16} className="lbl-ico" />طلباتي السابقة</div>
