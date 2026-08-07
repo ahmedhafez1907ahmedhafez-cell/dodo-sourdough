@@ -113,6 +113,7 @@ function OrdersDashboard() {
         <h2>📦 الطلبات</h2>
         <div style={{ display: "flex", gap: 10 }}>
           <button onClick={load} style={{ border: "none", background: "none", color: "#1b7a3d", cursor: "pointer" }}>تحديث</button>
+          <Link href="/admin/shipping">تجهيز الشحن</Link>
           <Link href="/admin/products">المنتجات</Link>
           <Link href="/admin/content">المحتوى</Link>
           <Link href="/admin/reviews">التعليقات</Link>

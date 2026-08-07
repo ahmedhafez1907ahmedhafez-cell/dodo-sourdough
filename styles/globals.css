@@ -896,3 +896,65 @@ a.menu-item.active{color:var(--cream);}
   border-radius:6px;padding:3px 11px;font-family:'Tajawal',sans-serif;font-size:11.5px;
   font-weight:700;cursor:pointer;transition:all .2s;}
 .adm-retry:hover{background:#c0392b;color:#fff;}
+
+/* ==================================================================
+   تجهيز الشحن — ملصقات + كشف تسليم
+   مستقلة عن شركة الشحن، بتشتغل مع أي شركة.
+   ================================================================== */
+.ship-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.ship-seg{display:flex;border:1px solid #ccc;border-radius:8px;overflow:hidden;}
+.ship-seg button{border:none;background:#fff;padding:8px 18px;font-family:'Tajawal',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;color:#555;}
+.ship-seg button.on{background:#1b1410;color:#fff;}
+.ship-controls select{padding:8px 10px;border-radius:8px;border:1px solid #ccc;
+  font-family:'Tajawal',sans-serif;font-size:13px;}
+.ship-print{margin-right:auto;border:none;border-radius:8px;background:#2c7a4b;color:#fff;
+  padding:9px 22px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.ship-print:disabled{opacity:.5;cursor:default;}
+
+.ship-pick{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
+.ship-pick label{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #ddd;
+  border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer;}
+.ship-pick em{font-style:normal;color:#999;font-size:11px;}
+
+/* ---- الملصقات ---- */
+.labels-sheet{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ship-label{border:1.5px dashed #999;border-radius:6px;padding:12px 14px;
+  background:#fff;min-height:150px;display:flex;flex-direction:column;gap:5px;}
+.lbl-brand{font-size:11px;font-weight:800;color:#8a4a28;border-bottom:1px solid #eee;padding-bottom:5px;}
+.lbl-brand span{color:#aaa;font-weight:400;}
+.lbl-name{font-size:19px;font-weight:800;color:#1b1410;line-height:1.4;}
+.lbl-phone{font-size:17px;font-weight:700;font-family:'Courier New',monospace;letter-spacing:1px;}
+.lbl-addr{font-size:13px;line-height:1.75;color:#333;flex:1;}
+.lbl-foot{display:flex;justify-content:space-between;align-items:center;font-size:11px;
+  color:#777;border-top:1px solid #eee;padding-top:6px;}
+.lbl-due{font-weight:800;color:#1b1410;font-size:12.5px;}
+
+/* ---- كشف التسليم ---- */
+.manifest-sheet{background:#fff;padding:18px;border:1px solid #ddd;border-radius:8px;}
+.mf-head{display:flex;justify-content:space-between;align-items:flex-start;
+  border-bottom:2px solid #1b1410;padding-bottom:10px;margin-bottom:14px;}
+.mf-head h3{font-size:19px;}
+.mf-head p{font-size:12px;color:#666;margin-top:3px;}
+.mf-count{font-size:13px;font-weight:800;background:#f2ede4;border-radius:6px;padding:6px 14px;}
+.manifest-sheet table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.manifest-sheet th,.manifest-sheet td{border:1px solid #ddd;padding:7px 8px;text-align:right;}
+.manifest-sheet th{background:#f7f3ec;font-weight:800;}
+.mf-addr{font-size:11.5px;line-height:1.6;}
+.mf-total{margin-top:12px;text-align:left;font-size:14px;}
+.mf-sign{display:flex;gap:26px;margin-top:34px;}
+.mf-sign div{flex:1;}
+.mf-sign span{font-size:11.5px;color:#666;}
+.mf-sign i{display:block;border-bottom:1px solid #333;margin-top:26px;}
+
+/* ---- الطباعة ---- */
+@media print{
+  .ship-ui{display:none !important;}
+  .ship-page{padding:0 !important;max-width:none !important;}
+  body{background:#fff;}
+  .labels-sheet{gap:0;}
+  .ship-label{break-inside:avoid;page-break-inside:avoid;border-radius:0;margin:0;}
+  .manifest-sheet{border:none;padding:0;}
+  .manifest-sheet tr{break-inside:avoid;}
+  @page{margin:10mm;}
+}
