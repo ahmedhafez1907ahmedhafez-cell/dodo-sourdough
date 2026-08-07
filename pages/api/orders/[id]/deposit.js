@@ -56,10 +56,13 @@ export default async function handler(req, res) {
     }
 
     // ---- تأكيد العربون ----
+    // لو العربون متأكد قبل كده والشحنة فشلت، الطلب ده بيبقى
+    // "إعادة محاولة شحن" — بنكمّل عادي وننضّف الخطأ القديم.
     await ref.update({
       depositPaid: true,
       depositPaidAt: new Date().toISOString(),
       status: AFTER_DEPOSIT_STATUS,
+      mylerzError: null,
     });
 
     // اتشحن قبل كده؟ منبعتش مرتين

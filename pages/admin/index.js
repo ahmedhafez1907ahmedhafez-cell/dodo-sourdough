@@ -67,7 +67,12 @@ function OrdersDashboard() {
     const data = await res.json().catch(() => ({}));
     setDepBusy(null);
     if (!res.ok) { alert(data.error || "فشل التأكيد"); return; }
-    if (data.mylerzError) alert("العربون اتأكد، بس الشحنة فشلت:\n" + data.mylerzError);
+    if (data.mylerzError) {
+      const lowBalance = /sufficient balance|current balance/i.test(data.mylerzError);
+      alert(lowBalance
+        ? "العربون اتأكد، بس مايلرز رفضت الشحنة لأن رصيدك عندهم خلص أو بالسالب.\n\nادخل mylerz.net → Finance واشحن رصيدك، وبعدين دوس «أعد محاولة الشحن» على الطلب.\n\nرد مايلرز:\n" + data.mylerzError
+        : "العربون اتأكد، بس الشحنة فشلت:\n" + data.mylerzError);
+    }
     else if (data.skipped) alert("العربون اتأكد. الشحنة اتخطت: " + data.skipped);
     else if (data.trackingNo) {
       // الشحنة اتعملت — بنفتح البوليصة على طول عشان تطبعها وتلزقها
@@ -165,7 +170,19 @@ function OrdersDashboard() {
               <button className="adm-awb" onClick={() => printAwb(o.id)}>اطبع البوليصة</button>
             </div>
           )}
-          {o.mylerzError && <div className="adm-ship err">فشل الشحن: {o.mylerzError}</div>}
+          {/* الشحنة فشلت والعربون متأكد؟ يبقى محتاج إعادة محاولة —
+              من غير الزرار ده الأوردر بيفضل واقف من غير شحنة. */}
+          {o.mylerzError && (
+            <div className="adm-ship err">
+              فشل الشحن: {o.mylerzError}
+              {!o.mylerzTrackingNo && o.depositPaid && (
+                <button className="adm-retry" disabled={depBusy === o.id}
+                  onClick={() => setDeposit(o.id, true)}>
+                  {depBusy === o.id ? "..." : "أعد محاولة الشحن"}
+                </button>
+              )}
+            </div>
+          )}
           {o.emailError && <div className="adm-ship err">إشعار الإيميل مبعتش: {o.emailError}</div>}
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
             <select
