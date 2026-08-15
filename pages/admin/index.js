@@ -6,6 +6,16 @@ import { useAdminAuth } from "../../lib/useAdminAuth";
 import { ORDER_STATUSES as STATUSES, AWAITING_DEPOSIT } from "../../lib/orderStatus";
 import Icon from "../../components/Icon";
 
+// wa.me عايز الرقم بكود الدولة من غير + أو صفر في الأول (زي "20106...").
+// أرقام العملاء متخزنة "01xxxxxxxxx" فبنبدّل الصفر بـ 20. من غير نص —
+// كده هو اللي بيكتب الرسالة بنفسه لما الشات يفتح.
+function waChatLink(phone) {
+  const digits = String(phone || "").replace(/\D/g, "");
+  if (!digits) return null;
+  const withCountry = digits.startsWith("20") ? digits : digits.startsWith("0") ? "20" + digits.slice(1) : "20" + digits;
+  return `https://wa.me/${withCountry}`;
+}
+
 function OrdersDashboard() {
   const { authedFetch, logout, user, loading: authLoading } = useAdminAuth();
   const [orders, setOrders] = useState([]);
@@ -135,8 +145,21 @@ function OrdersDashboard() {
             color: o.zone === "banha" ? "#2c7a4b" : "#8a4a28" }}>
             {o.zone === "banha" ? "بنها ومحيطها — توصيل بنفسنا" : "خارج بنها — شحن مايلرز"}
           </div>
-          <div style={{ fontSize: 13, color: "#555" }}>
-            {o.customerPhone} — {[o.zone === "banha" ? o.area : o.province, o.zone === "banha" ? null : o.area, o.street].filter(Boolean).join("، ")}
+          <div style={{ fontSize: 13, color: "#555", display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
+            <span>{o.customerPhone} — {[o.zone === "banha" ? o.area : o.province, o.zone === "banha" ? null : o.area, o.street].filter(Boolean).join("، ")}</span>
+            {/* بيفتح شات واتساب مع صاحب الأوردر من غير أي رسالة جاهزة —
+                إنت اللي بتكتب. بيشتغل على أي أوردر عنده رقم تليفون. */}
+            {waChatLink(o.customerPhone) && (
+              <a
+                href={waChatLink(o.customerPhone)}
+                target="_blank"
+                rel="noreferrer"
+                title="كلّم العميل على واتساب"
+                style={{ display: "inline-flex", alignItems: "center", gap: 4, background: "#25d366", color: "#fff", borderRadius: 999, padding: "3px 10px", fontSize: 12, fontWeight: 700, textDecoration: "none" }}
+              >
+                <Icon name="chat" size={13} /> واتساب
+              </a>
+            )}
           </div>
           <div style={{ fontSize: 13, margin: "6px 0" }}>
             {o.items?.map((it, i) => <span key={i}>{it.nameAr} ×{it.qty}{i < o.items.length - 1 ? "، " : ""}</span>)}

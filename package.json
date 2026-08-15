@@ -6,6 +6,7 @@
     "dev": "cross-env NODE_OPTIONS=--use-system-ca next dev",
     "build": "next build",
     "start": "next start",
+    "preview": "node --use-system-ca scripts/exportPreview.js",
     "seed:products": "node --use-system-ca scripts/seedProducts.js",
     "set:images": "node --use-system-ca scripts/setProductImages.js",
     "import:content": "node --use-system-ca scripts/importContent.js",
