@@ -200,9 +200,25 @@ function ProductsAdmin() {
   }
 
   async function removeProduct(id) {
-    if (!confirm("متأكد إنك عايز تمسح المنتج ده؟")) return;
+    if (!confirm("متأكد إنك عايز تمسح المنتج ده نهائي؟ الخطوة دي مش هترجع — لو محتاج تشيله شوية بس ورجّعه بعدين، استخدم زرار الإخفاء المؤقت بدل كده.")) return;
     await authedFetch(`/api/products/${id}`, { method: "DELETE" });
     load();
+  }
+
+  // إخفاء مؤقت: بنعلّم المنتج active:false — بيختفي من الموقع على طول
+  // (الهوم بيدج بتفلتر active !== false) بس فاضل هنا في الأدمن بلون
+  // باهت، وترجّعه في أي وقت بنفس الزرار. مفيش حذف حقيقي هنا خالص.
+  const [toggling, setToggling] = useState(null);
+  async function toggleActive(p) {
+    const nowActive = p.active !== false;
+    setToggling(p.id);
+    const res = await authedFetch(`/api/products/${p.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ active: !nowActive }),
+    });
+    setToggling(null);
+    if (res.ok) load();
   }
 
   return (
@@ -436,30 +452,53 @@ function ProductsAdmin() {
         {msg && <p>{msg}</p>}
       </form>
 
-      <h3>المنتجات الحالية ({products.length})</h3>
-      {products.map((p) => (
-        <div key={p.id} style={{ display: "flex", gap: 10, alignItems: "center", borderBottom: "1px solid #eee", padding: "8px 0" }}>
-          {p.mainImg && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={p.mainImg} alt="" style={{ width: 44, height: 44, objectFit: "cover", borderRadius: 6 }} onError={(e) => (e.currentTarget.style.display = "none")} />
-          )}
-          <div style={{ flex: 1 }}>
-            {p.nameAr} —{" "}
-            {p.isStarter ? (
-              `${p.pricePerGram} جنيه/جرام`
-            ) : p.oldPrice && Number(p.oldPrice) > Number(p.price) ? (
-              <>
-                <span style={{ textDecoration: "line-through", color: "#e74c3c" }}>{p.oldPrice}</span>{" "}
-                <b>{p.price} جنيه 🔥</b>
-              </>
-            ) : (
-              `${p.price} جنيه`
-            )}
-          </div>
-          <button onClick={() => startEdit(p)} style={{ color: "#1b1410", border: "none", background: "none", cursor: "pointer" }}>✏️</button>
-          <button onClick={() => removeProduct(p.id)} style={{ color: "#e74c3c", border: "none", background: "none", cursor: "pointer" }}>🗑️</button>
-        </div>
-      ))}
+      <h3>
+        المنتجات الحالية ({products.length})
+        {!!products.filter((p) => p.active === false).length && (
+          <span style={{ fontSize: 12.5, fontWeight: 400, color: "#999" }}>
+            {" "}— {products.filter((p) => p.active === false).length} منها مخفي مؤقتاً
+          </span>
+        )}
+      </h3>
+      {products
+        // الظاهر فوق، المخفي مؤقتاً تحت — أسهل تلاقي اللي شغال
+        .slice()
+        .sort((a, b) => (a.active === false ? 1 : 0) - (b.active === false ? 1 : 0))
+        .map((p) => {
+          const hidden = p.active === false;
+          return (
+            <div key={p.id} style={{ display: "flex", gap: 10, alignItems: "center", borderBottom: "1px solid #eee", padding: "8px 0", opacity: hidden ? 0.45 : 1 }}>
+              {p.mainImg && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={p.mainImg} alt="" style={{ width: 44, height: 44, objectFit: "cover", borderRadius: 6, filter: hidden ? "grayscale(1)" : "none" }} onError={(e) => (e.currentTarget.style.display = "none")} />
+              )}
+              <div style={{ flex: 1 }}>
+                {p.nameAr} —{" "}
+                {p.isStarter ? (
+                  `${p.pricePerGram} جنيه/جرام`
+                ) : p.oldPrice && Number(p.oldPrice) > Number(p.price) ? (
+                  <>
+                    <span style={{ textDecoration: "line-through", color: "#e74c3c" }}>{p.oldPrice}</span>{" "}
+                    <b>{p.price} جنيه 🔥</b>
+                  </>
+                ) : (
+                  `${p.price} جنيه`
+                )}
+                {hidden && <span style={{ marginRight: 8, fontSize: 11.5, fontWeight: 700, color: "#a8442a", background: "#fbe9df", padding: "2px 8px", borderRadius: 999 }}>مخفي مؤقتاً</span>}
+              </div>
+              <button
+                onClick={() => toggleActive(p)}
+                disabled={toggling === p.id}
+                title={hidden ? "رجّعه للموقع" : "إخفاء مؤقت — يختفي من الموقع بس يفضل هنا"}
+                style={{ color: hidden ? "#2c7a4b" : "#8a6d3b", border: "none", background: "none", cursor: "pointer", fontSize: 15 }}
+              >
+                {toggling === p.id ? "..." : hidden ? "👁️ إظهار" : "🚫 إخفاء مؤقت"}
+              </button>
+              <button onClick={() => startEdit(p)} style={{ color: "#1b1410", border: "none", background: "none", cursor: "pointer" }}>✏️</button>
+              <button onClick={() => removeProduct(p.id)} title="حذف نهائي" style={{ color: "#e74c3c", border: "none", background: "none", cursor: "pointer" }}>🗑️</button>
+            </div>
+          );
+        })}
     </div>
   );
 }
