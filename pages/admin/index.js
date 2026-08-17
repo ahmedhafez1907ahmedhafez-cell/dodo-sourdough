@@ -16,6 +16,26 @@ function waChatLink(phone) {
   return `https://wa.me/${withCountry}`;
 }
 
+// من امتى الأوردر مستني؟ — ده الفرق الحقيقي بين طلب لسه دقايق (عادي)
+// وطلب واقف من ساعات كتير (محتاج متابعة). "قفل شاشة العربون" وحدها
+// مش مؤشر قوي — أي حد بيعمل أوردر بيشوف الشاشة دي وبيقفلها فوراً
+// عشان يكمل، سواء هيدفع أو لأ.
+function hoursSince(iso) {
+  if (!iso) return 0;
+  return (Date.now() - new Date(iso).getTime()) / 3_600_000;
+}
+function depositAgeClass(hrs) {
+  if (hrs >= 24) return "overdue";
+  if (hrs >= 3) return "stale";
+  return "";
+}
+function ageLabel(hrs) {
+  if (hrs >= 48) return `من ${Math.floor(hrs / 24)} يوم`;
+  if (hrs >= 24) return "من يوم تقريباً";
+  if (hrs >= 1) return `من ${Math.floor(hrs)} ساعة`;
+  return "دلوقتي";
+}
+
 function OrdersDashboard() {
   const { authedFetch, logout, user, loading: authLoading } = useAdminAuth();
   const [orders, setOrders] = useState([]);
@@ -174,18 +194,27 @@ function OrdersDashboard() {
 
           {/* الكارت بيختفي خالص أول ما العربون يتأكد أو الأوردر يتحرك
               لحالة أبعد — مفيش لازمة لزرار على أوردر خلاص اتحصّل. */}
-          {!o.depositPaid && o.status === AWAITING_DEPOSIT && (
-            <div className="adm-dep">
-              <Icon name="clock" size={17} />
-              <span className="adm-dep-txt">
-                في انتظار عربون {o.deposit ?? Math.ceil((o.total || 0) / 2)} جنيه
-              </span>
-              <button className="adm-dep-yes" disabled={depBusy === o.id}
-                onClick={() => setDeposit(o.id, true)}>
-                {depBusy === o.id ? "..." : "تم استلام العربون"}
-              </button>
-            </div>
-          )}
+          {!o.depositPaid && o.status === AWAITING_DEPOSIT && (() => {
+            const hrs = hoursSince(o.createdAt);
+            const ageCls = depositAgeClass(hrs);
+            return (
+              <div className={"adm-dep" + (ageCls ? " " + ageCls : "")}>
+                <Icon name="clock" size={17} />
+                <span className="adm-dep-txt">
+                  في انتظار عربون {o.deposit ?? Math.ceil((o.total || 0) / 2)} جنيه
+                  {ageCls && <> — {ageLabel(hrs)}</>}
+                </span>
+                {/* شاف شاشة تعليمات الدفع وقفلها — معلومة إضافية بس،
+                    مش تحذير. معظم الطلبات بتاخدها لأن الشاشة دي بتفتح
+                    لوحدها بعد كل طلب جديد. */}
+                {o.depositPromptClosed && <span className="adm-dep-seen">شاف تعليمات الدفع</span>}
+                <button className="adm-dep-yes" disabled={depBusy === o.id}
+                  onClick={() => setDeposit(o.id, true)}>
+                  {depBusy === o.id ? "..." : "تم استلام العربون"}
+                </button>
+              </div>
+            );
+          })()}
 
           {o.mylerzTrackingNo && (
             <div className="adm-ship ok">

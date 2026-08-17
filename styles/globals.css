@@ -798,12 +798,22 @@ footer{background:var(--clay-900);color:var(--sand);}
 .adm-dep{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 4px;
   padding:10px 12px;border-radius:8px;background:#fff8e6;border:1px solid #f0d79a;}
 .adm-dep.paid{background:#eef7ef;border-color:#bcd9c0;}
+/* لسه مستني عربون من فترة أطول — بيتلوّن أكتر كل ما الوقت يعدي، عشان
+   الطلبات المنسية تلفت النظر من غير ما تدوّر عليها */
+.adm-dep.stale{background:#fdeee0;border-color:#eab27a;}
+.adm-dep.overdue{background:#fdecec;border-color:#e5a3a3;}
 .adm-dep-txt{font-size:13px;font-weight:700;color:#7a5a12;}
 .adm-dep.paid .adm-dep-txt{color:#2c7a4b;}
+.adm-dep.stale .adm-dep-txt{color:#a15b1f;}
+.adm-dep.overdue .adm-dep-txt{color:#b42318;}
 .adm-dep button{border:none;border-radius:7px;padding:7px 14px;font-family:'Tajawal',sans-serif;
   font-size:12.5px;font-weight:700;cursor:pointer;margin-right:auto;}
 .adm-dep-yes{background:#2c7a4b;color:#fff;}
 .adm-dep-no{background:none;color:#999;text-decoration:underline;}
+/* علامة صغيرة: شاف تعليمات العربون وقفلها من غير ما يدفع. مش تحذير —
+   معظم الطلبات هتاخدها لأن الشاشة دي بتفتح لوحدها بعد كل طلب. */
+.adm-dep-seen{font-size:10.5px;font-weight:700;color:#8a6d3b;background:#f3ead4;
+  border-radius:999px;padding:2px 9px;white-space:nowrap;}
 .adm-ship{font-size:11.5px;line-height:1.7;margin-top:6px;}
 .adm-ship.ok{color:#2c7a4b;}
 .adm-ship.err{color:#c0392b;}

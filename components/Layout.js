@@ -202,6 +202,7 @@ function CartSidebar() {
         remainder: data.remainder,
         wallet: data.depositWallet || DEPOSIT_WALLET,
         note: data.deliveryNote,
+        cancelToken: data.customerCancelToken,
       });
     } catch (e) {
       shop.showToast("حصل خطأ، جرب تاني");
@@ -212,7 +213,19 @@ function CartSidebar() {
 
   return (
     <>
-      {done && <OrderDonePopup done={done} onClose={() => { setDone(null); shop.showToast("الطلب لن يبدأ إلا بعد دفع العربون. حوّل العربون ثم ابعت الإيصال على واتساب."); }} />}
+      {done && <OrderDonePopup done={done} onClose={() => {
+        // بنسجّل إنه قفل شاشة العربون من غير ما يدفع — علامة بسيطة
+        // بتبان في الأدمن، من غير ما توقف أو تأثر على تدفق الطلب
+        if (done.cancelToken) {
+          fetch(`/api/orders/${done.id}/deposit-seen`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: done.cancelToken }),
+          }).catch(() => {});
+        }
+        setDone(null);
+        shop.showToast("الطلب لن يبدأ إلا بعد دفع العربون. حوّل العربون ثم ابعت الإيصال على واتساب.");
+      }} />}
 
       <div className={"cart-sidebar" + (shop.cartOpen ? " open" : "")}>
         <div className="cart-header">

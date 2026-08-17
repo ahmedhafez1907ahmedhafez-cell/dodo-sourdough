@@ -104,7 +104,10 @@ async function createOrder(req, res) {
   // بنسجّل فشل الإيميل على الأوردر نفسه عشان يبان في الأدمن،
   // بدل ما يضيع في اللوج ومنعرفش ليه الإشعار مجاش.
   sendOrderNotification(order).catch((e) => {
-    const msg = String(e.message || e).slice(0, 200);
+    // بنسجّل السبب الحقيقي (cause) مش بس "fetch failed" — عشان لو
+    // اتكرر تاني بعد الـ retry نعرف نشخّصه صح من الأدمن على طول
+    const cause = e?.cause?.message || e?.cause?.code || "";
+    const msg = String(cause ? `${e.message} (${cause})` : e.message || e).slice(0, 200);
     console.error("[order email]", msg);
     orderRef.update({ emailError: msg }).catch(() => {});
   });
