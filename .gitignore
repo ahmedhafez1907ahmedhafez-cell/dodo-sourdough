@@ -5,3 +5,5 @@ node_modules
 
 # نسخ المعاينة المولّدة — مش بتتحط على جيت
 previews/
+_to_delete/
+.env.local.bak

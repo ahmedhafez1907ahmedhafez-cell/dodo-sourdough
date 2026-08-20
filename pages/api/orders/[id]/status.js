@@ -1,6 +1,6 @@
 import { adminDb, requireAdmin, ApiError } from "../../../../lib/firebaseAdmin";
 import { isValidStatus, AWAITING_DEPOSIT } from "../../../../lib/orderStatus";
-import { cancelMylerzPackage } from "../../../../lib/mylerz";
+import { cancelBostaDelivery } from "../../../../lib/bosta";
 
 export default async function handler(req, res) {
   try {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     // لو نقلت الأوردر لأي حالة غير "في انتظار العربون"، يبقى العربون
     // وصل بالبديهة — مش منطقي تبدأ تحضّر أوردر لسه مدفعش. وبنمسح
     // أي خطأ شحن قديم لأنك بقيت متولّي الأوردر بنفسك.
-    // ⚠️ الحالة دي مبتبعتش شحنة لمايلرز — الشحن بيحصل من زرار
+    // ⚠️ الحالة دي مبتبعتش شحنة — الشحن بيحصل من زرار
     //    "تم استلام العربون" بس، عشان محصلش شحنتين لنفس الأوردر.
     const patch = { status };
     if (status === AWAITING_DEPOSIT) {
@@ -28,30 +28,31 @@ export default async function handler(req, res) {
       patch.depositPaid = !!existing.data()?.depositPaid;
     } else {
       patch.depositPaid = true;
-      patch.mylerzError = null;
+      patch.shipmentError = null;
     }
 
     const ref = adminDb.collection("orders").doc(id);
 
-    // "ملغي" = الغي الشحنة من مايلرز كمان، عشان ميجيش مندوب
+    // "ملغي" = الغي الشحنة من بوسطة كمان، عشان ميجيش مندوب
     // على طرد إنت لغيته، وميتحسبش عليك مشوار.
     let cancelNote = null;
     if (status === "ملغي") {
       const snap = await ref.get();
-      const tracking = snap.exists ? snap.data().mylerzTrackingNo : null;
-      if (tracking) {
+      const data = snap.exists ? snap.data() : {};
+      const shipRef = data.shipmentId || data.shipmentTrackingNo;
+      if (shipRef) {
         try {
-          const r = await cancelMylerzPackage(tracking);
+          const r = await cancelBostaDelivery(shipRef);
           if (r.enabled && r.ok) {
-            patch.mylerzCancelled = true;
-            cancelNote = `اتلغت شحنة مايلرز ${tracking}`;
+            patch.shipmentCancelled = true;
+            cancelNote = `اتلغت شحنة بوسطة ${data.shipmentTrackingNo || shipRef}`;
           } else {
-            cancelNote = `الأوردر اتلغى، بس مايلرز رفضت إلغاء الشحنة ${tracking} — الغيها من البوابة`;
-            patch.mylerzError = cancelNote;
+            cancelNote = `الأوردر اتلغى، بس بوسطة رفضت إلغاء الشحنة ${data.shipmentTrackingNo || shipRef} — الغيها من الداشبورد`;
+            patch.shipmentError = cancelNote;
           }
         } catch (e) {
           cancelNote = `الأوردر اتلغى، بس فشل إلغاء الشحنة: ${String(e.message || e).slice(0, 150)}`;
-          patch.mylerzError = cancelNote;
+          patch.shipmentError = cancelNote;
         }
       }
     }

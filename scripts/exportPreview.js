@@ -40,25 +40,27 @@ const depositFor = (t) => Math.ceil((Number(t) || 0) * DEPOSIT_RATIO);
 const remainderFor = (t) => Math.round(((Number(t) || 0) - depositFor(t)) * 100) / 100;
 
 const VAT = 0.14;
-const MYLERZ_ZONES = {
-  cairoGiza: { label: "القاهرة والجيزة", first2kg: 75 },
-  alex: { label: "الإسكندرية", first2kg: 80 },
-  delta: { label: "الدلتا", first2kg: 85 },
-  canal: { label: "مدن القناة", first2kg: 90 },
-  upperEgypt: { label: "الصعيد والبحر الأحمر", first2kg: 105 },
-  beyond: { label: "مناطق بعيدة", first2kg: 150 },
+const SHIPPING_ZONES = {
+  cairoGiza: { label: "القاهرة والجيزة", price: 97 },
+  alexBeheira: { label: "الإسكندرية والبحيرة", price: 102 },
+  deltaCanal: { label: "الدلتا ومدن القناة", price: 110 },
+  upperNorth: { label: "الصعيد (شمال)", price: 124 },
+  upperSouth: { label: "الصعيد (جنوب)", price: 140 },
+  northCoast: { label: "الساحل الشمالي ومطروح", price: 144 },
+  sinaiNewValley: { label: "سيناء والوادي الجديد", price: 160 },
 };
 const GOVERNORATE_TO_ZONE = {
-  "القليوبية": "delta", "الدقهلية": "delta", "الشرقية": "delta", "الغربية": "delta",
-  "المنوفية": "delta", "البحيرة": "delta", "كفر الشيخ": "delta", "دمياط": "delta",
-  "الإسكندرية": "alex", "القاهرة": "cairoGiza", "الجيزة": "cairoGiza",
-  "بورسعيد": "canal", "الإسماعيلية": "canal", "السويس": "canal",
-  "الفيوم": "upperEgypt", "بني سويف": "upperEgypt", "المنيا": "upperEgypt", "أسيوط": "upperEgypt",
-  "سوهاج": "upperEgypt", "قنا": "upperEgypt", "الأقصر": "upperEgypt", "أسوان": "upperEgypt",
-  "البحر الأحمر": "upperEgypt", "مطروح": "upperEgypt",
-  "شمال سيناء": "beyond", "جنوب سيناء": "beyond", "الوادي الجديد": "beyond",
+  "القاهرة": "cairoGiza", "الجيزة": "cairoGiza",
+  "الإسكندرية": "alexBeheira", "البحيرة": "alexBeheira",
+  "القليوبية": "deltaCanal", "الدقهلية": "deltaCanal", "الشرقية": "deltaCanal", "الغربية": "deltaCanal",
+  "المنوفية": "deltaCanal", "كفر الشيخ": "deltaCanal", "دمياط": "deltaCanal",
+  "بورسعيد": "deltaCanal", "الإسماعيلية": "deltaCanal", "السويس": "deltaCanal",
+  "الفيوم": "upperNorth", "بني سويف": "upperNorth", "المنيا": "upperNorth",
+  "أسيوط": "upperSouth", "سوهاج": "upperSouth", "قنا": "upperSouth", "الأقصر": "upperSouth", "أسوان": "upperSouth",
+  "البحر الأحمر": "upperSouth", "مطروح": "upperSouth",
+  "شمال سيناء": "sinaiNewValley", "جنوب سيناء": "sinaiNewValley", "الوادي الجديد": "sinaiNewValley",
 };
-const zoneFee = (z) => Math.round(MYLERZ_ZONES[z].first2kg * (1 + VAT) * 100) / 100;
+const zoneFee = (z) => Math.round(SHIPPING_ZONES[z].price * (1 + VAT) * 100) / 100;
 const GOVERNORATE_RATES = Object.fromEntries(
   Object.entries(GOVERNORATE_TO_ZONE).map(([g, z]) => [g, zoneFee(z)])
 );

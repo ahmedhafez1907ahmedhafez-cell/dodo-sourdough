@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { adminDb, ApiError } from "../../../../lib/firebaseAdmin";
-import { cancelMylerzPackage } from "../../../../lib/mylerz";
+import { cancelBostaDelivery } from "../../../../lib/bosta";
 
 function validToken(order, token) {
   const expected = order.customerCancelTokenHash || "";
@@ -23,12 +23,13 @@ export default async function handler(req, res) {
     if (order.status === "تم التوصيل") return res.status(400).json({ error: "لا يمكن إلغاء طلب تم توصيله" });
 
     const patch = { status: "ملغي", cancelledByCustomer: true, cancelledAt: new Date().toISOString() };
-    if (order.mylerzTrackingNo) {
+    const shipRef = order.shipmentId || order.shipmentTrackingNo;
+    if (shipRef) {
       try {
-        const result = await cancelMylerzPackage(order.mylerzTrackingNo);
-        patch.mylerzCancelled = !!(result.enabled && result.ok);
-        if (!patch.mylerzCancelled) patch.mylerzError = "العميل ألغى الطلب؛ راجع إلغاء شحنة مايلرز يدوياً.";
-      } catch { patch.mylerzError = "العميل ألغى الطلب؛ تعذر إلغاء شحنة مايلرز تلقائياً."; }
+        const result = await cancelBostaDelivery(shipRef);
+        patch.shipmentCancelled = !!(result.enabled && result.ok);
+        if (!patch.shipmentCancelled) patch.shipmentError = "العميل ألغى الطلب؛ راجع إلغاء الشحنة يدوياً من بوسطة.";
+      } catch { patch.shipmentError = "العميل ألغى الطلب؛ تعذر إلغاء الشحنة تلقائياً."; }
     }
     await ref.update(patch);
     return res.status(200).json({ ok: true, depositPaid: !!order.depositPaid });

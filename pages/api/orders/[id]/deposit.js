@@ -2,35 +2,22 @@
 // PATCH /api/orders/[id]/deposit   { paid: true | false }
 // أدمن بس.
 //
-// ده المكان الوحيد اللي بتتعمل فيه شحنة مايلرز. الفكرة إن الأوردر
+// ده المكان الوحيد اللي بتتعمل فيه الشحنة. الفكرة إن الأوردر
 // ميتشحنش أبداً قبل ما تشوف صورة التحويل بعينك وتدوس الزرار.
 //
 // لما تأكّد العربون:
 //   1) بنعلّم الأوردر إن العربون اتدفع وحالته تبقى "قيد التحضير"
-//   2) بنبعت الشحنة لمايلرز — إلا لو:
-//      • أوردر بنها و MYLERZ_SKIP_BANHA=true (بتوصّله بنفسك)
+//   2) بنبعت الشحنة لبوسطة — إلا لو:
+//      • أوردر بنها و BOSTA_SKIP_BANHA=true (بتوصّله بنفسك)
 //      • سعر التوصيل لسه متحددش ("محافظة تانية")
 //
-// سرعة الشحن: أول 3 شحنات في اليوم بتروح "نفس اليوم" (SD)
-// واللي بعدهم "اليوم التالي" (ND) — زي ما اتفقنا.
+// ملحوظة: بوسطة خدمتها الأساسية "التوصيل في اليوم التالي" فمفيش
+// اختيار سرعة زي ما كان بيحصل قبل كده.
 // ============================================================
 
 import { adminDb, requireAdmin, ApiError } from "../../../../lib/firebaseAdmin";
-import { createMylerzShipment } from "../../../../lib/mylerz";
+import { createBostaDelivery } from "../../../../lib/bosta";
 import { AFTER_DEPOSIT_STATUS, AWAITING_DEPOSIT } from "../../../../lib/orderStatus";
-
-const SAME_DAY_QUOTA = 3;
-
-/** كام شحنة اتبعتت لمايلرز النهاردة؟ */
-async function shipmentsToday() {
-  const start = new Date();
-  start.setHours(0, 0, 0, 0);
-  const snap = await adminDb
-    .collection("orders")
-    .where("shippedAt", ">=", start.toISOString())
-    .get();
-  return snap.size;
-}
 
 export default async function handler(req, res) {
   try {
@@ -62,15 +49,15 @@ export default async function handler(req, res) {
       depositPaid: true,
       depositPaidAt: new Date().toISOString(),
       status: AFTER_DEPOSIT_STATUS,
-      mylerzError: null,
+      shipmentError: null,
     });
 
     // اتشحن قبل كده؟ منبعتش مرتين
-    if (order.mylerzTrackingNo) {
+    if (order.shipmentTrackingNo) {
       return res.status(200).json({ ok: true, depositPaid: true, alreadyShipped: true });
     }
 
-    const skipBanha = String(process.env.MYLERZ_SKIP_BANHA || "").toLowerCase() === "true";
+    const skipBanha = String(process.env.BOSTA_SKIP_BANHA || "").toLowerCase() === "true";
     const skipReason =
       order.deliveryFee === null ? "سعر التوصيل لسه متحددش" :
       (skipBanha && order.zone === "banha") ? "أوردر بنها — بتوصّله بنفسك" : null;
@@ -79,34 +66,32 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, depositPaid: true, skipped: skipReason });
     }
 
-    // أول 3 شحنات في اليوم = نفس اليوم
-    let sameDay = false;
-    try { sameDay = (await shipmentsToday()) < SAME_DAY_QUOTA; } catch { /* لو فشل العد، ND أأمن */ }
-
     try {
-      const mylerz = await createMylerzShipment({ ...order, sameDay });
-      if (!mylerz.enabled) {
-        const msg = "تكامل مايلرز مش مفعّل على السيرفر (MYLERZ_ENABLED)";
-        await ref.update({ mylerzError: msg });
-        return res.status(200).json({ ok: true, depositPaid: true, mylerzError: msg });
+      const shipment = await createBostaDelivery(order);
+      if (!shipment.enabled) {
+        const msg = "تكامل بوسطة مش مفعّل على السيرفر (BOSTA_API_KEY)";
+        await ref.update({ shipmentError: msg });
+        return res.status(200).json({ ok: true, depositPaid: true, shipmentError: msg });
       }
       await ref.update({
-        mylerzTrackingNo: mylerz.trackingNo || null,
-        mylerzPickupCode: mylerz.pickupOrderCode || null,
-        mylerzService: sameDay ? "SD" : "ND",
-        mylerzError: null,
+        shipmentCourier: "bosta",
+        shipmentTrackingNo: shipment.trackingNo || null,
+        shipmentId: shipment.deliveryId || null,
+        shipmentState: "Pickup requested",
+        shipmentError: null,
         shippedAt: new Date().toISOString(),
       });
       return res.status(200).json({
-        ok: true, depositPaid: true,
-        trackingNo: mylerz.trackingNo, service: sameDay ? "نفس اليوم" : "اليوم التالي",
+        ok: true,
+        depositPaid: true,
+        trackingNo: shipment.trackingNo,
       });
     } catch (e) {
       const msg = String(e.message || e).slice(0, 300);
-      console.error("[Mylerz]", msg);
-      await ref.update({ mylerzError: msg }).catch(() => {});
+      console.error("[Bosta]", msg);
+      await ref.update({ shipmentError: msg }).catch(() => {});
       // العربون اتأكد فعلاً — الشحن هو اللي فشل، فبنقول ده صراحة
-      return res.status(200).json({ ok: true, depositPaid: true, mylerzError: msg });
+      return res.status(200).json({ ok: true, depositPaid: true, shipmentError: msg });
     }
   } catch (e) {
     const status = e instanceof ApiError ? e.status : 500;

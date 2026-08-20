@@ -64,7 +64,7 @@ function OrdersDashboard() {
   async function changeStatus(id, status) {
     // تغيير الحالة معناه إن العربون وصل (السيرفر بيعمل نفس الحاجة)
     setOrders((o) => o.map((x) => (x.id === id
-      ? { ...x, status, depositPaid: status === AWAITING_DEPOSIT ? false : status === "ملغي" ? x.depositPaid : true, mylerzError: status === AWAITING_DEPOSIT ? x.mylerzError : null }
+      ? { ...x, status, depositPaid: status === AWAITING_DEPOSIT ? false : status === "ملغي" ? x.depositPaid : true, shipmentError: status === AWAITING_DEPOSIT ? x.shipmentError : null }
       : x))); // optimistic
     const res = await authedFetch(`/api/orders/${id}/status`, {
       method: "PATCH",
@@ -76,17 +76,17 @@ function OrdersDashboard() {
     if (data.cancelNote) alert(data.cancelNote);
   }
 
-  // تأكيد العربون — ده اللي بيبعت الشحنة لمايلرز. مفيش أوردر
+  // تأكيد العربون — ده اللي بيبعت الشحنة لبوسطة. مفيش أوردر
   // بيتشحن قبل ما تدوس هنا.
   const [depBusy, setDepBusy] = useState(null);
   async function setDeposit(id, paid) {
-    // أوردرات بنها بنوصّلها بنفسنا، فمش بتروح لمايلرز — الرسالة
+    // أوردرات بنها بنوصّلها بنفسنا، فمش بتروح لبوسطة — الرسالة
     // لازم تقول ده صح عشان متتلخبطش.
     const o = orders.find((x) => x.id === id);
     const localBanha = o?.zone === "banha";
     const msg = localBanha
-      ? "متأكد إن العربون وصل؟ الطلب ده بنها — هيتعلّم كمدفوع بس مش هيروح لمايلرز."
-      : "متأكد إن العربون وصل؟ الطلب هيتبعت لمايلرز على طول.";
+      ? "متأكد إن العربون وصل؟ الطلب ده بنها — هيتعلّم كمدفوع بس مش هيروح لبوسطة."
+      : "متأكد إن العربون وصل؟ الطلب هيتبعت لبوسطة على طول.";
     if (paid && !confirm(msg)) return;
     setDepBusy(id);
     const res = await authedFetch(`/api/orders/${id}/deposit`, {
@@ -97,23 +97,20 @@ function OrdersDashboard() {
     const data = await res.json().catch(() => ({}));
     setDepBusy(null);
     if (!res.ok) { alert(data.error || "فشل التأكيد"); return; }
-    if (data.mylerzError) {
-      const lowBalance = /sufficient balance|current balance/i.test(data.mylerzError);
-      alert(lowBalance
-        ? "العربون اتأكد، بس مايلرز رفضت الشحنة لأن رصيدك عندهم خلص أو بالسالب.\n\nادخل mylerz.net → Finance واشحن رصيدك، وبعدين دوس «أعد محاولة الشحن» على الطلب.\n\nرد مايلرز:\n" + data.mylerzError
-        : "العربون اتأكد، بس الشحنة فشلت:\n" + data.mylerzError);
+    if (data.shipmentError) {
+      alert("العربون اتأكد، بس الشحنة فشلت:\n" + data.shipmentError);
     }
     else if (data.skipped) alert("العربون اتأكد. الشحنة اتخطت: " + data.skipped);
     else if (data.trackingNo) {
       // الشحنة اتعملت — بنفتح البوليصة على طول عشان تطبعها وتلزقها
-      alert(`تمام — الشحنة اتعملت (${data.service})\nرقم التتبع: ${data.trackingNo}\n\nهنفتحلك البوليصة دلوقتي عشان تطبعها.`);
+      alert(`تمام — الشحنة اتعملت\nرقم التتبع: ${data.trackingNo}\n\nهنفتحلك البوليصة دلوقتي عشان تطبعها.`);
       printAwb(id);
     }
     load();
   }
 
   // بوليصة الشحن — بتتفتح في تاب جديد وبتطبع لوحدها.
-  // مايلرز بيطلبوا تلزقها على الطرد.
+  // بوسطة بتطلب تلزقها على الطرد.
   async function printAwb(id) {
     const res = await authedFetch(`/api/orders/${id}/awb`);
     if (!res.ok) {
@@ -159,11 +156,11 @@ function OrdersDashboard() {
             <strong>{o.customerName}</strong>
             <span style={{ fontSize: 12, color: "#888" }}>{o.createdAt?.slice(0, 16).replace("T", " ")}</span>
           </div>
-          {/* بنوضّح نوع التوصيل الأول: بنها بنوصّلها بنفسنا، وبرّه بمايلرز.
+          {/* بنوضّح نوع التوصيل الأول: بنها بنوصّلها بنفسنا، وبرّه ببوسطة.
               وبنعرض المحافظة قبل باقي العنوان عشان تبان بسرعة. */}
           <div style={{ fontSize: 12, fontWeight: 700, margin: "3px 0",
             color: o.zone === "banha" ? "#2c7a4b" : "#8a4a28" }}>
-            {o.zone === "banha" ? "بنها ومحيطها — توصيل بنفسنا" : "خارج بنها — شحن مايلرز"}
+            {o.zone === "banha" ? "بنها ومحيطها — توصيل بنفسنا" : "خارج بنها — شحن بوسطة"}
           </div>
           <div style={{ fontSize: 13, color: "#555", display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
             <span>{o.customerPhone} — {[o.zone === "banha" ? o.area : o.province, o.zone === "banha" ? null : o.area, o.street].filter(Boolean).join("، ")}</span>
@@ -216,19 +213,18 @@ function OrdersDashboard() {
             );
           })()}
 
-          {o.mylerzTrackingNo && (
+          {o.shipmentTrackingNo && (
             <div className="adm-ship ok">
-              شحنة مايلرز: {o.mylerzTrackingNo}
-              {o.mylerzService === "SD" ? " — نفس اليوم" : o.mylerzService === "ND" ? " — اليوم التالي" : ""}
+              شحنة بوسطة: {o.shipmentTrackingNo}
               <button className="adm-awb" onClick={() => printAwb(o.id)}>اطبع البوليصة</button>
             </div>
           )}
           {/* الشحنة فشلت والعربون متأكد؟ يبقى محتاج إعادة محاولة —
               من غير الزرار ده الأوردر بيفضل واقف من غير شحنة. */}
-          {o.mylerzError && (
+          {o.shipmentError && (
             <div className="adm-ship err">
-              فشل الشحن: {o.mylerzError}
-              {!o.mylerzTrackingNo && o.depositPaid && (
+              فشل الشحن: {o.shipmentError}
+              {!o.shipmentTrackingNo && o.depositPaid && (
                 <button className="adm-retry" disabled={depBusy === o.id}
                   onClick={() => setDeposit(o.id, true)}>
                   {depBusy === o.id ? "..." : "أعد محاولة الشحن"}

@@ -93,7 +93,7 @@ async function createOrder(req, res) {
     depositPaid: false,
     customerCancelTokenHash,
     status: DEFAULT_ORDER_STATUS,
-    mylerzTrackingNo: null,
+    shipmentTrackingNo: null,
     createdAt: new Date().toISOString(),
   });
 
@@ -114,7 +114,7 @@ async function createOrder(req, res) {
 
   // ⚠️ الشحنة مش بتتعمل هنا خالص.
   // الأوردر بيفضل "في انتظار العربون" لحد ما الأدمن يأكّد إن نص
-  // المبلغ وصل، وساعتها بس بتتبعت لمايلرز من
+  // المبلغ وصل، وساعتها بس بتتبعت لبوسطة من
   // /api/orders/[id]/deposit — عشان محدش يشحن من غير ما يدفع.
 
   // كل الأوردرات دلوقتي بتعدي على نفس الشاشة: العربون + واتساب.

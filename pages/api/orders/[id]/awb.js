@@ -2,15 +2,15 @@
 // GET /api/orders/[id]/awb   → بيرجّع بوليصة الشحن PDF
 // أدمن بس.
 //
-// مايلرز بيطلبوا تطبع البوليصة وتلزقها على الطرد. الملف ده بيجيب
-// الـ PDF من مايلرز مباشرة ويرجّعه للمتصفح، فبيتفتح في تاب جديد
+// بوسطة بتطلب تطبع البوليصة وتلزقها على الطرد. الملف ده بيجيب
+// الـ PDF من بوسطة مباشرة ويرجّعه للمتصفح، فبيتفتح في تاب جديد
 // وتقدر تطبعه على أي طابعة موصولة بالجهاز.
 //
-// ⚠️ التوكن بتاع مايلرز بيفضل في السيرفر — المتصفح بيشوف الـ PDF بس.
+// ⚠️ مفتاح بوسطة بيفضل في السيرفر — المتصفح بيشوف الـ PDF بس.
 // ============================================================
 
 import { requireAdmin, adminDb, ApiError } from "../../../../lib/firebaseAdmin";
-import { getMylerzAwbPdf } from "../../../../lib/mylerz";
+import { getBostaAwbPdf } from "../../../../lib/bosta";
 
 export default async function handler(req, res) {
   try {
@@ -26,15 +26,17 @@ export default async function handler(req, res) {
     if (!snap.exists) return res.status(404).json({ error: "الطلب مش موجود" });
 
     const order = snap.data();
-    if (!order.mylerzTrackingNo) {
-      return res.status(400).json({ error: "الطلب ده مالوش شحنة في مايلرز" });
+    // بوسطة بتطبع البوليصة بالـ delivery id، ولو مش موجود بنجرّب رقم التتبع
+    const ref = order.shipmentId || order.shipmentTrackingNo;
+    if (!ref) {
+      return res.status(400).json({ error: "الطلب ده مالوش شحنة" });
     }
 
-    const pdf = await getMylerzAwbPdf(order.mylerzTrackingNo);
+    const pdf = await getBostaAwbPdf(ref);
 
     res.setHeader("Content-Type", "application/pdf");
     // inline = يفتح في المتصفح جاهز للطباعة، مش ينزّل ملف
-    res.setHeader("Content-Disposition", `inline; filename="awb-${order.mylerzTrackingNo}.pdf"`);
+    res.setHeader("Content-Disposition", `inline; filename="awb-${order.shipmentTrackingNo || ref}.pdf"`);
     res.setHeader("Cache-Control", "no-store");
     return res.status(200).send(pdf);
   } catch (e) {
