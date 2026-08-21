@@ -85,8 +85,8 @@ function OrdersDashboard() {
     const o = orders.find((x) => x.id === id);
     const localBanha = o?.zone === "banha";
     const msg = localBanha
-      ? "متأكد إن العربون وصل؟ الطلب ده بنها — هيتعلّم كمدفوع بس مش هيروح لبوسطة."
-      : "متأكد إن العربون وصل؟ الطلب هيتبعت لبوسطة على طول.";
+      ? "متأكد إن العربون وصل؟ الطلب ده بنها — هيتعلّم كمدفوع بس مش هيتشحن أوتوماتيك."
+      : "متأكد إن العربون وصل؟ فاكر تسجّل الشحنة يدوي في تطبيق J&T بعد كده.";
     if (paid && !confirm(msg)) return;
     setDepBusy(id);
     const res = await authedFetch(`/api/orders/${id}/deposit`, {
@@ -97,33 +97,8 @@ function OrdersDashboard() {
     const data = await res.json().catch(() => ({}));
     setDepBusy(null);
     if (!res.ok) { alert(data.error || "فشل التأكيد"); return; }
-    if (data.shipmentError) {
-      alert("العربون اتأكد، بس الشحنة فشلت:\n" + data.shipmentError);
-    }
-    else if (data.skipped) alert("العربون اتأكد. الشحنة اتخطت: " + data.skipped);
-    else if (data.trackingNo) {
-      // الشحنة اتعملت — بنفتح البوليصة على طول عشان تطبعها وتلزقها
-      alert(`تمام — الشحنة اتعملت\nرقم التتبع: ${data.trackingNo}\n\nهنفتحلك البوليصة دلوقتي عشان تطبعها.`);
-      printAwb(id);
-    }
+    if (!localBanha) alert("تمام — متنساش تسجّل الشحنة يدوي في تطبيق J&T.");
     load();
-  }
-
-  // بوليصة الشحن — بتتفتح في تاب جديد وبتطبع لوحدها.
-  // بوسطة بتطلب تلزقها على الطرد.
-  async function printAwb(id) {
-    const res = await authedFetch(`/api/orders/${id}/awb`);
-    if (!res.ok) {
-      const d = await res.json().catch(() => ({}));
-      alert(d.error || "مقدرناش نجيب البوليصة");
-      return;
-    }
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const w = window.open(url, "_blank");
-    // بنستنى الـ PDF يتحمّل الأول وبعدين نفتح شاشة الطباعة
-    if (w) w.addEventListener("load", () => { try { w.print(); } catch {} });
-    setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
   async function deleteOrder(id) {
@@ -160,7 +135,7 @@ function OrdersDashboard() {
               وبنعرض المحافظة قبل باقي العنوان عشان تبان بسرعة. */}
           <div style={{ fontSize: 12, fontWeight: 700, margin: "3px 0",
             color: o.zone === "banha" ? "#2c7a4b" : "#8a4a28" }}>
-            {o.zone === "banha" ? "بنها ومحيطها — توصيل بنفسنا" : "خارج بنها — شحن بوسطة"}
+            {o.zone === "banha" ? "بنها ومحيطها — توصيل بنفسنا" : "خارج بنها — شحن J&T (يدوي)"}
           </div>
           <div style={{ fontSize: 13, color: "#555", display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
             <span>{o.customerPhone} — {[o.zone === "banha" ? o.area : o.province, o.zone === "banha" ? null : o.area, o.street].filter(Boolean).join("، ")}</span>
@@ -213,25 +188,7 @@ function OrdersDashboard() {
             );
           })()}
 
-          {o.shipmentTrackingNo && (
-            <div className="adm-ship ok">
-              شحنة بوسطة: {o.shipmentTrackingNo}
-              <button className="adm-awb" onClick={() => printAwb(o.id)}>اطبع البوليصة</button>
-            </div>
-          )}
-          {/* الشحنة فشلت والعربون متأكد؟ يبقى محتاج إعادة محاولة —
-              من غير الزرار ده الأوردر بيفضل واقف من غير شحنة. */}
-          {o.shipmentError && (
-            <div className="adm-ship err">
-              فشل الشحن: {o.shipmentError}
-              {!o.shipmentTrackingNo && o.depositPaid && (
-                <button className="adm-retry" disabled={depBusy === o.id}
-                  onClick={() => setDeposit(o.id, true)}>
-                  {depBusy === o.id ? "..." : "أعد محاولة الشحن"}
-                </button>
-              )}
-            </div>
-          )}
+
           {o.emailError && <div className="adm-ship err">إشعار الإيميل مبعتش: {o.emailError}</div>}
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
             <select

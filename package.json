@@ -10,7 +10,6 @@
     "seed:products": "node --use-system-ca scripts/seedProducts.js",
     "set:images": "node --use-system-ca scripts/setProductImages.js",
     "import:content": "node --use-system-ca scripts/importContent.js",
-    "migrate:shipment": "node --use-system-ca scripts/migrateShipmentFields.js",
     "dedupe:products": "node --use-system-ca scripts/dedupeProducts.js"
   },
   "dependencies": {

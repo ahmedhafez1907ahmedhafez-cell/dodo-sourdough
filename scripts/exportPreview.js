@@ -39,28 +39,27 @@ const DEPOSIT_RATIO = 0.5;
 const depositFor = (t) => Math.ceil((Number(t) || 0) * DEPOSIT_RATIO);
 const remainderFor = (t) => Math.round(((Number(t) || 0) - depositFor(t)) * 100) / 100;
 
-const VAT = 0.14;
+// J&T Express (تسجيل يدوي) — الأسعار دي نهائية زي ما هي، من غير حساب حجم شحنة أو ضريبة إضافية.
 const SHIPPING_ZONES = {
-  cairoGiza: { label: "القاهرة والجيزة", price: 97 },
-  alexBeheira: { label: "الإسكندرية والبحيرة", price: 102 },
-  deltaCanal: { label: "الدلتا ومدن القناة", price: 110 },
-  upperNorth: { label: "الصعيد (شمال)", price: 124 },
-  upperSouth: { label: "الصعيد (جنوب)", price: 140 },
-  northCoast: { label: "الساحل الشمالي ومطروح", price: 144 },
-  sinaiNewValley: { label: "سيناء والوادي الجديد", price: 160 },
+  cairoAlexGiza: { label: "القاهرة والإسكندرية والجيزة", price: 90 },
+  deltaCanal: { label: "الدلتا ومدن القناة", price: 100 },
+  qalyubia: { label: "القليوبية", price: 80 },
+  upperEgypt: { label: "الصعيد", price: 115 },
+  farRemote: { label: "المناطق البعيدة والحدودية", price: 180 },
 };
 const GOVERNORATE_TO_ZONE = {
-  "القاهرة": "cairoGiza", "الجيزة": "cairoGiza",
-  "الإسكندرية": "alexBeheira", "البحيرة": "alexBeheira",
-  "القليوبية": "deltaCanal", "الدقهلية": "deltaCanal", "الشرقية": "deltaCanal", "الغربية": "deltaCanal",
-  "المنوفية": "deltaCanal", "كفر الشيخ": "deltaCanal", "دمياط": "deltaCanal",
-  "بورسعيد": "deltaCanal", "الإسماعيلية": "deltaCanal", "السويس": "deltaCanal",
-  "الفيوم": "upperNorth", "بني سويف": "upperNorth", "المنيا": "upperNorth",
-  "أسيوط": "upperSouth", "سوهاج": "upperSouth", "قنا": "upperSouth", "الأقصر": "upperSouth", "أسوان": "upperSouth",
-  "البحر الأحمر": "upperSouth", "مطروح": "upperSouth",
-  "شمال سيناء": "sinaiNewValley", "جنوب سيناء": "sinaiNewValley", "الوادي الجديد": "sinaiNewValley",
+  "القاهرة": "cairoAlexGiza", "الإسكندرية": "cairoAlexGiza", "الجيزة": "cairoAlexGiza",
+  "الدقهلية": "deltaCanal", "المنوفية": "deltaCanal", "الغربية": "deltaCanal",
+  "البحيرة": "deltaCanal", "الإسماعيلية": "deltaCanal", "السويس": "deltaCanal",
+  "الشرقية": "deltaCanal", "دمياط": "deltaCanal", "بورسعيد": "deltaCanal", "كفر الشيخ": "deltaCanal",
+  "القليوبية": "qalyubia",
+  "أسوان": "upperEgypt", "المنيا": "upperEgypt", "بني سويف": "upperEgypt",
+  "قنا": "upperEgypt", "سوهاج": "upperEgypt", "الأقصر": "upperEgypt",
+  "الفيوم": "upperEgypt", "أسيوط": "upperEgypt",
+  "مطروح": "farRemote", "جنوب سيناء": "farRemote", "الوادي الجديد": "farRemote",
+  "شمال سيناء": "farRemote", "البحر الأحمر": "farRemote",
 };
-const zoneFee = (z) => Math.round(SHIPPING_ZONES[z].price * (1 + VAT) * 100) / 100;
+const zoneFee = (z) => SHIPPING_ZONES[z].price;
 const GOVERNORATE_RATES = Object.fromEntries(
   Object.entries(GOVERNORATE_TO_ZONE).map(([g, z]) => [g, zoneFee(z)])
 );

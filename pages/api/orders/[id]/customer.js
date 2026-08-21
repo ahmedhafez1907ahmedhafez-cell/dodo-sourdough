@@ -1,6 +1,5 @@
 import crypto from "crypto";
 import { adminDb, ApiError } from "../../../../lib/firebaseAdmin";
-import { cancelBostaDelivery } from "../../../../lib/bosta";
 
 function validToken(order, token) {
   const expected = order.customerCancelTokenHash || "";
@@ -22,16 +21,9 @@ export default async function handler(req, res) {
     if (order.status === "ملغي") return res.status(200).json({ ok: true, alreadyCancelled: true });
     if (order.status === "تم التوصيل") return res.status(400).json({ error: "لا يمكن إلغاء طلب تم توصيله" });
 
-    const patch = { status: "ملغي", cancelledByCustomer: true, cancelledAt: new Date().toISOString() };
-    const shipRef = order.shipmentId || order.shipmentTrackingNo;
-    if (shipRef) {
-      try {
-        const result = await cancelBostaDelivery(shipRef);
-        patch.shipmentCancelled = !!(result.enabled && result.ok);
-        if (!patch.shipmentCancelled) patch.shipmentError = "العميل ألغى الطلب؛ راجع إلغاء الشحنة يدوياً من بوسطة.";
-      } catch { patch.shipmentError = "العميل ألغى الطلب؛ تعذر إلغاء الشحنة تلقائياً."; }
-    }
-    await ref.update(patch);
+    // J&T معندهاش API نلغي بيه شحنة أوتوماتيك — لو الشحنة اتسجّلت
+    // فعلاً يدوي في تطبيق J&T، لازم تُلغى من هناك بإيدك.
+    await ref.update({ status: "ملغي", cancelledByCustomer: true, cancelledAt: new Date().toISOString() });
     return res.status(200).json({ ok: true, depositPaid: !!order.depositPaid });
   } catch (e) {
     const status = e instanceof ApiError ? e.status : 500;
