@@ -1,9 +1,10 @@
 import { adminDb, requireAdmin, ApiError } from "../../../lib/firebaseAdmin";
-import { getGovernorateFee, isBanhaArea, BANHA_DELIVERY_NOTE, OTHER_GOVERNORATE } from "../../../lib/deliveryRates";
+import { getGovernorateShippingFee, extraKgFromGrams, isBanhaArea, BANHA_DELIVERY_NOTE, OTHER_GOVERNORATE, PACKAGING_FEE } from "../../../lib/deliveryRates";
 import { sendOrderNotification } from "../../../lib/sendMail";
 import { recalcItems, PriceError } from "../../../lib/pricing";
 import { DEFAULT_ORDER_STATUS } from "../../../lib/orderStatus";
 import { depositFor, remainderFor, DEPOSIT_WALLET } from "../../../lib/payment";
+import { checkRateLimit } from "../../../lib/rateLimit";
 import crypto from "crypto";
 
 export default async function handler(req, res) {
@@ -21,6 +22,13 @@ export default async function handler(req, res) {
 
 // أي حد يقدر يعمل أوردر (عميل الموقع) — مفيش حاجة أدمن هنا
 async function createOrder(req, res) {
+  // حد أقصى 10 أوردرات كل 10 دقايق لكل IP — يمنع سبام الأوردرات
+  const rl = checkRateLimit(req, "orders", { max: 10, windowMs: 10 * 60 * 1000 });
+  if (!rl.ok) {
+    res.setHeader("Retry-After", String(rl.retryAfter));
+    return res.status(429).json({ error: "طلبات كتير من نفس الجهاز — استنى شوية وجرب تاني" });
+  }
+
   const b = req.body || {};
   const required = ["customerName", "customerPhone", "street", "zone", "items"];
   for (const f of required) {
@@ -46,6 +54,12 @@ async function createOrder(req, res) {
     return res.status(400).json({ error: "في طلبك منتجات (خبز/خميرة سائلة) بتتوصل بنها بس" });
   }
 
+  // وزن الخميرة السائلة في الأوردر (جرام) — المنتج الوحيد اللي وزنه
+  // متسجل، وبيتحسب بيه "الكيلو الزيادة" في سعر التوصيل. باقي المنتجات
+  // (خبز/أدوات) مالهاش وزن مسجل فبتعتبر دايماً جوّه الكيلو الأول الثابت.
+  const totalStarterGrams = items.reduce((s, i) => s + (i.isStarter ? (i.grams || 0) : 0), 0);
+  const extraKg = extraKgFromGrams(totalStarterGrams);
+
   let deliveryFee = null;
   let deliveryNote = "";
   if (b.zone === "banha") {
@@ -60,14 +74,15 @@ async function createOrder(req, res) {
       deliveryFee = null;
       deliveryNote = "سعر التوصيل هنقولك عليه على رقم الهاتف اللي بعته";
     } else {
-      deliveryFee = getGovernorateFee(b.province);
+      deliveryFee = getGovernorateShippingFee(b.province, extraKg);
       if (deliveryFee === null) return res.status(400).json({ error: "محافظة غير معروفة" });
     }
   } else {
     return res.status(400).json({ error: "منطقة توصيل غير معروفة" });
   }
 
-  const total = itemsTotal + (deliveryFee || 0);
+  // رسم التغليف: مبلغ ثابت بيتضاف مرة واحدة لكل أوردر (مش لكل منتج)
+  const total = itemsTotal + (deliveryFee || 0) + PACKAGING_FEE;
   // العربون: نص المبلغ، بيتحسب في السيرفر عشان العميل ميقدرش يقلله
   const deposit = depositFor(total);
 
@@ -88,6 +103,7 @@ async function createOrder(req, res) {
     itemsTotal,
     deliveryFee,
     deliveryNote,
+    packagingFee: PACKAGING_FEE,
     total,
     deposit,
     depositPaid: false,
@@ -98,7 +114,7 @@ async function createOrder(req, res) {
   });
 
   // بنبني الأوردر من القيم المحسوبة في السيرفر — مش من الـ body
-  const order = { ...b, id: orderRef.id, items, itemsTotal, deliveryFee, total, deposit };
+  const order = { ...b, id: orderRef.id, items, itemsTotal, deliveryFee, packagingFee: PACKAGING_FEE, total, deposit };
 
   // إشعار إيميل — مايفشلش الطلب لو الإيميل وقع
   // بنسجّل فشل الإيميل على الأوردر نفسه عشان يبان في الأدمن،
@@ -112,10 +128,10 @@ async function createOrder(req, res) {
     orderRef.update({ emailError: msg }).catch(() => {});
   });
 
-  // ⚠️ الشحنة مش بتتعمل هنا خالص.
+  // ⚠️ الشحنة مش بتتعمل هنا خالص، ولا بأي API لأي شركة شحن.
   // الأوردر بيفضل "في انتظار العربون" لحد ما الأدمن يأكّد إن نص
-  // المبلغ وصل، وساعتها بس بتتبعت لبوسطة من
-  // /api/orders/[id]/deposit — عشان محدش يشحن من غير ما يدفع.
+  // المبلغ وصل من /api/orders/[id]/deposit (بيغيّر الحالة بس) — وبعد
+  // كده الأدمن نفسه يسجّل الشحنة يدوي في تطبيق J&T.
 
   // كل الأوردرات دلوقتي بتعدي على نفس الشاشة: العربون + واتساب.
   // بنرجّع الأرقام للواجهة عشان تعرضها للعميل.
@@ -124,6 +140,7 @@ async function createOrder(req, res) {
     total,
     deliveryFee,
     deliveryNote,
+    packagingFee: PACKAGING_FEE,
     deposit,
     remainder: remainderFor(total),
     depositWallet: DEPOSIT_WALLET,

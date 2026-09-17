@@ -45,7 +45,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
       shop.addToCart({
         id: p.id, name: p.name, nameAr: `${p.nameAr} (${grams} جرام)`,
         basePrice: total, extras: [], extrasPrice: 0, totalPrice: total, unitPrice: total,
-        qty: 1, img: mainImg || null, priceNote: "جنيه", isStarter: true, localOnly,
+        qty: 1, img: mainImg || null, priceNote: "جنيه", isStarter: true, grams, localOnly,
       });
       setGrams(1);
       return;

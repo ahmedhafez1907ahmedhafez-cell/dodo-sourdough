@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useShop } from "../context/ShopContext";
-import { getGovernorateFee, GOVERNORATE_NAMES, OTHER_GOVERNORATE, BANHA_DELIVERY_NOTE } from "../lib/deliveryRates";
+import { getGovernorateShippingFee, extraKgFromGrams, GOVERNORATE_NAMES, OTHER_GOVERNORATE, BANHA_DELIVERY_NOTE, PACKAGING_FEE } from "../lib/deliveryRates";
 import { AREA_NAMES } from "../lib/areaNames";
 import { WHATSAPP_NUMBER } from "../lib/contact";
 import { buildOrderWhatsAppUrl } from "../lib/orderMessage";
@@ -129,8 +129,12 @@ function CartSidebar() {
 
   const forcedLocal = shop.cart.some((i) => i.localOnly);
   const zone = forcedLocal ? "banha" : form.zone;
+  // وزن الخميرة السائلة في السلة (جرام) — المنتج الوحيد اللي بيأثر على
+  // "الكيلو الزيادة" في سعر التوصيل. باقي المنتجات مالهاش وزن مسجل.
+  const totalStarterGrams = shop.cart.reduce((s, i) => s + (i.isStarter ? (i.grams || 0) : 0), 0);
+  const extraKg = extraKgFromGrams(totalStarterGrams);
   // بنها بنوصّلها بنفسنا وسعرها بيتحدد على واتساب، فمفيش رقم بيتعرض
-  const govFee = zone === "nationwide" ? getGovernorateFee(form.province) : null;
+  const govFee = zone === "nationwide" ? getGovernorateShippingFee(form.province, extraKg) : null;
   const deliveryFee = zone === "nationwide" ? govFee : null;
   // الحالات اللي سعر التوصيل فيها لسه متحددش
   const feeUnknown = zone === "banha" || (zone === "nationwide" && form.province === OTHER_GOVERNORATE);
@@ -191,6 +195,7 @@ function CartSidebar() {
         street: snapForm.street,
         items: snapshot,
         deliveryFee: data.deliveryFee,
+        packagingFee: data.packagingFee,
         total: data.total,
         deposit: data.deposit,
       });
@@ -334,8 +339,8 @@ function CartSidebar() {
               <input value={form.street} onChange={(e) => setForm({ ...form, street: e.target.value })} placeholder="اسم الشارع، رقم العمارة..." />
             </div>
             <div className="cart-total">
-              <span className="cart-total-label">الإجمالي:</span>
-              <span className="cart-total-price">{shop.cartTotal + (deliveryFee || 0)} جنيه{feeUnknown ? " + توصيل" : ""}</span>
+              <span className="cart-total-label">الإجمالي (شامل {PACKAGING_FEE} جنيه تغليف):</span>
+              <span className="cart-total-price">{shop.cartTotal + (deliveryFee || 0) + PACKAGING_FEE} جنيه{feeUnknown ? " + توصيل" : ""}</span>
             </div>
             <button className="checkout-btn" disabled={busy} onClick={confirmOrder}>
               {busy ? "جاري الإرسال..." : <><Icon name="check" size={18} /> تأكيد الطلب</>}

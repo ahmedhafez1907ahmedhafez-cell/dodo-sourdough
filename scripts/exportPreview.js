@@ -39,32 +39,31 @@ const DEPOSIT_RATIO = 0.5;
 const depositFor = (t) => Math.ceil((Number(t) || 0) * DEPOSIT_RATIO);
 const remainderFor = (t) => Math.round(((Number(t) || 0) - depositFor(t)) * 100) / 100;
 
-// J&T Express (تسجيل يدوي) — الأسعار دي نهائية زي ما هي، من غير حساب حجم شحنة أو ضريبة إضافية.
-const SHIPPING_ZONES = {
-  cairoAlexGiza: { label: "القاهرة والإسكندرية والجيزة", price: 90 },
-  deltaCanal: { label: "الدلتا ومدن القناة", price: 100 },
-  qalyubia: { label: "القليوبية", price: 80 },
-  upperEgypt: { label: "الصعيد", price: 115 },
-  farRemote: { label: "المناطق البعيدة والحدودية", price: 180 },
+// J&T Express (تسجيل يدوي) — نسخة مطابقة لـ lib/deliveryRates.js (سبتمبر 2026):
+// سعر "أول كيلو" ثابت لكل أوردر + سعر "كيلو زيادة" بيتحسب بس على وزن
+// الخميرة السائلة (المنتج الوحيد اللي بيتباع بالجرام).
+const SHIPPING_TIERS = {
+  qalyubia: { label: "القليوبية", firstKilo: 94, extraKg: 7 },
+  cairoAlexGiza: { label: "القاهرة والجيزة والإسكندرية", firstKilo: 106, extraKg: 7 },
+  lowerEgyptRest: { label: "باقي محافظات وجه بحري", firstKilo: 119, extraKg: 7 },
+  upperEgypt: { label: "محافظات وجه قبلي", firstKilo: 137, extraKg: 10 },
+  farRemote: { label: "جنوب سيناء ومرسى مطروح والوادي الجديد والمناطق البعيدة", firstKilo: 225, extraKg: 15 },
 };
-const GOVERNORATE_TO_ZONE = {
-  "القاهرة": "cairoAlexGiza", "الإسكندرية": "cairoAlexGiza", "الجيزة": "cairoAlexGiza",
-  "الدقهلية": "deltaCanal", "المنوفية": "deltaCanal", "الغربية": "deltaCanal",
-  "البحيرة": "deltaCanal", "الإسماعيلية": "deltaCanal", "السويس": "deltaCanal",
-  "الشرقية": "deltaCanal", "دمياط": "deltaCanal", "بورسعيد": "deltaCanal", "كفر الشيخ": "deltaCanal",
+const GOVERNORATE_TO_TIER = {
   "القليوبية": "qalyubia",
+  "القاهرة": "cairoAlexGiza", "الجيزة": "cairoAlexGiza", "الإسكندرية": "cairoAlexGiza",
+  "الدقهلية": "lowerEgyptRest", "المنوفية": "lowerEgyptRest", "الغربية": "lowerEgyptRest",
+  "البحيرة": "lowerEgyptRest", "الشرقية": "lowerEgyptRest", "دمياط": "lowerEgyptRest", "كفر الشيخ": "lowerEgyptRest",
+  "الإسماعيلية": "lowerEgyptRest", "السويس": "lowerEgyptRest", "بورسعيد": "lowerEgyptRest",
   "أسوان": "upperEgypt", "المنيا": "upperEgypt", "بني سويف": "upperEgypt",
   "قنا": "upperEgypt", "سوهاج": "upperEgypt", "الأقصر": "upperEgypt",
   "الفيوم": "upperEgypt", "أسيوط": "upperEgypt",
   "مطروح": "farRemote", "جنوب سيناء": "farRemote", "الوادي الجديد": "farRemote",
   "شمال سيناء": "farRemote", "البحر الأحمر": "farRemote",
 };
-const zoneFee = (z) => SHIPPING_ZONES[z].price;
-const GOVERNORATE_RATES = Object.fromEntries(
-  Object.entries(GOVERNORATE_TO_ZONE).map(([g, z]) => [g, zoneFee(z)])
-);
-const GOVERNORATE_NAMES = Object.keys(GOVERNORATE_TO_ZONE);
+const GOVERNORATE_NAMES = Object.keys(GOVERNORATE_TO_TIER);
 const OTHER_GOVERNORATE = "محافظة تانية";
+const PACKAGING_FEE = 5;
 const BANHA_DELIVERY_NOTE = "توصيل بنها بنتفق عليه على واتساب — أرخص من الشحن العادي";
 const AREA_NAMES = [
   "الفلل","شارع الموقف","الاهرام","اتريب","كوبري الفحص","عند علوم","منشية بنها","وسط البلد",
@@ -201,8 +200,8 @@ async function fontsCss() {
 
 function pageHtml({ css, fonts, products, assets, generatedAt }) {
   const data = JSON.stringify({
-    products, WHATSAPP_NUMBER, DEPOSIT_RATIO, GOVERNORATE_RATES, GOVERNORATE_NAMES,
-    OTHER_GOVERNORATE, BANHA_DELIVERY_NOTE, AREA_NAMES, EXTRAS_LIST,
+    products, WHATSAPP_NUMBER, DEPOSIT_RATIO, SHIPPING_TIERS, GOVERNORATE_TO_TIER, GOVERNORATE_NAMES,
+    OTHER_GOVERNORATE, PACKAGING_FEE, BANHA_DELIVERY_NOTE, AREA_NAMES, EXTRAS_LIST,
     ICON_PATHS, ICON_FILLED: [...ICON_FILLED],
   }).replace(/<\/script/gi, "<\\/script");
 
@@ -629,11 +628,28 @@ function addStarterToCart(id){
   var grams = gramState[id] || 1;
   var total = (p.pricePerGram||0) * grams;
   cart.push({ id:p.id, name:p.name, nameAr:p.nameAr+' ('+grams+' جرام)', basePrice:total, extras:[], extrasPrice:0,
-    totalPrice:total, unitPrice:total, qty:1, img:p._img||null, priceNote:'جنيه', isStarter:true,
+    totalPrice:total, unitPrice:total, qty:1, img:p._img||null, priceNote:'جنيه', isStarter:true, grams:grams,
     localOnly: p.localOnly !== undefined ? p.localOnly : p.catalog !== 'tools' });
   gramState[id]=1; syncGram(id);
   toast('اتضاف للسلة');
   updateCartUI();
+}
+
+// ---------- سعر التوصيل الجديد: كيلو أول + كيلو زيادة (نسخة مطابقة لـ lib/deliveryRates.js) ----------
+function extraKgFromGrams(grams){
+  var g = Number(grams) || 0;
+  if (g <= 0) return 0;
+  return Math.ceil(g / 1000);
+}
+function cartStarterGrams(){
+  return cart.reduce(function(s,i){ return s + (i.isStarter ? (i.grams||0) : 0); }, 0);
+}
+function govShippingFee(province, extraKg){
+  var tierKey = D.GOVERNORATE_TO_TIER[province];
+  var tier = tierKey ? D.SHIPPING_TIERS[tierKey] : null;
+  if (!tier) return null;
+  var kg = Math.max(0, Math.round(Number(extraKg)||0));
+  return tier.firstKilo + kg*tier.extraKg;
 }
 
 // ---------- الليتباكس ----------
@@ -755,7 +771,8 @@ function renderOrderForm(){
   if (!cart.length) { wrap.innerHTML=''; return; }
   var forcedLocal = cart.some(function(i){return i.localOnly;});
   var zone = forcedLocal ? 'banha' : orderForm.zone;
-  var govFee = zone==='nationwide' ? (D.GOVERNORATE_RATES[orderForm.province]||null) : null;
+  var extraKg = extraKgFromGrams(cartStarterGrams());
+  var govFee = zone==='nationwide' ? govShippingFee(orderForm.province, extraKg) : null;
   var deliveryFee = zone==='nationwide' ? govFee : null;
   var feeUnknown = zone==='banha' || (zone==='nationwide' && orderForm.province===D.OTHER_GOVERNORATE);
 
@@ -788,7 +805,7 @@ function renderOrderForm(){
   }
 
   html += '<div class="form-group"><label>'+icon('home',15,'')+'الشارع / تفاصيل العنوان *</label><input id="ofStreet" placeholder="اسم الشارع، رقم العمارة..." value="'+esc(orderForm.street)+'"></div>'+
-    '<div class="cart-total"><span class="cart-total-label">الإجمالي:</span><span class="cart-total-price">'+(cartTotal()+(deliveryFee||0))+' جنيه'+(feeUnknown?' + توصيل':'')+'</span></div>'+
+    '<div class="cart-total"><span class="cart-total-label">الإجمالي (شامل '+D.PACKAGING_FEE+' جنيه تغليف):</span><span class="cart-total-price">'+(cartTotal()+(deliveryFee||0)+D.PACKAGING_FEE)+' جنيه'+(feeUnknown?' + توصيل':'')+'</span></div>'+
     '<button class="checkout-btn" id="checkoutBtn">'+icon('check',18)+' تأكيد الطلب</button></div>';
 
   wrap.innerHTML = html;
@@ -821,9 +838,10 @@ function confirmOrder(){
   if (!orderForm.street.trim()) return toast('من فضلك اكتب الشارع/العنوان بالتفصيل');
   if (!cart.length) return toast('السلة فاضية');
 
-  var govFee = zone==='nationwide' ? (D.GOVERNORATE_RATES[orderForm.province]||null) : null;
+  var extraKg = extraKgFromGrams(cartStarterGrams());
+  var govFee = zone==='nationwide' ? govShippingFee(orderForm.province, extraKg) : null;
   var deliveryFee = zone==='nationwide' ? govFee : null;
-  var total = cartTotal() + (deliveryFee||0);
+  var total = cartTotal() + (deliveryFee||0) + D.PACKAGING_FEE;
   var deposit = depositFor(total), remainder = remainderFor(total);
   var id = 'PRVW-' + Date.now().toString(36).toUpperCase();
 
@@ -838,6 +856,7 @@ function confirmOrder(){
   });
   lines.push('');
   if (deliveryFee!=null) lines.push('التوصيل: '+money(deliveryFee)+' جنيه');
+  lines.push('التغليف: '+money(D.PACKAGING_FEE)+' جنيه');
   lines.push('الإجمالي: '+money(total)+' جنيه');
   var waUrl = 'https://wa.me/'+D.WHATSAPP_NUMBER+'?text='+encodeURIComponent(lines.join('\\n'));
 
