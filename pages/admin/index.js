@@ -4,6 +4,7 @@ import AdminGuard from "../../components/AdminGuard";
 import { useAdminAuth } from "../../lib/useAdminAuth";
 
 import { ORDER_STATUSES as STATUSES, AWAITING_DEPOSIT } from "../../lib/orderStatus";
+import { PACKAGING_FEE } from "../../lib/deliveryRates";
 import Icon from "../../components/Icon";
 
 // wa.me عايز الرقم بكود الدولة من غير + أو صفر في الأول (زي "20106...").
@@ -159,7 +160,7 @@ function OrdersDashboard() {
           <div style={{ fontWeight: 700 }}>
             الإجمالي: {o.total} جنيه{" "}
             <span style={{ fontWeight: 400, fontSize: 13, color: "#777" }}>
-              (توصيل {o.zone === "banha" ? "بيتحدد على واتساب" : (o.deliveryFee ?? "لسه متحددش")})
+              (توصيل {o.zone === "banha" ? "بيتحدد على واتساب" : (o.deliveryFee ?? "لسه متحددش")} + تغليف {o.packagingFee ?? PACKAGING_FEE} جنيه)
             </span>
           </div>
           {o.cancelledByCustomer && <div style={{ color: "#b42318", fontWeight: 800, marginTop: 8 }}>⚠️ العميل ألغى الطلب بنفسه</div>}

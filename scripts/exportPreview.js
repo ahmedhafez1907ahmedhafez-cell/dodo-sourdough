@@ -639,7 +639,7 @@ function addStarterToCart(id){
 function extraKgFromGrams(grams){
   var g = Number(grams) || 0;
   if (g <= 0) return 0;
-  return Math.ceil(g / 1000);
+  return Math.max(0, Math.ceil(g / 1000) - 1);
 }
 function cartStarterGrams(){
   return cart.reduce(function(s,i){ return s + (i.isStarter ? (i.grams||0) : 0); }, 0);

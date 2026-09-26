@@ -46,6 +46,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
         id: p.id, name: p.name, nameAr: `${p.nameAr} (${grams} جرام)`,
         basePrice: total, extras: [], extrasPrice: 0, totalPrice: total, unitPrice: total,
         qty: 1, img: mainImg || null, priceNote: "جنيه", isStarter: true, grams, localOnly,
+        weightGrams: grams,
       });
       setGrams(1);
       return;
@@ -57,6 +58,7 @@ export default function ProductCard({ product: p, style, sizeClass = "" }) {
       basePrice: p.price, extras: checkedExtras, extrasPrice,
       totalPrice: unitPrice * qty, unitPrice, qty,
       img: mainImg || null, priceNote: p.priceNote || "جنيه", localOnly,
+      weightGrams: (Number(p.weightGrams) || 0) * qty,
     });
     setQty(1);
     setCheckedExtras([]);

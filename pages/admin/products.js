@@ -19,7 +19,7 @@ const EMPTY = {
   name: "", nameAr: "", price: "", oldPrice: "", description: "", notes: "", category: "",
   tag: "", catalog: "bread", isNew: false, isBestseller: false,
   mainImg: "", secondImg: "", hasExtras: false, isStarter: false, pricePerGram: "",
-  video: "", emoji: "", localOnly: true,
+  video: "", emoji: "", localOnly: true, weightGrams: "",
 };
 
 function ProductsAdmin() {
@@ -157,6 +157,7 @@ function ProductsAdmin() {
         price: form.isStarter ? 0 : Number(form.price),
         oldPrice: !form.isStarter && form.oldPrice !== "" ? Number(form.oldPrice) : null,
         pricePerGram: form.isStarter ? Number(form.pricePerGram || 0) : undefined,
+        weightGrams: form.weightGrams !== "" ? Number(form.weightGrams) : 0,
       };
       const url = editingId ? `/api/products/${editingId}` : "/api/products";
       const method = editingId ? "PATCH" : "POST";
@@ -189,6 +190,7 @@ function ProductsAdmin() {
       mainImg: p.mainImg || "", secondImg: p.secondImg || "", hasExtras: !!p.hasExtras,
       isStarter: !!p.isStarter, pricePerGram: p.pricePerGram || "",
       video: p.video || "", emoji: p.emoji || "", localOnly: p.localOnly !== false,
+      weightGrams: p.weightGrams || "",
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -395,6 +397,17 @@ function ProductsAdmin() {
                   </button>
                 )}
               </div>
+            </div>
+            <div>
+              <label style={{ fontSize: 13, fontWeight: 700, display: "block", marginBottom: 4 }}>
+                ⚖️ الوزن بالجرام (لكل وحدة) — اختياري
+              </label>
+              <input
+                type="number"
+                placeholder="مثلاً 1000 (كيلو واحد) — لحساب رسوم الشحن للمنتجات التقيلة زي الدقيق"
+                value={form.weightGrams}
+                onChange={(e) => setForm({ ...form, weightGrams: e.target.value })}
+              />
             </div>
           </>
         )}

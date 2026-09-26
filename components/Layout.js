@@ -129,10 +129,11 @@ function CartSidebar() {
 
   const forcedLocal = shop.cart.some((i) => i.localOnly);
   const zone = forcedLocal ? "banha" : form.zone;
-  // وزن الخميرة السائلة في السلة (جرام) — المنتج الوحيد اللي بيأثر على
-  // "الكيلو الزيادة" في سعر التوصيل. باقي المنتجات مالهاش وزن مسجل.
-  const totalStarterGrams = shop.cart.reduce((s, i) => s + (i.isStarter ? (i.grams || 0) : 0), 0);
-  const extraKg = extraKgFromGrams(totalStarterGrams);
+  // إجمالي وزن السلة (جرام) — بيتحسب بيه "الكيلو الزيادة" في سعر
+  // التوصيل. بيشمل الخميرة السائلة وأي منتج تاني ليه وزن مسجل (زي
+  // الدقيق). باقي المنتجات مالهاش وزن مسجل فبتتحسب صفر.
+  const totalWeightGrams = shop.cart.reduce((s, i) => s + (i.weightGrams || 0), 0);
+  const extraKg = extraKgFromGrams(totalWeightGrams);
   // بنها بنوصّلها بنفسنا وسعرها بيتحدد على واتساب، فمفيش رقم بيتعرض
   const govFee = zone === "nationwide" ? getGovernorateShippingFee(form.province, extraKg) : null;
   const deliveryFee = zone === "nationwide" ? govFee : null;

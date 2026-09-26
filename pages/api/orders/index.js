@@ -54,11 +54,12 @@ async function createOrder(req, res) {
     return res.status(400).json({ error: "في طلبك منتجات (خبز/خميرة سائلة) بتتوصل بنها بس" });
   }
 
-  // وزن الخميرة السائلة في الأوردر (جرام) — المنتج الوحيد اللي وزنه
-  // متسجل، وبيتحسب بيه "الكيلو الزيادة" في سعر التوصيل. باقي المنتجات
-  // (خبز/أدوات) مالهاش وزن مسجل فبتعتبر دايماً جوّه الكيلو الأول الثابت.
-  const totalStarterGrams = items.reduce((s, i) => s + (i.isStarter ? (i.grams || 0) : 0), 0);
-  const extraKg = extraKgFromGrams(totalStarterGrams);
+  // إجمالي وزن الأوردر (جرام) — بيتحسب بيه "الكيلو الزيادة" في سعر
+  // التوصيل. بيشمل الخميرة السائلة وأي منتج تاني ليه weightGrams مسجل
+  // (زي الدقيق). باقي المنتجات (خبز/أدوات) مالهاش وزن مسجل فبتعتبر
+  // دايماً جوّه الكيلو الأول الثابت.
+  const totalWeightGrams = items.reduce((s, i) => s + (i.weightGrams || 0), 0);
+  const extraKg = extraKgFromGrams(totalWeightGrams);
 
   let deliveryFee = null;
   let deliveryNote = "";

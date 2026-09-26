@@ -95,7 +95,12 @@ export function ShopProvider({ children }) {
       );
       if (ei > -1) {
         const copy = [...c];
-        copy[ei] = { ...copy[ei], qty: copy[ei].qty + item.qty, totalPrice: copy[ei].unitPrice * (copy[ei].qty + item.qty) };
+        copy[ei] = {
+          ...copy[ei],
+          qty: copy[ei].qty + item.qty,
+          totalPrice: copy[ei].unitPrice * (copy[ei].qty + item.qty),
+          weightGrams: (copy[ei].weightGrams || 0) + (item.weightGrams || 0),
+        };
         return copy;
       }
       return [...c, item];
@@ -112,7 +117,10 @@ export function ShopProvider({ children }) {
       if (!it || it.isStarter) return c;
       const qty = it.qty + d;
       if (qty <= 0) return copy.filter((_, i) => i !== idx);
-      copy[idx] = { ...it, qty, totalPrice: it.unitPrice * qty };
+      // بنحافظ على وزن الوحدة الواحدة ثابت لما الكمية تتغيّر، عشان تقدير
+      // سعر التوصيل في السلة يفضل مظبوط (وزن الدقيق مثلاً بيتغيّر مع الكمية)
+      const perUnitWeight = it.qty ? (it.weightGrams || 0) / it.qty : 0;
+      copy[idx] = { ...it, qty, totalPrice: it.unitPrice * qty, weightGrams: Math.round(perUnitWeight * qty) };
       return copy;
     });
   }

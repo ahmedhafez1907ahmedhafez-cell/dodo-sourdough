@@ -51,6 +51,9 @@ async function addProduct(req, res) {
     hasExtras: !!b.hasExtras,
     isStarter: !!b.isStarter,
     pricePerGram: b.isStarter ? Number(b.pricePerGram || 0) : null,
+    // وزن الوحدة بالجرام (اختياري) — بيتحسب بيه سعر "الكيلو الزيادة" في
+    // الشحن للمنتجات التقيلة زي الدقيق (اللي مش بتتباع بالجرام أصلاً)
+    weightGrams: b.weightGrams !== undefined && b.weightGrams !== null && b.weightGrams !== "" ? Number(b.weightGrams) : 0,
     localOnly: b.localOnly !== undefined ? !!b.localOnly : b.catalog !== "tools",
     active: true,
     createdAt: new Date().toISOString(),
